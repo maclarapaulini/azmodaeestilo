@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Ariadne Zanardi</title>
+    <link rel="stylesheet" href="./style/blog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ================= Header (mesmo do index, com Blog ativo) ================= -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
+                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
+            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
+        </a>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="#">Montar Look</a>
+            <a href="#">Contato</a>
+            <a href="#" class="btn-entrar">Entrar</a>
+        </nav>
+    </header>
+
+    <!-- ================= Capa do blog ================= -->
+    <section class="blog-cover">
+        <div class="cover-text">
+            <span class="eyebrow">O Blog</span>
+            <h1>Tudo que eu vi de <em>novidade</em> essa semana</h1>
+            <p class="lead">
+                Tendências, achados, coleções que chegaram e ideias de look para o seu dia a dia.
+                Um caderno de moda aberto, atualizado toda semana — para você ler, salvar e se inspirar.
+            </p>
+            <div class="author-strip">
+                <span class="author-avatar">AZ</span>
+                <div>
+                    <span class="who">Ariadne Zanardi</span>
+                    <span class="role">Autora · estudante de Moda na PUCCamp</span>
+                </div>
+            </div>
+        </div>
+        <div class="cover-photo">
+            <!-- Dica: troque por images/blog/capa.jpg (foto sua ou do styling) -->
+            <img src="images/blog/capa.jpg" alt="Ariadne Zanardi em ensaio de moda com flores rosas">
+        </div>
+    </section>
+
+    <!-- ================= Post em destaque ================= -->
+    <section class="featured-wrap">
+        <div class="section-label">
+            <h2>Em destaque</h2>
+            <span class="line"></span>
+        </div>
+
+        <article class="featured-card">
+            <div class="featured-media">
+                <img src="images/blog/post-primavera.jpg" alt="Look de blazer xadrez e saia vermelha">
+            </div>
+            <div class="featured-body">
+                <span class="tag">Novidades da semana</span>
+                <!-- BACKEND: título, texto, imagem e links vêm do painel da Autora -->
+                <h3>5 peças que vão dominar o guarda-roupa nesta primavera</h3>
+                <p>
+                    O que apareceu nas passarelas e já está nas vitrines: xadrez, vermelho cereja,
+                    saias midi e o blazer que resolve qualquer produção. Separei cada peça com link
+                    direto para você provar antes de comprar.
+                </p>
+                <p class="meta">14 de setembro de 2026 · 6 min de leitura · 128 comentários</p>
+                <a href="#" class="btn-blog">Ler a matéria</a>
+            </div>
+        </article>
+    </section>
+
+    <!-- ================= Feed público ================= -->
+    <section class="feed-wrap">
+        <div class="feed-head">
+            <div>
+                <h2>Últimas do blog</h2>
+                <!-- Público: visita não precisa de conta para ler -->
+                <p class="hint">Leitura livre para todo mundo. Para comentar e salvar, é só criar sua conta.</p>
+            </div>
+            <div class="chips">
+                <button class="chip active" data-cat="todos">Todos</button>
+                <button class="chip" data-cat="tendencias">Tendências</button>
+                <button class="chip" data-cat="looks">Looks</button>
+                <button class="chip" data-cat="capsula">Guarda-roupa cápsula</button>
+                <button class="chip" data-cat="consultoria">Consultoria</button>
+            </div>
+        </div>
+
+        <div class="grid" id="postsGrid">
+
+            <article class="card" data-cat="tendencias">
+                <div class="card-media">
+                    <img src="images/blog/rosa-vermelho.jpg" alt="Detalhe de tecido e flores rosas">
+                    <span class="tag">Tendências</span>
+                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
+                </div>
+                <div class="card-body">
+                    <p class="meta">12 set 2026 · 4 min</p>
+                    <h3><a href="#">Rosa e vermelho: como usar as duas cores juntas</a></h3>
+                    <p class="excerpt">
+                        O combo que parecia arriscado virou o mais fotografado da estação. Ensino o
+                        truque do tom intermediário para ninguém errar.
+                    </p>
+                    <div class="card-foot">
+                        <button class="like-btn" data-likes="42">♡ <span>42</span></button>
+                        <a href="#" class="read">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-cat="looks">
+                <div class="card-media">
+                    <img src="images/blog/tres-looks.jpg" alt="Look montado com blazer e saia">
+                    <span class="tag">Looks</span>
+                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
+                </div>
+                <div class="card-body">
+                    <p class="meta">10 set 2026 · 3 min</p>
+                    <h3><a href="#">3 looks com a mesma saia vermelha</a></h3>
+                    <p class="excerpt">
+                        Uma peça, três produções: trabalho, faculdade e jantar. Todas com link de cada
+                        peça no fim do post.
+                    </p>
+                    <div class="card-foot">
+                        <button class="like-btn" data-likes="87">♡ <span>87</span></button>
+                        <a href="#" class="read">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-cat="capsula">
+                <div class="card-media">
+                    <img src="images/blog/capsula.jpg" alt="Detalhes de styling sobre mesa">
+                    <span class="tag">Guarda-roupa cápsula</span>
+                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
+                </div>
+                <div class="card-body">
+                    <p class="meta">07 set 2026 · 7 min</p>
+                    <h3><a href="#">Cápsula de 12 peças para a primavera</a></h3>
+                    <p class="excerpt">
+                        Quantas combinações cabem em 12 peças? Fiz a conta: mais de 40. Veja a lista
+                        completa e como adaptar ao seu estilo.
+                    </p>
+                    <div class="card-foot">
+                        <button class="like-btn" data-likes="156">♡ <span>156</span></button>
+                        <a href="#" class="read">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-cat="consultoria">
+                <div class="card-media">
+                    <img src="images/blog/consultoria.jpg" alt="Detalhe de styling com flores">
+                    <span class="tag">Consultoria</span>
+                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
+                </div>
+                <div class="card-body">
+                    <p class="meta">03 set 2026 · 5 min</p>
+                    <h3><a href="#">Como funciona minha consultoria por evento</a></h3>
+                    <p class="excerpt">
+                        Do briefing ao PDF com as combinações: passo a passo do que acontece quando
+                        você me chama para montar o look de uma ocasião especial.
+                    </p>
+                    <div class="card-foot">
+                        <button class="like-btn" data-likes="64">♡ <span>64</span></button>
+                        <a href="#" class="read">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-cat="looks">
+                <div class="card-media">
+                    <img src="images/blog/faculdade.jpg" alt="Look editorial com flores cor-de-rosa">
+                    <span class="tag">Looks</span>
+                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
+                </div>
+                <div class="card-body">
+                    <p class="meta">30 ago 2026 · 4 min</p>
+                    <h3><a href="#">Look de faculdade: confortável, mas com estilo</a></h3>
+                    <p class="excerpt">
+                        O truque do terceiro elemento (bolsa, óculos ou meia) que faz um look simples
+                        parecer pensado.
+                    </p>
+                    <div class="card-foot">
+                        <button class="like-btn" data-likes="73">♡ <span>73</span></button>
+                        <a href="#" class="read">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-cat="tendencias">
+                <div class="card-media">
+                    <img src="images/blog/pinterest.jpg" alt="Colagem de referências de moda">
+                    <span class="tag">Tendências</span>
+                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
+                </div>
+                <div class="card-body">
+                    <p class="meta">27 ago 2026 · 3 min</p>
+                    <h3><a href="#">O que salvei no Pinterest essa semana</a></h3>
+                    <p class="excerpt">
+                        Minha pasta de referências aberta para você: texturas, silhuetas e paletas que
+                        estão guiando meus stylings do mês.
+                    </p>
+                    <div class="card-foot">
+                        <button class="like-btn" data-likes="98">♡ <span>98</span></button>
+                        <a href="#" class="read">Ler mais →</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <p class="empty-state" id="emptyState" hidden>
+            Ainda não tem post nessa categoria — em breve! ♡
+        </p>
+    </section>
+
+    <!-- ================= Steel de look: links das peças ================= -->
+    <section class="steel-wrap">
+        <div class="steel-inner">
+            <h2>Steel de look</h2>
+            <p class="hint">
+                As peças exatas de cada look publicado, com link direto para a loja.
+                É só clicar, conferir o preço e terminar a compra por lá.
+                <!-- BACKEND: cada item é um link (afiliado) cadastrado pela Autora no post -->
+            </p>
+
+            <ul class="steel-list">
+                <li class="steel-item">
+                    <span class="steel-thumb">🧥</span>
+                    <span class="steel-info">
+                        <span class="piece">Blazer oversized xadrez</span>
+                        <span class="store">Renner · R$ 249,90</span>
+                    </span>
+                    <a href="#" class="btn-mini">Ver peça</a>
+                </li>
+                <li class="steel-item">
+                    <span class="steel-thumb">👗</span>
+                    <span class="steel-info">
+                        <span class="piece">Saia midi vermelho cereja</span>
+                        <span class="store">Zara · R$ 199,00</span>
+                    </span>
+                    <a href="#" class="btn-mini">Ver peça</a>
+                </li>
+                <li class="steel-item">
+                    <span class="steel-thumb">👞</span>
+                    <span class="steel-info">
+                        <span class="piece">Sapato de bico fino</span>
+                        <span class="store">Ferracini · R$ 379,00</span>
+                    </span>
+                    <a href="#" class="btn-mini">Ver peça</a>
+                </li>
+                <li class="steel-item">
+                    <span class="steel-thumb">👜</span>
+                    <span class="steel-info">
+                        <span class="piece">Bolsa estruturada média</span>
+                        <span class="store">Aramis · R$ 289,90</span>
+                    </span>
+                    <a href="#" class="btn-mini">Ver peça</a>
+                </li>
+                <li class="steel-item">
+                    <span class="steel-thumb">🕶️</span>
+                    <span class="steel-info">
+                        <span class="piece">Óculos retangular tartaruga</span>
+                        <span class="store">Chilli Beans · R$ 189,00</span>
+                    </span>
+                    <a href="#" class="btn-mini">Ver peça</a>
+                </li>
+                <li class="steel-item">
+                    <span class="steel-thumb">🧦</span>
+                    <span class="steel-info">
+                        <span class="piece">Meia cano médio branca</span>
+                        <span class="store">Use Meias · R$ 29,90</span>
+                    </span>
+                    <a href="#" class="btn-mini">Ver peça</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ================= Comentários ================= -->
+    <section class="comments-wrap">
+        <h2>Comentários</h2>
+        <p class="hint">
+            O blog é público, mas a conversa acontece entre quem tem conta no site.
+            Comente com carinho — respondo todas! ♡
+        </p>
+
+        <form class="comment-form" id="commentForm">
+            <div class="form-row">
+                <input type="text" id="commentName" placeholder="Seu nome" required>
+            </div>
+            <textarea id="commentText" rows="3" placeholder="Escreva seu comentário sobre o post..." required></textarea>
+            <div class="actions">
+                <span>Sua foto de perfil e histórico ficam salvos na sua conta.</span>
+                <button type="submit" class="btn-blog">Comentar</button>
+            </div>
+        </form>
+
+        <div class="comment-list" id="commentList">
+            <article class="comment">
+                <span class="bubble-avatar">M</span>
+                <div>
+                    <div class="c-head">
+                        <span class="c-name">Marina Lopes</span>
+                        <span class="c-date">há 2 dias</span>
+                    </div>
+                    <p class="c-text">Amei o post das 5 peças! Já comprei o blazer pelo link, chegou rapidinho. Você arrasa ♡</p>
+                </div>
+            </article>
+
+            <article class="comment author-reply">
+                <span class="bubble-avatar" style="background-color:#C84B4B; color:#fff;">AZ</span>
+                <div>
+                    <div class="c-head">
+                        <span class="c-name">Ariadne Zanardi</span>
+                        <span class="badge-autora">Autora</span>
+                        <span class="c-date">há 2 dias</span>
+                    </div>
+                    <p class="c-text">Marina, que alegria! Depois me manda foto do look montado que eu posto nos stories ♡</p>
+                </div>
+            </article>
+
+            <article class="comment">
+                <span class="bubble-avatar">J</span>
+                <div>
+                    <div class="c-head">
+                        <span class="c-name">Juliana Reis</span>
+                        <span class="c-date">há 5 dias</span>
+                    </div>
+                    <p class="c-text">Consegui aplicar a cápsula de 12 peças no meu armário e sobrou espaço! Muito obrigada.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ================= Newsletter por e-mail ================= -->
+    <section class="newsletter">
+        <div class="newsletter-inner">
+            <h2>Receba os posts por e-mail</h2>
+            <p>Um resumo por semana: novidades, links de peças e ideias de look direto na sua caixa de entrada.</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" id="newsletterEmail" placeholder="seu@email.com" required>
+                <button type="submit" class="btn-blog">Inscrever</button>
+            </form>
+            <p class="newsletter-status" id="newsletterStatus"></p>
+        </div>
+    </section>
+
+    <!-- ================= Área da Autora (permissão diferenciada) ================= -->
+    <section class="author-area">
+        <button class="author-toggle" id="authorToggle" aria-expanded="false">
+            <span>Área da Autora — publicar no blog</span>
+            <span class="lock">Autora · Cliente</span>
+        </button>
+
+        <div class="author-panel" id="authorPanel">
+            <h3>Nova publicação</h3>
+            <p class="note">
+                Só quem tem permissão de <strong>Autora</strong> publica no feed.
+                Quem é <strong>Cliente</strong> pode curtir, salvar na pasta de inspirações e comentar.
+            </p>
+
+            <input type="text" id="newTitle" placeholder="Título do post">
+            <select id="newCat">
+                <option value="tendencias">Tendências</option>
+                <option value="looks">Looks</option>
+                <option value="capsula">Guarda-roupa cápsula</option>
+                <option value="consultoria">Consultoria</option>
+            </select>
+
+            <!-- Upload da foto do post: uma imagem diferente para cada publicação -->
+            <label class="upload-box" for="newImage" id="uploadBox">
+                <input type="file" id="newImage" accept="image/*" hidden>
+                <span class="upload-icon">＋</span>
+                <span class="upload-text">
+                    <strong>Enviar foto do post</strong>
+                    <small>JPG, PNG ou WEBP · arraste o arquivo aqui ou clique para escolher</small>
+                </span>
+            </label>
+            <p class="upload-error" id="uploadError"></p>
+
+            <!-- Prévia da imagem escolhida pela Autora -->
+            <div class="upload-preview" id="uploadPreview" hidden>
+                <img id="previewImg" alt="Prévia da foto do post">
+                <button type="button" class="btn-remove" id="removeImage">Remover foto</button>
+            </div>
+
+            <textarea id="newExcerpt" rows="3" placeholder="Resumo que aparece no card..."></textarea>
+            <button class="btn-blog" id="publishBtn">Publicar</button>
+            <p class="author-status" id="authorStatus"></p>
+        </div>
+    </section>
+
+    <!-- ================= Footer ================= -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                Ariadne Zanardi
+                <small>Seu estilo, do seu jeito.</small>
+            </div>
+            <div class="footer-social">
+                <!-- BACKEND: redes citadas na entrevista (Instagram, TikTok, Pinterest) + portfólio -->
+                <a href="#">Instagram</a>
+                <a href="#">TikTok</a>
+                <a href="#">Pinterest</a>
+                <a href="#">Portfólio</a>
+                <a href="#">Contato</a>
+            </div>
+        </div>
+        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- ================= JavaScript ================= -->
+    <script>
+        /* ---------- Filtro por categoria ---------- */
+        const cards = Array.from(document.querySelectorAll('.card'));
+        const emptyState = document.getElementById('emptyState');
+
+        document.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+
+                const cat = chip.dataset.cat;
+                let visible = 0;
+
+                cards.forEach(card => {
+                    const show = cat === 'todos' || card.dataset.cat === cat;
+                    card.style.display = show ? '' : 'none';
+                    if (show) visible++;
+                });
+
+                emptyState.hidden = visible > 0;
+            });
+        });
+
+        /* ---------- Curtir ---------- */
+        function bindLike(btn) {
+            btn.addEventListener('click', () => {
+                const span = btn.querySelector('span');
+                const total = parseInt(btn.dataset.likes, 10);
+                const liked = btn.classList.toggle('liked');
+
+                span.textContent = liked ? total + 1 : total;
+                btn.firstChild.textContent = liked ? '♥ ' : '♡ ';
+            });
+        }
+
+        document.querySelectorAll('.like-btn').forEach(bindLike);
+
+        /* ---------- Salvar em pasta de inspirações ---------- */
+        function bindSave(btn) {
+            btn.addEventListener('click', () => {
+                const saved = btn.classList.toggle('saved');
+                btn.textContent = saved ? '♥' : '♡';
+                btn.title = saved ? 'Salvo na pasta de inspirações' : 'Salvar na pasta de inspirações';
+            });
+        }
+
+        document.querySelectorAll('.save').forEach(bindSave);
+
+        /* ---------- Comentários (BACKEND: POST /posts/:id/comments) ---------- */
+        const commentForm = document.getElementById('commentForm');
+        const commentList = document.getElementById('commentList');
+
+        commentForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const name = document.getElementById('commentName').value.trim();
+            const text = document.getElementById('commentText').value.trim();
+            if (!name || !text) return;
+
+            const comment = document.createElement('article');
+            comment.className = 'comment';
+            comment.innerHTML =
+                '<span class="bubble-avatar">' + name.charAt(0).toUpperCase() + '</span>' +
+                '<div>' +
+                    '<div class="c-head">' +
+                        '<span class="c-name"></span>' +
+                        '<span class="c-date">agora mesmo</span>' +
+                    '</div>' +
+                    '<p class="c-text"></p>' +
+                '</div>';
+
+            comment.querySelector('.c-name').textContent = name;
+            comment.querySelector('.c-text').textContent = text;
+
+            commentList.prepend(comment);
+            commentForm.reset();
+        });
+
+        /* ---------- Newsletter ---------- */
+        const newsletterForm = document.getElementById('newsletterForm');
+        const newsletterStatus = document.getElementById('newsletterStatus');
+
+        newsletterForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const email = document.getElementById('newsletterEmail').value.trim();
+            newsletterStatus.textContent = 'Prontinho! Os próximos posts chegam em ' + email + ' ♡';
+            newsletterForm.reset();
+        });
+
+        /* ---------- Área da Autora ---------- */
+        const authorToggle = document.getElementById('authorToggle');
+        const authorPanel = document.getElementById('authorPanel');
+        const authorStatus = document.getElementById('authorStatus');
+
+        authorToggle.addEventListener('click', () => {
+            const open = authorPanel.classList.toggle('open');
+            authorToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        /* ---------- Upload da foto do post ---------- */
+        const imageInput = document.getElementById('newImage');
+        const uploadBox = document.getElementById('uploadBox');
+        const uploadError = document.getElementById('uploadError');
+        const uploadPreview = document.getElementById('uploadPreview');
+        const previewImg = document.getElementById('previewImg');
+        const removeImageBtn = document.getElementById('removeImage');
+        const uploadPlaceholderText = '<span class="upload-icon">＋</span>' +
+            '<span class="upload-text">' +
+                '<strong>Enviar foto do post</strong>' +
+                '<small>JPG, PNG ou WEBP · arraste o arquivo aqui ou clique para escolher</small>' +
+            '</span>';
+
+        let uploadedFile = null;     // BACKEND: enviar este arquivo (FormData)
+        let previewUrl = null;       // URL temporária da prévia
+
+        const MAX_SIZE_MB = 5;
+
+        function showPreview(file) {
+            if (previewUrl) URL.revokeObjectURL(previewUrl);
+
+            previewUrl = URL.createObjectURL(file);
+            uploadedFile = file;
+
+            previewImg.src = previewUrl;
+            uploadPreview.hidden = false;
+            uploadError.textContent = '';
+
+            uploadBox.classList.add('has-file');
+            uploadBox.innerHTML =
+                '<span class="upload-icon">✓</span>' +
+                '<span class="upload-text">' +
+                    '<strong>' + file.name + '</strong>' +
+                    '<small>' + (file.size / 1024 / 1024).toFixed(2) + ' MB · clique para trocar a foto</small>' +
+                '</span>';
+        }
+
+        function clearImage() {
+            if (previewUrl) URL.revokeObjectURL(previewUrl);
+            previewUrl = null;
+            uploadedFile = null;
+
+            imageInput.value = '';
+            uploadPreview.hidden = true;
+            previewImg.removeAttribute('src');
+            uploadBox.classList.remove('has-file');
+            uploadBox.innerHTML = uploadPlaceholderText;
+        }
+
+        function handleFile(file) {
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                uploadError.textContent = 'Escolha um arquivo de imagem (JPG, PNG ou WEBP).';
+                return;
+            }
+
+            if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+                uploadError.textContent = 'A imagem é muito grande. Envie um arquivo de até ' + MAX_SIZE_MB + ' MB.';
+                return;
+            }
+
+            showPreview(file);
+        }
+
+        imageInput.addEventListener('change', () => handleFile(imageInput.files[0]));
+
+        /* arrastar e soltar */
+        ['dragenter', 'dragover'].forEach(evt =>
+            uploadBox.addEventListener(evt, e => {
+                e.preventDefault();
+                uploadBox.classList.add('dragover');
+            })
+        );
+
+        ['dragleave', 'drop'].forEach(evt =>
+            uploadBox.addEventListener(evt, e => {
+                e.preventDefault();
+                uploadBox.classList.remove('dragover');
+            })
+        );
+
+        uploadBox.addEventListener('drop', e => handleFile(e.dataTransfer.files[0]));
+
+        removeImageBtn.addEventListener('click', clearImage);
+
+        /* ---------- Publicar (usa a imagem enviada pela Autora) ---------- */
+        document.getElementById('publishBtn').addEventListener('click', () => {
+            const title = document.getElementById('newTitle').value.trim();
+            const cat = document.getElementById('newCat');
+            const excerpt = document.getElementById('newExcerpt').value.trim();
+
+            if (!uploadedFile) {
+                uploadError.textContent = 'Envie a foto do post antes de publicar.';
+                uploadBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            if (!title || !excerpt) {
+                authorStatus.textContent = 'Preencha título e resumo para publicar.';
+                return;
+            }
+
+            /* BACKEND: aqui você envia o arquivo + dados do post.
+               Exemplo:
+               const data = new FormData();
+               data.append('image', uploadedFile);
+               data.append('title', title);
+               data.append('category', cat.value);
+               data.append('excerpt', excerpt);
+               fetch('/api/posts', { method: 'POST', body: data });
+               e a URL salva (ex.: images/blog/minha-foto.jpg) é o que vai no card.
+            */
+
+            const imageUrl = previewUrl;
+
+            const card = document.createElement('article');
+            card.className = 'card';
+            card.dataset.cat = cat.value;
+
+            const media = document.createElement('div');
+            media.className = 'card-media';
+
+            // a imagem é do arquivo enviado — cada post fica com a sua
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = title;
+            media.appendChild(img);
+
+            const tag = document.createElement('span');
+            tag.className = 'tag';
+            tag.textContent = cat.options[cat.selectedIndex].text;
+            media.appendChild(tag);
+
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'icon-btn save';
+            saveBtn.title = 'Salvar na pasta de inspirações';
+            saveBtn.textContent = '♡';
+            media.appendChild(saveBtn);
+
+            const body = document.createElement('div');
+            body.className = 'card-body';
+            body.innerHTML =
+                '<p class="meta">hoje · 1 min</p>' +
+                '<h3><a href="#">' + title + '</a></h3>' +
+                '<p class="excerpt">' + excerpt + '</p>' +
+                '<div class="card-foot">' +
+                    '<button class="like-btn" data-likes="0">♡ <span>0</span></button>' +
+                    '<a href="#" class="read">Ler mais →</a>' +
+                '</div>';
+
+            card.appendChild(media);
+            card.appendChild(body);
+
+            bindSave(saveBtn);
+            bindLike(body.querySelector('.like-btn'));
+
+            document.getElementById('postsGrid').prepend(card);
+            cards.push(card);
+
+            /* limpa o formulário e libera a imagem */
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newExcerpt').value = '';
+            clearImage();
+
+            authorStatus.textContent = 'Publicado no feed! ♡';
+            window.scrollTo({ top: document.getElementById('postsGrid').offsetTop - 120, behavior: 'smooth' });
+        });
+
+        /* ---------- Ano no footer ---------- */
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
