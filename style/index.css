@@ -20,12 +20,8 @@ header {
 }
 
 .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    font-weight: 700;
-    color: #C84B4B;
-    font-style: italic;
-    letter-spacing: 2px;
+   width: 7vw;
+   height: auto;
 }
 
 nav {
@@ -86,13 +82,6 @@ nav a.active {
     z-index: 2;
 }
 
-.heart-icon {
-    position: absolute;
-    top: -20px;
-    left: 40px;
-    font-size: 48px;
-    color: #C84B4B;
-}
 
 .hero h1 {
     font-family: 'Playfair Display', serif;
@@ -130,7 +119,7 @@ nav a.active {
     position: absolute;
     right: 0;
     top: 0;
-    width: 60vw;
+    width: 55vw;
     height: 100%;
     overflow: hidden;
 }
@@ -165,6 +154,11 @@ nav a.active {
     filter: blur(20px);
     z-index: 1;
     pointer-events: none;
+}
+
+.heart-img {
+    width: 3vw;
+    height: auto;
 }
 
 /* About Section */
