@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Ariadne Zanardi</title>
     <link rel="stylesheet" href="./style/blog.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <!-- ================= Header (mesmo do index, com Blog ativo) ================= -->
     <header>
         <a href="index.html" class="logo-link">
             <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
-                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
+                onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
             <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
         </a>
         <nav>
@@ -134,7 +138,7 @@
 
             <textarea id="newExcerpt" rows="3" placeholder="Resumo que aparece no card..."></textarea>
 
-            <textarea id="newContent" rows="8" placeholder="Texto completo do post (o que aparece quando clicam em 'Ler mais'). Pode deixar em branco linha para separar parágrafos. Se deixar vazio, uso o resumo acima."></textarea>
+            <textarea id="newContent" rows="8" placeholder="Texto completo do post."></textarea>
 
             <button class="btn-blog" id="publishBtn">Publicar</button>
             <p class="author-status" id="authorStatus"></p>
@@ -143,8 +147,7 @@
 
             <button type="button" class="btn-reset" id="resetPostsBtn">Limpar posts publicados (resetar)</button>
             <p class="author-hint">
-                Isso apaga só os posts salvos neste navegador (sem banco de dados, é o único jeito
-                de "resetar" por enquanto).
+                Isso apaga só os posts salvos neste navegador.
             </p>
         </div>
     </section>
@@ -165,7 +168,8 @@
                 <a href="#">Contato</a>
             </div>
         </div>
-        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
+        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos
+            reservados.</p>
     </footer>
 
     <!-- ================= JavaScript ================= -->
@@ -201,10 +205,11 @@
         function savePosts(posts) {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+                return true;
             } catch (e) {
                 // Ex.: estourou o limite do localStorage (fotos grandes)
                 console.error('Não foi possível salvar os posts:', e);
-                authorStatus.textContent = 'A foto é muito pesada para salvar no navegador. Tente uma imagem menor.';
+                return false;
             }
         }
 
@@ -296,8 +301,8 @@
                 '<h3><a></a></h3>' +
                 '<p class="excerpt"></p>' +
                 '<div class="card-foot">' +
-                    '<button class="like-btn" data-likes="0">♡ <span>0</span></button>' +
-                    '<a class="read">Ler mais →</a>' +
+                '<button class="like-btn" data-likes="0">♡ <span>0</span></button>' +
+                '<a class="read">Ler mais →</a>' +
                 '</div>';
 
             const postUrl = 'post.html?id=' + post.id;
@@ -358,37 +363,87 @@
         const removeImageBtn = document.getElementById('removeImage');
         const uploadPlaceholderText = '<span class="upload-icon">＋</span>' +
             '<span class="upload-text">' +
-                '<strong>Enviar foto do post</strong>' +
-                '<small>JPG, PNG ou WEBP · arraste o arquivo aqui ou clique para escolher</small>' +
+            '<strong>Enviar foto do post</strong>' +
+            '<small>JPG, PNG ou WEBP · arraste o arquivo aqui ou clique para escolher</small>' +
             '</span>';
 
-        let uploadedFileDataUrl = null; // guardamos em base64 para poder salvar no localStorage
+        let uploadedFileDataUrl = null; // guardamos em base64 (já comprimida) para poder salvar no localStorage
         let uploadedFileName = null;
 
-        const MAX_SIZE_MB = 5;
+        const MAX_SIZE_MB = 15;       // limite do arquivo ORIGINAL escolhido pela pessoa
+        const MAX_DIMENSION = 1600;   // maior lado da imagem, depois de redimensionada
+        const JPEG_QUALITY = 0.82;    // qualidade da compressão (0 a 1)
+
+        /* Redimensiona a imagem e reduz a qualidade, pra caber com folga no
+           localStorage (o navegador só dá uns 5-10 MB por site, e uma foto de
+           celular sem tratamento facilmente passa disso sozinha). */
+        function compressImage(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    const img = new Image();
+
+                    img.onload = () => {
+                        let { width, height } = img;
+
+                        if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+                            if (width > height) {
+                                height = Math.round(height * (MAX_DIMENSION / width));
+                                width = MAX_DIMENSION;
+                            } else {
+                                width = Math.round(width * (MAX_DIMENSION / height));
+                                height = MAX_DIMENSION;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        resolve(canvas.toDataURL('image/jpeg', JPEG_QUALITY));
+                    };
+
+                    img.onerror = () => reject(new Error('Não consegui processar essa imagem.'));
+                    img.src = reader.result;
+                };
+
+                reader.onerror = () => reject(new Error('Não consegui ler essa imagem.'));
+                reader.readAsDataURL(file);
+            });
+        }
 
         function showPreview(file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                uploadedFileDataUrl = reader.result; // string base64 (data:image/...;base64,...)
-                uploadedFileName = file.name;
+            uploadError.textContent = '';
+            uploadBox.innerHTML =
+                '<span class="upload-icon">⏳</span>' +
+                '<span class="upload-text"><strong>Preparando a imagem…</strong></span>';
 
-                previewImg.src = uploadedFileDataUrl;
-                uploadPreview.hidden = false;
-                uploadError.textContent = '';
+            compressImage(file)
+                .then(dataUrl => {
+                    uploadedFileDataUrl = dataUrl;
+                    uploadedFileName = file.name;
 
-                uploadBox.classList.add('has-file');
-                uploadBox.innerHTML =
-                    '<span class="upload-icon">✓</span>' +
-                    '<span class="upload-text">' +
+                    previewImg.src = dataUrl;
+                    uploadPreview.hidden = false;
+
+                    const approxKB = Math.round((dataUrl.length * 0.75) / 1024);
+
+                    uploadBox.classList.add('has-file');
+                    uploadBox.innerHTML =
+                        '<span class="upload-icon">✓</span>' +
+                        '<span class="upload-text">' +
                         '<strong>' + file.name + '</strong>' +
-                        '<small>' + (file.size / 1024 / 1024).toFixed(2) + ' MB · clique para trocar a foto</small>' +
-                    '</span>';
-            };
-            reader.onerror = () => {
-                uploadError.textContent = 'Não consegui ler essa imagem, tenta outra.';
-            };
-            reader.readAsDataURL(file);
+                        '<small>~' + approxKB + ' KB depois de otimizada · clique para trocar a foto</small>' +
+                        '</span>';
+                })
+                .catch(err => {
+                    uploadError.textContent = err.message || 'Não consegui processar essa imagem, tenta outra.';
+                    clearImage();
+                });
         }
 
         function clearImage() {
@@ -415,7 +470,6 @@
                 return;
             }
 
-            handleFile._lastFile = file;
             showPreview(file);
         }
 
@@ -479,7 +533,15 @@
 
             const posts = loadPosts();
             posts.unshift(post); // post novo aparece primeiro
-            savePosts(posts);
+            const saved = savePosts(posts);
+
+            if (!saved) {
+                authorStatus.textContent =
+                    'Não deu para salvar: mesmo otimizada, a imagem ainda ficou grande demais para ' +
+                    'o espaço que o navegador reserva para o site. Tente uma foto mais simples, ou ' +
+                    'apague algum post publicado antes (botão "Limpar posts publicados") para abrir espaço.';
+                return;
+            }
 
             postsGrid.prepend(buildCardElement(post));
             applyFilter();
@@ -510,4 +572,5 @@
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
+
 </html>
