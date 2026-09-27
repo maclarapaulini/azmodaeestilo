@@ -208,44 +208,6 @@ nav a.active {
     background-color: #F5C6C6;
 }
 
-/* ---------- Post em destaque ---------- */
-.featured-wrap {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 100px 70px;
-}
-
-.featured-card {
-    display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    background-color: #fff;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 18px 40px rgba(200, 75, 75, 0.10);
-}
-
-.featured-media {
-    position: relative;
-    min-height: 400px;
-    background-color: #f1dcdc;
-}
-
-.featured-media img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 45% 25%;
-}
-
-.featured-body {
-    padding: 50px 50px 45px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 .tag {
     display: inline-block;
     align-self: flex-start;
@@ -258,21 +220,6 @@ nav a.active {
     padding: 5px 14px;
     border-radius: 14px;
     margin-bottom: 18px;
-}
-
-.featured-body h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 40px;
-    line-height: 1.2;
-    color: #333;
-    margin-bottom: 18px;
-}
-
-.featured-body p {
-    font-size: 17px;
-    line-height: 1.65;
-    color: #5a4a45;
-    margin-bottom: 24px;
 }
 
 .meta {
@@ -497,90 +444,6 @@ nav a.active {
     font-size: 17px;
     color: #9a8580;
 }
-
-/* ---------- Steel de look (links de peças) ---------- */
-.steel-wrap {
-    background-color: #F5C6C6;
-    padding: 70px 100px;
-    margin-top: 40px;
-}
-
-.steel-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.steel-inner h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    color: #A53D3D;
-    margin-bottom: 8px;
-}
-
-.steel-inner .hint {
-    font-size: 15px;
-    color: #8a5f5f;
-    margin-bottom: 34px;
-    max-width: 620px;
-    line-height: 1.6;
-}
-
-.steel-list {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-    gap: 16px;
-}
-
-.steel-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background-color: #FFF8DC;
-    border-radius: 18px;
-    padding: 14px 18px;
-}
-
-.steel-thumb {
-    width: 54px;
-    height: 54px;
-    border-radius: 12px;
-    flex-shrink: 0;
-    background: linear-gradient(140deg, #E8927C, #C84B4B);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-}
-
-.steel-info { flex: 1; }
-
-.steel-info .piece {
-    display: block;
-    font-size: 15px;
-    font-weight: 600;
-    color: #333;
-}
-
-.steel-info .store {
-    font-size: 13px;
-    color: #9a8580;
-}
-
-.btn-mini {
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-    background-color: #C84B4B;
-    padding: 9px 16px;
-    border-radius: 18px;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background-color 0.25s;
-}
-
-.btn-mini:hover { background-color: #A53D3D; }
 
 /* ---------- Comentários ---------- */
 .comments-wrap {
@@ -867,6 +730,39 @@ nav a.active {
     min-height: 18px;
 }
 
+.author-divider {
+    border: none;
+    border-top: 1.5px dashed #F5C6C6;
+    margin: 26px 0 20px;
+}
+
+.btn-reset {
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    color: #A53D3D;
+    border: 1.5px solid #C84B4B;
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.25s, color 0.25s;
+}
+
+.btn-reset:hover {
+    background-color: #C84B4B;
+    color: #fff;
+}
+
+.author-hint {
+    font-size: 12.5px;
+    color: #9a8580;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
 /* ---------- Upload de imagem do post ---------- */
 .upload-box {
     display: flex;
@@ -965,6 +861,119 @@ nav a.active {
 
 .btn-remove:hover { background-color: #A53D3D; }
 
+/* ---------- Estado inicial / sem posts ---------- */
+.grid-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #fff;
+    border-radius: 24px;
+    box-shadow: 0 10px 26px rgba(200, 75, 75, 0.08);
+    color: #9a8580;
+    font-size: 16px;
+}
+
+.grid-empty strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #C84B4B;
+    margin-bottom: 8px;
+}
+
+/* ---------- Página de post individual (post.html) ---------- */
+.post-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 100px 100px;
+}
+
+.post-back {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #C84B4B;
+    text-decoration: none;
+    margin-bottom: 30px;
+}
+
+.post-back:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.post-tag {
+    margin-bottom: 18px;
+}
+
+.post-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 46px;
+    line-height: 1.2;
+    color: #333;
+    margin-bottom: 14px;
+}
+
+.post-meta {
+    margin-bottom: 30px;
+}
+
+.post-hero {
+    width: 100%;
+    border-radius: 26px;
+    overflow: hidden;
+    background-color: #f1dcdc;
+    margin-bottom: 34px;
+}
+
+.post-hero img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+}
+
+.post-content {
+    font-size: 18px;
+    line-height: 1.75;
+    color: #4a3d38;
+}
+
+.post-content p {
+    margin-bottom: 22px;
+}
+
+.post-not-found {
+    background-color: #fff;
+    border-radius: 22px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 10px 26px rgba(200, 75, 75, 0.08);
+}
+
+.post-not-found strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #C84B4B;
+    margin-bottom: 10px;
+}
+
+.post-not-found p {
+    font-size: 15px;
+    color: #6b5a55;
+    line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+    .post-page {
+        padding: 40px 25px 70px;
+    }
+
+    .post-title { font-size: 32px; }
+
+    .post-content { font-size: 16px; }
+}
+
 /* ---------- Footer ---------- */
 footer {
     background-color: #F5C6C6;
@@ -1032,9 +1041,7 @@ footer {
    ========================================================== */
 @media (max-width: 1100px) {
     .blog-cover,
-    .featured-wrap,
     .feed-wrap,
-    .steel-wrap,
     .comments-wrap,
     .newsletter,
     .author-area,
@@ -1060,10 +1067,6 @@ footer {
         max-width: 420px;
         height: 460px;
     }
-
-    .featured-card { grid-template-columns: 1fr; }
-
-    .featured-media { min-height: 320px; }
 }
 
 @media (max-width: 900px) {
@@ -1081,9 +1084,7 @@ footer {
     .logo { width: 22vw; }
 
     .blog-cover,
-    .featured-wrap,
     .feed-wrap,
-    .steel-wrap,
     .comments-wrap,
     .newsletter,
     .author-area,
@@ -1097,17 +1098,6 @@ footer {
     .cover-text .lead { font-size: 17px; }
 
     .feed-head h2 { font-size: 32px; }
-
-    .featured-body { padding: 32px 26px; }
-
-    .featured-body h3 { font-size: 30px; }
-
-    .steel-wrap {
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-
-    .steel-inner h2 { font-size: 30px; }
 
     .comments-wrap h2 { font-size: 30px; }
 
