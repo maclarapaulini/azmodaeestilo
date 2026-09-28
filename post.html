@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post - Ariadne Zanardi</title>
+    <link rel="stylesheet" href="./style/blog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ================= Header (mesmo do blog) ================= -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
+                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
+            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
+        </a>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="#">Montar Look</a>
+            <a href="#">Contato</a>
+            <a href="#" class="btn-entrar">Entrar</a>
+        </nav>
+    </header>
+
+    <!-- ================= Conteúdo do post (preenchido via JS) ================= -->
+    <main class="post-page" id="postPage">
+        <!-- Enquanto carrega -->
+    </main>
+
+    <!-- ================= Comentários deste post ================= -->
+    <!-- Fica oculto até confirmarmos que o post existe (ver script) -->
+    <section class="comments-wrap" id="commentsSection" hidden>
+        <h2>Comentários</h2>
+        <p class="hint">
+            Comente com carinho — a Autora responde todas!
+        </p>
+
+        <form class="comment-form" id="commentForm">
+            <div class="form-row">
+                <input type="text" id="commentName" placeholder="Seu nome" required>
+            </div>
+            <textarea id="commentText" rows="3" placeholder="Escreva seu comentário sobre o post..." required></textarea>
+            <div class="actions">
+                <span>Sua foto de perfil e histórico ficam salvos na sua conta.</span>
+                <button type="submit" class="btn-blog">Comentar</button>
+            </div>
+        </form>
+
+        <div class="comment-list" id="commentList"></div>
+
+        <p class="empty-state" id="commentsEmpty">
+            Ainda não tem comentário por aqui — seja a primeira pessoa a comentar!
+        </p>
+    </section>
+
+    <!-- ================= Footer ================= -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                Ariadne Zanardi
+                <small>Seu estilo, do seu jeito.</small>
+            </div>
+            <div class="footer-social">
+                <a href="#">Instagram</a>
+                <a href="#">TikTok</a>
+                <a href="#">Pinterest</a>
+                <a href="#">Portfólio</a>
+                <a href="#">Contato</a>
+            </div>
+        </div>
+        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        /* Mesma "base de dados" (localStorage) usada em blog.html.
+           BACKEND: quando tiver servidor, troque por GET /api/posts/:id */
+        const STORAGE_KEY = 'az_blog_posts';
+
+        const catLabels = {
+            tendencias: 'Tendências',
+            looks: 'Looks',
+            capsula: 'Guarda-roupa cápsula',
+            consultoria: 'Consultoria'
+        };
+
+        function loadPosts() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        /* ==========================================================
+           Comentários por post (também no localStorage, por enquanto)
+           BACKEND: troque por GET/POST /api/posts/:id/comments
+           ========================================================== */
+        const COMMENTS_KEY = 'az_blog_comments';
+
+        function loadAllComments() {
+            try {
+                const raw = localStorage.getItem(COMMENTS_KEY);
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function loadCommentsFor(postId) {
+            const all = loadAllComments();
+            return all[postId] || [];
+        }
+
+        function saveCommentsFor(postId, comments) {
+            const all = loadAllComments();
+            all[postId] = comments;
+            try {
+                localStorage.setItem(COMMENTS_KEY, JSON.stringify(all));
+            } catch (e) {
+                console.error('Não foi possível salvar o comentário:', e);
+            }
+        }
+
+        function formatRelativeDate(timestamp) {
+            const diffMs = Date.now() - timestamp;
+            const mins = Math.floor(diffMs / 60000);
+            if (mins < 1) return 'agora mesmo';
+            if (mins < 60) return 'há ' + mins + (mins === 1 ? ' minuto' : ' minutos');
+            const hours = Math.floor(mins / 60);
+            if (hours < 24) return 'há ' + hours + (hours === 1 ? ' hora' : ' horas');
+            const days = Math.floor(hours / 24);
+            return 'há ' + days + (days === 1 ? ' dia' : ' dias');
+        }
+
+        function buildCommentElement(comment) {
+            const el = document.createElement('article');
+            el.className = 'comment';
+            el.innerHTML =
+                '<span class="bubble-avatar"></span>' +
+                '<div>' +
+                    '<div class="c-head">' +
+                        '<span class="c-name"></span>' +
+                        '<span class="c-date"></span>' +
+                    '</div>' +
+                    '<p class="c-text"></p>' +
+                '</div>';
+
+            el.querySelector('.bubble-avatar').textContent = comment.name.charAt(0).toUpperCase();
+            el.querySelector('.c-name').textContent = comment.name;
+            el.querySelector('.c-date').textContent = formatRelativeDate(comment.timestamp);
+            el.querySelector('.c-text').textContent = comment.text;
+            return el;
+        }
+
+        function renderComments(postId) {
+            const commentList = document.getElementById('commentList');
+            const commentsEmpty = document.getElementById('commentsEmpty');
+            const comments = loadCommentsFor(postId);
+
+            commentList.innerHTML = '';
+            comments.forEach(c => commentList.appendChild(buildCommentElement(c)));
+            commentsEmpty.hidden = comments.length > 0;
+        }
+
+        function setupCommentForm(postId) {
+            const commentForm = document.getElementById('commentForm');
+
+            commentForm.addEventListener('submit', event => {
+                event.preventDefault();
+
+                const name = document.getElementById('commentName').value.trim();
+                const text = document.getElementById('commentText').value.trim();
+                if (!name || !text) return;
+
+                const comments = loadCommentsFor(postId);
+                comments.push({ name, text, timestamp: Date.now() });
+                saveCommentsFor(postId, comments);
+
+                renderComments(postId);
+                commentForm.reset();
+            });
+        }
+
+        function renderPostPage(post) {
+            const main = document.getElementById('postPage');
+
+            const paragraphs = (post.content || '')
+                .split(/\n\s*\n/)
+                .map(p => p.trim())
+                .filter(Boolean);
+
+            const contentHtml = paragraphs.length
+                ? paragraphs.map(p => '<p>' + escapeHtml(p) + '</p>').join('')
+                : '<p>' + escapeHtml(post.content || '') + '</p>';
+
+            main.innerHTML =
+                '<a href="blog.html" class="post-back">← Voltar para o blog</a>' +
+                '<article class="post-article">' +
+                    '<span class="tag post-tag">' + escapeHtml(catLabels[post.cat] || post.cat) + '</span>' +
+                    '<h1 class="post-title"></h1>' +
+                    '<p class="meta post-meta"></p>' +
+                    '<div class="post-hero">' +
+                        '<img id="postHeroImg" alt="">' +
+                    '</div>' +
+                    '<div class="post-content">' + contentHtml + '</div>' +
+                '</article>';
+
+            main.querySelector('.post-title').textContent = post.title;
+            main.querySelector('.post-meta').textContent = post.dateLabel;
+            const img = document.getElementById('postHeroImg');
+            img.src = post.imageUrl;
+            img.alt = post.title;
+        }
+
+        function renderNotFound() {
+            const main = document.getElementById('postPage');
+            main.innerHTML =
+                '<a href="blog.html" class="post-back">← Voltar para o blog</a>' +
+                '<div class="post-not-found">' +
+                    '<strong>Esse post não foi encontrado.</strong>' +
+                    '<p>Ele pode ter sido removido, ou foi publicado em outro navegador ' +
+                    '(por enquanto os posts ficam salvos só no navegador de quem publicou).</p>' +
+                '</div>';
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        /* ---------- Descobre qual post mostrar, pelo ?id= na URL ---------- */
+        const params = new URLSearchParams(window.location.search);
+        const idParam = params.get('id');
+
+        const posts = loadPosts();
+        const found = posts.find(p => String(p.id) === idParam);
+
+        if (found) {
+            renderPostPage(found);
+
+            const commentsSection = document.getElementById('commentsSection');
+            commentsSection.hidden = false;
+            renderComments(idParam);
+            setupCommentForm(idParam);
+        } else {
+            renderNotFound();
+        }
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

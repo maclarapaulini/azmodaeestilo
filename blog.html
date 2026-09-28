@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Ariadne Zanardi</title>
     <link rel="stylesheet" href="./style/blog.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <!-- ================= Header (mesmo do index, com Blog ativo) ================= -->
     <header>
         <a href="index.html" class="logo-link">
             <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
-                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
+                onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
             <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
         </a>
         <nav>
@@ -43,34 +47,8 @@
         </div>
         <div class="cover-photo">
             <!-- Dica: troque por images/blog/capa.jpg (foto sua ou do styling) -->
-            <img src="images/blog/capa.jpg" alt="Ariadne Zanardi em ensaio de moda com flores rosas">
+            <img src="images/blog/blog-inicio.jpg" alt="Ariadne Zanardi em ensaio de moda com flores rosas">
         </div>
-    </section>
-
-    <!-- ================= Post em destaque ================= -->
-    <section class="featured-wrap">
-        <div class="section-label">
-            <h2>Em destaque</h2>
-            <span class="line"></span>
-        </div>
-
-        <article class="featured-card">
-            <div class="featured-media">
-                <img src="images/blog/post-primavera.jpg" alt="Look de blazer xadrez e saia vermelha">
-            </div>
-            <div class="featured-body">
-                <span class="tag">Novidades da semana</span>
-                <!-- BACKEND: título, texto, imagem e links vêm do painel da Autora -->
-                <h3>5 peças que vão dominar o guarda-roupa nesta primavera</h3>
-                <p>
-                    O que apareceu nas passarelas e já está nas vitrines: xadrez, vermelho cereja,
-                    saias midi e o blazer que resolve qualquer produção. Separei cada peça com link
-                    direto para você provar antes de comprar.
-                </p>
-                <p class="meta">14 de setembro de 2026 · 6 min de leitura · 128 comentários</p>
-                <a href="#" class="btn-blog">Ler a matéria</a>
-            </div>
-        </article>
     </section>
 
     <!-- ================= Feed público ================= -->
@@ -90,252 +68,20 @@
             </div>
         </div>
 
-        <div class="grid" id="postsGrid">
+        <!--
+            Grid de posts: começa VAZIO de propósito.
+            Os cards aqui dentro só existem se:
+            a) tiverem sido publicados pela Autora no painel "Publicar" lá embaixo, ou
+            b) (quando tiver backend) vierem da API, ex.: GET /api/posts
 
-            <article class="card" data-cat="tendencias">
-                <div class="card-media">
-                    <img src="images/blog/rosa-vermelho.jpg" alt="Detalhe de tecido e flores rosas">
-                    <span class="tag">Tendências</span>
-                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
-                </div>
-                <div class="card-body">
-                    <p class="meta">12 set 2026 · 4 min</p>
-                    <h3><a href="#">Rosa e vermelho: como usar as duas cores juntas</a></h3>
-                    <p class="excerpt">
-                        O combo que parecia arriscado virou o mais fotografado da estação. Ensino o
-                        truque do tom intermediário para ninguém errar.
-                    </p>
-                    <div class="card-foot">
-                        <button class="like-btn" data-likes="42">♡ <span>42</span></button>
-                        <a href="#" class="read">Ler mais →</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="card" data-cat="looks">
-                <div class="card-media">
-                    <img src="images/blog/tres-looks.jpg" alt="Look montado com blazer e saia">
-                    <span class="tag">Looks</span>
-                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
-                </div>
-                <div class="card-body">
-                    <p class="meta">10 set 2026 · 3 min</p>
-                    <h3><a href="#">3 looks com a mesma saia vermelha</a></h3>
-                    <p class="excerpt">
-                        Uma peça, três produções: trabalho, faculdade e jantar. Todas com link de cada
-                        peça no fim do post.
-                    </p>
-                    <div class="card-foot">
-                        <button class="like-btn" data-likes="87">♡ <span>87</span></button>
-                        <a href="#" class="read">Ler mais →</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="card" data-cat="capsula">
-                <div class="card-media">
-                    <img src="images/blog/capsula.jpg" alt="Detalhes de styling sobre mesa">
-                    <span class="tag">Guarda-roupa cápsula</span>
-                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
-                </div>
-                <div class="card-body">
-                    <p class="meta">07 set 2026 · 7 min</p>
-                    <h3><a href="#">Cápsula de 12 peças para a primavera</a></h3>
-                    <p class="excerpt">
-                        Quantas combinações cabem em 12 peças? Fiz a conta: mais de 40. Veja a lista
-                        completa e como adaptar ao seu estilo.
-                    </p>
-                    <div class="card-foot">
-                        <button class="like-btn" data-likes="156">♡ <span>156</span></button>
-                        <a href="#" class="read">Ler mais →</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="card" data-cat="consultoria">
-                <div class="card-media">
-                    <img src="images/blog/consultoria.jpg" alt="Detalhe de styling com flores">
-                    <span class="tag">Consultoria</span>
-                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
-                </div>
-                <div class="card-body">
-                    <p class="meta">03 set 2026 · 5 min</p>
-                    <h3><a href="#">Como funciona minha consultoria por evento</a></h3>
-                    <p class="excerpt">
-                        Do briefing ao PDF com as combinações: passo a passo do que acontece quando
-                        você me chama para montar o look de uma ocasião especial.
-                    </p>
-                    <div class="card-foot">
-                        <button class="like-btn" data-likes="64">♡ <span>64</span></button>
-                        <a href="#" class="read">Ler mais →</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="card" data-cat="looks">
-                <div class="card-media">
-                    <img src="images/blog/faculdade.jpg" alt="Look editorial com flores cor-de-rosa">
-                    <span class="tag">Looks</span>
-                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
-                </div>
-                <div class="card-body">
-                    <p class="meta">30 ago 2026 · 4 min</p>
-                    <h3><a href="#">Look de faculdade: confortável, mas com estilo</a></h3>
-                    <p class="excerpt">
-                        O truque do terceiro elemento (bolsa, óculos ou meia) que faz um look simples
-                        parecer pensado.
-                    </p>
-                    <div class="card-foot">
-                        <button class="like-btn" data-likes="73">♡ <span>73</span></button>
-                        <a href="#" class="read">Ler mais →</a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="card" data-cat="tendencias">
-                <div class="card-media">
-                    <img src="images/blog/pinterest.jpg" alt="Colagem de referências de moda">
-                    <span class="tag">Tendências</span>
-                    <button class="icon-btn save" title="Salvar na pasta de inspirações" aria-label="Salvar na pasta de inspirações">♡</button>
-                </div>
-                <div class="card-body">
-                    <p class="meta">27 ago 2026 · 3 min</p>
-                    <h3><a href="#">O que salvei no Pinterest essa semana</a></h3>
-                    <p class="excerpt">
-                        Minha pasta de referências aberta para você: texturas, silhuetas e paletas que
-                        estão guiando meus stylings do mês.
-                    </p>
-                    <div class="card-foot">
-                        <button class="like-btn" data-likes="98">♡ <span>98</span></button>
-                        <a href="#" class="read">Ler mais →</a>
-                    </div>
-                </div>
-            </article>
-
-        </div>
+            BACKEND: no lugar do localStorage do JS abaixo, é aqui que a lista de
+            posts viria do servidor.
+        -->
+        <div class="grid" id="postsGrid"></div>
 
         <p class="empty-state" id="emptyState" hidden>
-            Ainda não tem post nessa categoria — em breve! ♡
+            Ainda não tem post nessa categoria — em breve!
         </p>
-    </section>
-
-    <!-- ================= Steel de look: links das peças ================= -->
-    <section class="steel-wrap">
-        <div class="steel-inner">
-            <h2>Steel de look</h2>
-            <p class="hint">
-                As peças exatas de cada look publicado, com link direto para a loja.
-                É só clicar, conferir o preço e terminar a compra por lá.
-                <!-- BACKEND: cada item é um link (afiliado) cadastrado pela Autora no post -->
-            </p>
-
-            <ul class="steel-list">
-                <li class="steel-item">
-                    <span class="steel-thumb">🧥</span>
-                    <span class="steel-info">
-                        <span class="piece">Blazer oversized xadrez</span>
-                        <span class="store">Renner · R$ 249,90</span>
-                    </span>
-                    <a href="#" class="btn-mini">Ver peça</a>
-                </li>
-                <li class="steel-item">
-                    <span class="steel-thumb">👗</span>
-                    <span class="steel-info">
-                        <span class="piece">Saia midi vermelho cereja</span>
-                        <span class="store">Zara · R$ 199,00</span>
-                    </span>
-                    <a href="#" class="btn-mini">Ver peça</a>
-                </li>
-                <li class="steel-item">
-                    <span class="steel-thumb">👞</span>
-                    <span class="steel-info">
-                        <span class="piece">Sapato de bico fino</span>
-                        <span class="store">Ferracini · R$ 379,00</span>
-                    </span>
-                    <a href="#" class="btn-mini">Ver peça</a>
-                </li>
-                <li class="steel-item">
-                    <span class="steel-thumb">👜</span>
-                    <span class="steel-info">
-                        <span class="piece">Bolsa estruturada média</span>
-                        <span class="store">Aramis · R$ 289,90</span>
-                    </span>
-                    <a href="#" class="btn-mini">Ver peça</a>
-                </li>
-                <li class="steel-item">
-                    <span class="steel-thumb">🕶️</span>
-                    <span class="steel-info">
-                        <span class="piece">Óculos retangular tartaruga</span>
-                        <span class="store">Chilli Beans · R$ 189,00</span>
-                    </span>
-                    <a href="#" class="btn-mini">Ver peça</a>
-                </li>
-                <li class="steel-item">
-                    <span class="steel-thumb">🧦</span>
-                    <span class="steel-info">
-                        <span class="piece">Meia cano médio branca</span>
-                        <span class="store">Use Meias · R$ 29,90</span>
-                    </span>
-                    <a href="#" class="btn-mini">Ver peça</a>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- ================= Comentários ================= -->
-    <section class="comments-wrap">
-        <h2>Comentários</h2>
-        <p class="hint">
-            O blog é público, mas a conversa acontece entre quem tem conta no site.
-            Comente com carinho — respondo todas! ♡
-        </p>
-
-        <form class="comment-form" id="commentForm">
-            <div class="form-row">
-                <input type="text" id="commentName" placeholder="Seu nome" required>
-            </div>
-            <textarea id="commentText" rows="3" placeholder="Escreva seu comentário sobre o post..." required></textarea>
-            <div class="actions">
-                <span>Sua foto de perfil e histórico ficam salvos na sua conta.</span>
-                <button type="submit" class="btn-blog">Comentar</button>
-            </div>
-        </form>
-
-        <div class="comment-list" id="commentList">
-            <article class="comment">
-                <span class="bubble-avatar">M</span>
-                <div>
-                    <div class="c-head">
-                        <span class="c-name">Marina Lopes</span>
-                        <span class="c-date">há 2 dias</span>
-                    </div>
-                    <p class="c-text">Amei o post das 5 peças! Já comprei o blazer pelo link, chegou rapidinho. Você arrasa ♡</p>
-                </div>
-            </article>
-
-            <article class="comment author-reply">
-                <span class="bubble-avatar" style="background-color:#C84B4B; color:#fff;">AZ</span>
-                <div>
-                    <div class="c-head">
-                        <span class="c-name">Ariadne Zanardi</span>
-                        <span class="badge-autora">Autora</span>
-                        <span class="c-date">há 2 dias</span>
-                    </div>
-                    <p class="c-text">Marina, que alegria! Depois me manda foto do look montado que eu posto nos stories ♡</p>
-                </div>
-            </article>
-
-            <article class="comment">
-                <span class="bubble-avatar">J</span>
-                <div>
-                    <div class="c-head">
-                        <span class="c-name">Juliana Reis</span>
-                        <span class="c-date">há 5 dias</span>
-                    </div>
-                    <p class="c-text">Consegui aplicar a cápsula de 12 peças no meu armário e sobrou espaço! Muito obrigada.</p>
-                </div>
-            </article>
-        </div>
     </section>
 
     <!-- ================= Newsletter por e-mail ================= -->
@@ -391,8 +137,18 @@
             </div>
 
             <textarea id="newExcerpt" rows="3" placeholder="Resumo que aparece no card..."></textarea>
+
+            <textarea id="newContent" rows="8" placeholder="Texto completo do post."></textarea>
+
             <button class="btn-blog" id="publishBtn">Publicar</button>
             <p class="author-status" id="authorStatus"></p>
+
+            <hr class="author-divider">
+
+            <button type="button" class="btn-reset" id="resetPostsBtn">Limpar posts publicados (resetar)</button>
+            <p class="author-hint">
+                Isso apaga só os posts salvos neste navegador.
+            </p>
         </div>
     </section>
 
@@ -412,30 +168,82 @@
                 <a href="#">Contato</a>
             </div>
         </div>
-        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
+        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos
+            reservados.</p>
     </footer>
 
     <!-- ================= JavaScript ================= -->
     <script>
+        /* ==========================================================
+           "Banco de dados" do protótipo (sem backend real)
+           -----------------------------------------------------------
+           Enquanto não existe servidor, os posts publicados de verdade
+           ficam guardados no localStorage do navegador de quem está
+           usando a página. Ou seja:
+           - Se você publicar e recarregar a página NO MESMO navegador,
+             o post continua lá.
+           - Se abrir em outro navegador/computador, ele não vai ver
+             o que você publicou aqui (isso só um backend resolve).
+
+           BACKEND: quando tiver servidor, troque as 3 funções abaixo
+           (loadPosts / savePosts) por chamadas de API:
+             GET  /api/posts        -> carregar
+             POST /api/posts        -> publicar (envia FormData com a imagem)
+           ========================================================== */
+        const STORAGE_KEY = 'az_blog_posts';
+
+        function loadPosts() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                console.error('Não foi possível ler os posts salvos:', e);
+                return [];
+            }
+        }
+
+        function savePosts(posts) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+                return true;
+            } catch (e) {
+                // Ex.: estourou o limite do localStorage (fotos grandes)
+                console.error('Não foi possível salvar os posts:', e);
+                return false;
+            }
+        }
+
+        const catLabels = {
+            tendencias: 'Tendências',
+            looks: 'Looks',
+            capsula: 'Guarda-roupa cápsula',
+            consultoria: 'Consultoria'
+        };
+
         /* ---------- Filtro por categoria ---------- */
-        const cards = Array.from(document.querySelectorAll('.card'));
+        const postsGrid = document.getElementById('postsGrid');
         const emptyState = document.getElementById('emptyState');
+        let activeCat = 'todos';
+
+        function applyFilter() {
+            const allCards = Array.from(postsGrid.querySelectorAll('.card'));
+            let visible = 0;
+
+            allCards.forEach(card => {
+                const show = activeCat === 'todos' || card.dataset.cat === activeCat;
+                card.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+
+            emptyState.hidden = visible > 0;
+        }
 
         document.querySelectorAll('.chip').forEach(chip => {
             chip.addEventListener('click', () => {
                 document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
                 chip.classList.add('active');
-
-                const cat = chip.dataset.cat;
-                let visible = 0;
-
-                cards.forEach(card => {
-                    const show = cat === 'todos' || card.dataset.cat === cat;
-                    card.style.display = show ? '' : 'none';
-                    if (show) visible++;
-                });
-
-                emptyState.hidden = visible > 0;
+                activeCat = chip.dataset.cat;
+                applyFilter();
             });
         });
 
@@ -451,8 +259,6 @@
             });
         }
 
-        document.querySelectorAll('.like-btn').forEach(bindLike);
-
         /* ---------- Salvar em pasta de inspirações ---------- */
         function bindSave(btn) {
             btn.addEventListener('click', () => {
@@ -462,37 +268,70 @@
             });
         }
 
-        document.querySelectorAll('.save').forEach(bindSave);
+        /* ---------- Cria o elemento <article class="card"> a partir de um post ---------- */
+        function buildCardElement(post) {
+            const card = document.createElement('article');
+            card.className = 'card';
+            card.dataset.cat = post.cat;
 
-        /* ---------- Comentários (BACKEND: POST /posts/:id/comments) ---------- */
-        const commentForm = document.getElementById('commentForm');
-        const commentList = document.getElementById('commentList');
+            const media = document.createElement('div');
+            media.className = 'card-media';
 
-        commentForm.addEventListener('submit', event => {
-            event.preventDefault();
+            const img = document.createElement('img');
+            img.src = post.imageUrl;
+            img.alt = post.title;
+            media.appendChild(img);
 
-            const name = document.getElementById('commentName').value.trim();
-            const text = document.getElementById('commentText').value.trim();
-            if (!name || !text) return;
+            const tag = document.createElement('span');
+            tag.className = 'tag';
+            tag.textContent = catLabels[post.cat] || post.cat;
+            media.appendChild(tag);
 
-            const comment = document.createElement('article');
-            comment.className = 'comment';
-            comment.innerHTML =
-                '<span class="bubble-avatar">' + name.charAt(0).toUpperCase() + '</span>' +
-                '<div>' +
-                    '<div class="c-head">' +
-                        '<span class="c-name"></span>' +
-                        '<span class="c-date">agora mesmo</span>' +
-                    '</div>' +
-                    '<p class="c-text"></p>' +
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'icon-btn save';
+            saveBtn.title = 'Salvar na pasta de inspirações';
+            saveBtn.setAttribute('aria-label', 'Salvar na pasta de inspirações');
+            saveBtn.textContent = '♡';
+            media.appendChild(saveBtn);
+
+            const body = document.createElement('div');
+            body.className = 'card-body';
+            body.innerHTML =
+                '<p class="meta"></p>' +
+                '<h3><a></a></h3>' +
+                '<p class="excerpt"></p>' +
+                '<div class="card-foot">' +
+                '<button class="like-btn" data-likes="0">♡ <span>0</span></button>' +
+                '<a class="read">Ler mais →</a>' +
                 '</div>';
 
-            comment.querySelector('.c-name').textContent = name;
-            comment.querySelector('.c-text').textContent = text;
+            const postUrl = 'post.html?id=' + post.id;
 
-            commentList.prepend(comment);
-            commentForm.reset();
-        });
+            body.querySelector('.meta').textContent = post.dateLabel + ' · 1 min';
+            const titleLink = body.querySelector('h3 a');
+            titleLink.textContent = post.title;
+            titleLink.href = postUrl;
+            body.querySelector('.excerpt').textContent = post.excerpt;
+            body.querySelector('.read').href = postUrl;
+
+            card.appendChild(media);
+            card.appendChild(body);
+
+            bindSave(saveBtn);
+            bindLike(body.querySelector('.like-btn'));
+
+            return card;
+        }
+
+        /* ---------- Renderiza todos os posts salvos (mais novo primeiro) ---------- */
+        function renderAllPosts() {
+            postsGrid.innerHTML = '';
+            const posts = loadPosts();
+            posts.forEach(post => postsGrid.appendChild(buildCardElement(post)));
+            applyFilter();
+        }
+
+        renderAllPosts();
 
         /* ---------- Newsletter ---------- */
         const newsletterForm = document.getElementById('newsletterForm');
@@ -524,38 +363,92 @@
         const removeImageBtn = document.getElementById('removeImage');
         const uploadPlaceholderText = '<span class="upload-icon">＋</span>' +
             '<span class="upload-text">' +
-                '<strong>Enviar foto do post</strong>' +
-                '<small>JPG, PNG ou WEBP · arraste o arquivo aqui ou clique para escolher</small>' +
+            '<strong>Enviar foto do post</strong>' +
+            '<small>JPG, PNG ou WEBP · arraste o arquivo aqui ou clique para escolher</small>' +
             '</span>';
 
-        let uploadedFile = null;     // BACKEND: enviar este arquivo (FormData)
-        let previewUrl = null;       // URL temporária da prévia
+        let uploadedFileDataUrl = null; // guardamos em base64 (já comprimida) para poder salvar no localStorage
+        let uploadedFileName = null;
 
-        const MAX_SIZE_MB = 5;
+        const MAX_SIZE_MB = 15;       // limite do arquivo ORIGINAL escolhido pela pessoa
+        const MAX_DIMENSION = 1600;   // maior lado da imagem, depois de redimensionada
+        const JPEG_QUALITY = 0.82;    // qualidade da compressão (0 a 1)
+
+        /* Redimensiona a imagem e reduz a qualidade, pra caber com folga no
+           localStorage (o navegador só dá uns 5-10 MB por site, e uma foto de
+           celular sem tratamento facilmente passa disso sozinha). */
+        function compressImage(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    const img = new Image();
+
+                    img.onload = () => {
+                        let { width, height } = img;
+
+                        if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+                            if (width > height) {
+                                height = Math.round(height * (MAX_DIMENSION / width));
+                                width = MAX_DIMENSION;
+                            } else {
+                                width = Math.round(width * (MAX_DIMENSION / height));
+                                height = MAX_DIMENSION;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        resolve(canvas.toDataURL('image/jpeg', JPEG_QUALITY));
+                    };
+
+                    img.onerror = () => reject(new Error('Não consegui processar essa imagem.'));
+                    img.src = reader.result;
+                };
+
+                reader.onerror = () => reject(new Error('Não consegui ler essa imagem.'));
+                reader.readAsDataURL(file);
+            });
+        }
 
         function showPreview(file) {
-            if (previewUrl) URL.revokeObjectURL(previewUrl);
-
-            previewUrl = URL.createObjectURL(file);
-            uploadedFile = file;
-
-            previewImg.src = previewUrl;
-            uploadPreview.hidden = false;
             uploadError.textContent = '';
-
-            uploadBox.classList.add('has-file');
             uploadBox.innerHTML =
-                '<span class="upload-icon">✓</span>' +
-                '<span class="upload-text">' +
-                    '<strong>' + file.name + '</strong>' +
-                    '<small>' + (file.size / 1024 / 1024).toFixed(2) + ' MB · clique para trocar a foto</small>' +
-                '</span>';
+                '<span class="upload-icon">⏳</span>' +
+                '<span class="upload-text"><strong>Preparando a imagem…</strong></span>';
+
+            compressImage(file)
+                .then(dataUrl => {
+                    uploadedFileDataUrl = dataUrl;
+                    uploadedFileName = file.name;
+
+                    previewImg.src = dataUrl;
+                    uploadPreview.hidden = false;
+
+                    const approxKB = Math.round((dataUrl.length * 0.75) / 1024);
+
+                    uploadBox.classList.add('has-file');
+                    uploadBox.innerHTML =
+                        '<span class="upload-icon">✓</span>' +
+                        '<span class="upload-text">' +
+                        '<strong>' + file.name + '</strong>' +
+                        '<small>~' + approxKB + ' KB depois de otimizada · clique para trocar a foto</small>' +
+                        '</span>';
+                })
+                .catch(err => {
+                    uploadError.textContent = err.message || 'Não consegui processar essa imagem, tenta outra.';
+                    clearImage();
+                });
         }
 
         function clearImage() {
-            if (previewUrl) URL.revokeObjectURL(previewUrl);
-            previewUrl = null;
-            uploadedFile = null;
+            uploadedFileDataUrl = null;
+            uploadedFileName = null;
 
             imageInput.value = '';
             uploadPreview.hidden = true;
@@ -601,13 +494,14 @@
 
         removeImageBtn.addEventListener('click', clearImage);
 
-        /* ---------- Publicar (usa a imagem enviada pela Autora) ---------- */
+        /* ---------- Publicar de verdade (título + resumo + imagem escolhidos pela Autora) ---------- */
         document.getElementById('publishBtn').addEventListener('click', () => {
             const title = document.getElementById('newTitle').value.trim();
             const cat = document.getElementById('newCat');
             const excerpt = document.getElementById('newExcerpt').value.trim();
+            const contentInput = document.getElementById('newContent').value.trim();
 
-            if (!uploadedFile) {
+            if (!uploadedFileDataUrl) {
                 uploadError.textContent = 'Envie a foto do post antes de publicar.';
                 uploadBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 return;
@@ -618,74 +512,65 @@
                 return;
             }
 
-            /* BACKEND: aqui você envia o arquivo + dados do post.
-               Exemplo:
+            /* BACKEND: quando tiver servidor, troque este bloco por:
                const data = new FormData();
-               data.append('image', uploadedFile);
+               data.append('image', uploadedFile);       // o File original, não o base64
                data.append('title', title);
                data.append('category', cat.value);
                data.append('excerpt', excerpt);
                fetch('/api/posts', { method: 'POST', body: data });
-               e a URL salva (ex.: images/blog/minha-foto.jpg) é o que vai no card.
+               e recarregue os posts a partir da resposta da API.
             */
+            const post = {
+                id: Date.now(),
+                title,
+                cat: cat.value,
+                excerpt,
+                content: contentInput || excerpt,
+                imageUrl: uploadedFileDataUrl,
+                dateLabel: 'hoje'
+            };
 
-            const imageUrl = previewUrl;
+            const posts = loadPosts();
+            posts.unshift(post); // post novo aparece primeiro
+            const saved = savePosts(posts);
 
-            const card = document.createElement('article');
-            card.className = 'card';
-            card.dataset.cat = cat.value;
+            if (!saved) {
+                authorStatus.textContent =
+                    'Não deu para salvar: mesmo otimizada, a imagem ainda ficou grande demais para ' +
+                    'o espaço que o navegador reserva para o site. Tente uma foto mais simples, ou ' +
+                    'apague algum post publicado antes (botão "Limpar posts publicados") para abrir espaço.';
+                return;
+            }
 
-            const media = document.createElement('div');
-            media.className = 'card-media';
-
-            // a imagem é do arquivo enviado — cada post fica com a sua
-            const img = document.createElement('img');
-            img.src = imageUrl;
-            img.alt = title;
-            media.appendChild(img);
-
-            const tag = document.createElement('span');
-            tag.className = 'tag';
-            tag.textContent = cat.options[cat.selectedIndex].text;
-            media.appendChild(tag);
-
-            const saveBtn = document.createElement('button');
-            saveBtn.className = 'icon-btn save';
-            saveBtn.title = 'Salvar na pasta de inspirações';
-            saveBtn.textContent = '♡';
-            media.appendChild(saveBtn);
-
-            const body = document.createElement('div');
-            body.className = 'card-body';
-            body.innerHTML =
-                '<p class="meta">hoje · 1 min</p>' +
-                '<h3><a href="#">' + title + '</a></h3>' +
-                '<p class="excerpt">' + excerpt + '</p>' +
-                '<div class="card-foot">' +
-                    '<button class="like-btn" data-likes="0">♡ <span>0</span></button>' +
-                    '<a href="#" class="read">Ler mais →</a>' +
-                '</div>';
-
-            card.appendChild(media);
-            card.appendChild(body);
-
-            bindSave(saveBtn);
-            bindLike(body.querySelector('.like-btn'));
-
-            document.getElementById('postsGrid').prepend(card);
-            cards.push(card);
+            postsGrid.prepend(buildCardElement(post));
+            applyFilter();
 
             /* limpa o formulário e libera a imagem */
             document.getElementById('newTitle').value = '';
             document.getElementById('newExcerpt').value = '';
+            document.getElementById('newContent').value = '';
             clearImage();
 
             authorStatus.textContent = 'Publicado no feed! ♡';
-            window.scrollTo({ top: document.getElementById('postsGrid').offsetTop - 120, behavior: 'smooth' });
+            window.scrollTo({ top: postsGrid.offsetTop - 120, behavior: 'smooth' });
+        });
+
+        /* ---------- Resetar (apaga todos os posts publicados neste navegador) ---------- */
+        document.getElementById('resetPostsBtn').addEventListener('click', () => {
+            const confirmed = window.confirm(
+                'Tem certeza? Isso vai apagar TODOS os posts publicados salvos neste navegador. Essa ação não pode ser desfeita.'
+            );
+            if (!confirmed) return;
+
+            localStorage.removeItem(STORAGE_KEY);
+            renderAllPosts();
+            authorStatus.textContent = 'Posts apagados. O feed foi resetado. ♡';
         });
 
         /* ---------- Ano no footer ---------- */
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
+
 </html>
