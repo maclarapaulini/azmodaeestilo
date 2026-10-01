@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar ou criar conta - Ariadne Zanardi</title>
+    <link rel="stylesheet" href="./style/blog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ================= Header (mesmo do blog) ================= -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
+                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
+            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
+        </a>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="blog.html">Blog</a>
+            <a href="#">Montar Look</a>
+            <a href="#">Contato</a>
+            <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
+        </nav>
+    </header>
+
+    <!-- ================= Entrar / Criar conta ================= -->
+    <section class="auth-wrap">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin" data-tab="login">Entrar</button>
+                <button class="auth-tab" id="tabCadastro" data-tab="cadastro">Criar conta</button>
+            </div>
+
+            <!-- ---------- Painel: Entrar ---------- -->
+            <div class="auth-panel" id="panelLogin">
+                <h2>Que bom te ver de novo!</h2>
+                <p class="hint">Entre com seu e-mail (ou usuário) e senha.</p>
+
+                <form id="loginForm" class="auth-form" novalidate>
+                    <div class="field">
+                        <label for="loginIdentifier">E-mail ou usuário</label>
+                        <input type="text" id="loginIdentifier" autocomplete="username">
+                        <span class="field-error" id="errLoginIdentifier"></span>
+                    </div>
+
+                    <div class="field">
+                        <label for="loginPassword">Senha</label>
+                        <div class="password-field">
+                            <input type="password" id="loginPassword" autocomplete="current-password">
+                            <button type="button" class="toggle-password" data-target="loginPassword">Mostrar</button>
+                        </div>
+                        <span class="field-error" id="errLoginPassword"></span>
+                    </div>
+
+                    <button type="submit" class="btn-blog auth-submit">Entrar</button>
+                    <p class="auth-status" id="loginStatus"></p>
+                </form>
+
+                <p class="auth-switch-text">
+                    Ainda não tem conta?
+                    <button type="button" class="link-button" id="goToCadastro">Criar conta</button>
+                </p>
+            </div>
+
+            <!-- ---------- Painel: Criar conta ---------- -->
+            <div class="auth-panel" id="panelCadastro" hidden>
+                <h2>Vamos criar sua conta?</h2>
+
+                <form id="cadastroForm" class="auth-form" novalidate>
+                    <div class="form-grid-2">
+                        <div class="field">
+                            <label for="cadNome">Nome completo</label>
+                            <input type="text" id="cadNome" autocomplete="name">
+                            <span class="field-error" id="errCadNome"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="cadUsername">Usuário</label>
+                            <input type="text" id="cadUsername" autocomplete="username" placeholder="ex: ariadne.z">
+                            <span class="field-error" id="errCadUsername"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="cadEmail">E-mail</label>
+                            <input type="email" id="cadEmail" autocomplete="email">
+                            <span class="field-error" id="errCadEmail"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="cadTelefone">Telefone</label>
+                            <input type="text" id="cadTelefone" inputmode="numeric" placeholder="(00) 00000-0000" autocomplete="tel">
+                            <span class="field-error" id="errCadTelefone"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="cadCpf">CPF</label>
+                            <input type="text" id="cadCpf" inputmode="numeric" placeholder="000.000.000-00" autocomplete="off">
+                            <span class="field-error" id="errCadCpf"></span>
+                        </div>
+
+                        <div></div>
+
+                        <div class="field">
+                            <label for="cadSenha">Senha</label>
+                            <div class="password-field">
+                                <input type="password" id="cadSenha" autocomplete="new-password">
+                                <button type="button" class="toggle-password" data-target="cadSenha">Mostrar</button>
+                            </div>
+                            <span class="field-error" id="errCadSenha"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="cadSenha2">Confirmar senha</label>
+                            <div class="password-field">
+                                <input type="password" id="cadSenha2" autocomplete="new-password">
+                                <button type="button" class="toggle-password" data-target="cadSenha2">Mostrar</button>
+                            </div>
+                            <span class="field-error" id="errCadSenha2"></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-blog auth-submit">Criar conta</button>
+                    <p class="auth-status" id="cadastroStatus"></p>
+                </form>
+
+                <p class="auth-switch-text">
+                    Já tem conta?
+                    <button type="button" class="link-button" id="goToLogin">Entrar</button>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= Footer ================= -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                Ariadne Zanardi
+                <small>Seu estilo, do seu jeito.</small>
+            </div>
+            <div class="footer-social">
+                <a href="#">Instagram</a>
+                <a href="#">TikTok</a>
+                <a href="#">Pinterest</a>
+                <a href="#">Portfólio</a>
+                <a href="#">Contato</a>
+            </div>
+        </div>
+        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="./scripts/auth.js"></script>
+    <script>
+        /* ---------- Troca de abas ---------- */
+        const tabLogin = document.getElementById('tabLogin');
+        const tabCadastro = document.getElementById('tabCadastro');
+        const panelLogin = document.getElementById('panelLogin');
+        const panelCadastro = document.getElementById('panelCadastro');
+
+        function showTab(tab) {
+            const isLogin = tab === 'login';
+            tabLogin.classList.toggle('active', isLogin);
+            tabCadastro.classList.toggle('active', !isLogin);
+            panelLogin.hidden = !isLogin;
+            panelCadastro.hidden = isLogin;
+        }
+
+        tabLogin.addEventListener('click', () => showTab('login'));
+        tabCadastro.addEventListener('click', () => showTab('cadastro'));
+        document.getElementById('goToCadastro').addEventListener('click', () => showTab('cadastro'));
+        document.getElementById('goToLogin').addEventListener('click', () => showTab('login'));
+
+        /* Se já estiver logada, não faz sentido ficar nessa página */
+        if (azGetCurrentUser()) {
+            window.location.href = 'perfil.html';
+        }
+
+        /* ---------- Mostrar/ocultar senha ---------- */
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = document.getElementById(btn.dataset.target);
+                const show = input.type === 'password';
+                input.type = show ? 'text' : 'password';
+                btn.textContent = show ? 'Ocultar' : 'Mostrar';
+            });
+        });
+
+        /* ---------- Máscaras ao digitar ---------- */
+        const cadTelefone = document.getElementById('cadTelefone');
+        cadTelefone.addEventListener('input', () => {
+            cadTelefone.value = azFormatPhone(cadTelefone.value);
+        });
+
+        const cadCpf = document.getElementById('cadCpf');
+        cadCpf.addEventListener('input', () => {
+            cadCpf.value = azFormatCPF(cadCpf.value);
+        });
+
+        /* ---------- Helpers de erro ---------- */
+        function setFieldError(fieldId, errId, message) {
+            document.getElementById(errId).textContent = message || '';
+            document.getElementById(fieldId).classList.toggle('input-error', Boolean(message));
+        }
+
+        function clearCadastroErrors() {
+            ['Nome', 'Username', 'Email', 'Telefone', 'Cpf', 'Senha', 'Senha2'].forEach(name => {
+                setFieldError('cad' + name, 'errCad' + name, '');
+            });
+        }
+
+        /* ---------- Login ---------- */
+        document.getElementById('loginForm').addEventListener('submit', event => {
+            event.preventDefault();
+
+            const identifier = document.getElementById('loginIdentifier').value;
+            const senha = document.getElementById('loginPassword').value;
+            const loginStatus = document.getElementById('loginStatus');
+
+            setFieldError('loginIdentifier', 'errLoginIdentifier', '');
+            setFieldError('loginPassword', 'errLoginPassword', '');
+            loginStatus.textContent = '';
+
+            if (!identifier.trim() || !senha) {
+                loginStatus.textContent = 'Preencha e-mail/usuário e senha.';
+                return;
+            }
+
+            const user = azFindUserByEmailOrUsername(identifier);
+
+            // Mensagem genérica de propósito: não revela se foi o usuário ou a senha
+            // que estava errada (boa prática de segurança a manter no backend também).
+            if (!user || user.senha !== azObfuscate(senha)) {
+                loginStatus.textContent = 'E-mail/usuário ou senha incorretos.';
+                return;
+            }
+
+            azSetCurrentUser(user.id);
+            window.location.href = 'perfil.html';
+        });
+
+        /* ---------- Cadastro ---------- */
+        document.getElementById('cadastroForm').addEventListener('submit', event => {
+            event.preventDefault();
+            clearCadastroErrors();
+
+            const nome = document.getElementById('cadNome').value.trim();
+            const username = document.getElementById('cadUsername').value.trim();
+            const email = document.getElementById('cadEmail').value.trim();
+            const telefone = document.getElementById('cadTelefone').value.trim();
+            const cpf = document.getElementById('cadCpf').value.trim();
+            const senha = document.getElementById('cadSenha').value;
+            const senha2 = document.getElementById('cadSenha2').value;
+            const cadastroStatus = document.getElementById('cadastroStatus');
+            cadastroStatus.textContent = '';
+
+            let hasError = false;
+            const users = azLoadUsers();
+
+            if (!nome) {
+                setFieldError('cadNome', 'errCadNome', 'Informe seu nome completo.');
+                hasError = true;
+            }
+
+            if (!username || username.length < 3) {
+                setFieldError('cadUsername', 'errCadUsername', 'Pelo menos 3 caracteres.');
+                hasError = true;
+            } else if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+                setFieldError('cadUsername', 'errCadUsername', 'Esse usuário já está em uso.');
+                hasError = true;
+            }
+
+            if (!azIsValidEmail(email)) {
+                setFieldError('cadEmail', 'errCadEmail', 'E-mail inválido.');
+                hasError = true;
+            } else if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+                setFieldError('cadEmail', 'errCadEmail', 'Já existe uma conta com esse e-mail.');
+                hasError = true;
+            }
+
+            if (!azIsValidPhone(telefone)) {
+                setFieldError('cadTelefone', 'errCadTelefone', 'Telefone inválido.');
+                hasError = true;
+            }
+
+            if (!azIsValidCPF(cpf)) {
+                setFieldError('cadCpf', 'errCadCpf', 'CPF inválido.');
+                hasError = true;
+            } else if (users.some(u => u.cpf.replace(/\D/g, '') === cpf.replace(/\D/g, ''))) {
+                setFieldError('cadCpf', 'errCadCpf', 'Já existe uma conta com esse CPF.');
+                hasError = true;
+            }
+
+            if (senha.length < 6) {
+                setFieldError('cadSenha', 'errCadSenha', 'Pelo menos 6 caracteres.');
+                hasError = true;
+            }
+
+            if (senha2 !== senha || !senha2) {
+                setFieldError('cadSenha2', 'errCadSenha2', 'As senhas não coincidem.');
+                hasError = true;
+            }
+
+            if (hasError) {
+                cadastroStatus.textContent = 'Corrija os campos destacados.';
+                return;
+            }
+
+            /* BACKEND: troque isto por POST /api/cadastro */
+            const newUser = {
+                id: azGenerateId(),
+                nome,
+                username,
+                email,
+                telefone,
+                cpf,
+                senha: azObfuscate(senha),
+                createdAt: Date.now(),
+                measurements: null // preenchido depois, de forma opcional, no perfil
+            };
+
+            users.push(newUser);
+            const saved = azSaveUsers(users);
+
+            if (!saved) {
+                cadastroStatus.textContent = 'Não foi possível criar a conta. Tenta de novo?';
+                return;
+            }
+
+            azSetCurrentUser(newUser.id);
+            window.location.href = 'perfil.html';
+        });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

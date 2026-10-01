@@ -16,11 +16,11 @@
     <header>
         <img src="images/logo.png" alt="Logo" class="logo">
         <nav>
-            <a href="#" class="active">Início</a>
+            <a href="index.html" class="active">Início</a>
             <a href="blog.html">Blog</a>
             <a href="#">Montar Look</a>
             <a href="#">Contato</a>
-            <a href="#" class="btn-entrar">Entrar</a>
+            <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
         </nav>
     </header>
 
@@ -30,7 +30,7 @@
             <img src="images/home/heart.png" alt="Imagem de coração" class="heart-img">
             <h1>Seu estilo, do seu<br>jeito!</h1>
             <p>Tendências, inspirações e combinações pensadas para você!</p>
-            <a href="#" class="btn-hero">Entrar</a>
+            <a href="conta.html" class="btn-hero">Entrar</a>
         </div>
         <div class="hero-image">
             <img src="images/home/tablet.jpg" alt="Fashion collage with pink flowers and polaroids">
@@ -48,7 +48,7 @@
             <p class="subtitle">Vamos conversar sobre tendências?</p>
             <p>Meu nome é Ariadne Zanardi, sou estudante de Moda na PUCCamp e criei esse espaço para me conectar com
                 você!</p>
-            <a href="#" class="btn-blog">Meu blog</a>
+            <a href="blog.html" class="btn-blog">Meu blog</a>
         </div>
     </section>
 
@@ -71,6 +71,11 @@
         <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos
             reservados.</p>
     </footer>
+
+    <script src="./scripts/auth.js"></script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 
 </html>
