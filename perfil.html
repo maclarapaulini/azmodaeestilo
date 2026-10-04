@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu perfil - Ariadne Zanardi</title>
+    <link rel="stylesheet" href="./style/blog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ================= Header (mesmo do blog) ================= -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
+                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
+            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
+        </a>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="blog.html">Blog</a>
+            <a href="#">Montar Look</a>
+            <a href="#">Contato</a>
+            <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
+        </nav>
+    </header>
+
+    <section class="profile-wrap" id="profileWrap" hidden>
+        <!-- ---------- Cabeçalho do perfil ---------- -->
+        <div class="profile-header">
+            <span class="avatar-circle" id="profileAvatar"></span>
+            <div class="profile-header-text">
+                <h1 id="profileNome"></h1>
+                <p id="profileUsername"></p>
+            </div>
+            <button type="button" class="btn-reset" id="logoutBtn">Sair da conta</button>
+        </div>
+
+        <!-- ---------- Banner: falta completar o perfil (opcional) ---------- -->
+        <div class="alert-banner" id="completeBanner" hidden>
+            <div class="alert-text">
+                <strong>Falta só um passo pra sua conta ficar completa!</strong>
+                <p>
+                    Adicione suas medidas para receber sugestões de look sob medida.
+                    Isso é totalmente opcional — você pode fazer isso quando quiser.
+                </p>
+            </div>
+            <div class="alert-actions">
+                <button type="button" class="btn-blog" id="completeNowBtn">Adicionar agora</button>
+                <button type="button" class="btn-ghost" id="dismissBannerBtn">Depois</button>
+            </div>
+        </div>
+
+        <!-- ---------- Formulário de medidas (opcional) ---------- -->
+        <div class="measurements-card" id="measurementsForm" hidden>
+            <h2>Suas medidas</h2>
+            <p class="hint">
+                Fica só na sua conta e ajuda a sugerir looks que caibam certinho em você.
+                Pode deixar em branco o que não quiser informar.
+            </p>
+
+            <div class="measurements-grid">
+                <div class="field">
+                    <label for="mAltura">Altura (cm)</label>
+                    <input type="number" id="mAltura" min="0" step="1">
+                </div>
+                <div class="field">
+                    <label for="mBusto">Busto (cm)</label>
+                    <input type="number" id="mBusto" min="0" step="1">
+                </div>
+                <div class="field">
+                    <label for="mCintura">Cintura (cm)</label>
+                    <input type="number" id="mCintura" min="0" step="1">
+                </div>
+                <div class="field">
+                    <label for="mQuadril">Quadril (cm)</label>
+                    <input type="number" id="mQuadril" min="0" step="1">
+                </div>
+                <div class="field">
+                    <label for="mManequim">Manequim</label>
+                    <select id="mManequim">
+                        <option value="">Não sei dizer</option>
+                        <option value="PP">PP</option>
+                        <option value="P">P</option>
+                        <option value="M">M</option>
+                        <option value="G">G</option>
+                        <option value="GG">GG</option>
+                        <option value="EG">EG</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="mCalcado">Calçado (opcional)</label>
+                    <input type="number" id="mCalcado" min="0" step="1">
+                </div>
+            </div>
+
+            <div class="measurements-actions">
+                <button type="button" class="btn-blog" id="saveMeasurementsBtn">Salvar medidas</button>
+                <button type="button" class="btn-ghost" id="cancelMeasurementsBtn">Cancelar</button>
+            </div>
+            <p class="auth-status" id="measurementsStatus"></p>
+        </div>
+
+        <!-- ---------- Resumo das medidas já salvas ---------- -->
+        <div class="measurements-summary" id="measurementsSummary" hidden>
+            <div class="measurements-summary-head">
+                <h2>Suas medidas</h2>
+                <button type="button" class="link-button" id="editMeasurementsBtn">Editar</button>
+            </div>
+            <dl class="info-list" id="measurementsList"></dl>
+        </div>
+
+        <!-- ---------- Dados da conta ---------- -->
+        <div class="profile-info-card">
+            <h2>Seus dados</h2>
+            <dl class="info-list">
+                <dt>Nome</dt><dd id="infoNome"></dd>
+                <dt>Usuário</dt><dd id="infoUsername"></dd>
+                <dt>E-mail</dt><dd id="infoEmail"></dd>
+                <dt>Telefone</dt><dd id="infoTelefone"></dd>
+                <dt>CPF</dt><dd id="infoCpf"></dd>
+            </dl>
+        </div>
+    </section>
+
+    <!-- ================= Footer ================= -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                Ariadne Zanardi
+                <small>Seu estilo, do seu jeito.</small>
+            </div>
+            <div class="footer-social">
+                <a href="#">Instagram</a>
+                <a href="#">TikTok</a>
+                <a href="#">Pinterest</a>
+                <a href="#">Portfólio</a>
+                <a href="#">Contato</a>
+            </div>
+        </div>
+        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="./scripts/auth.js"></script>
+    <script>
+        const manequimLabels = {
+            PP: 'PP', P: 'P', M: 'M', G: 'G', GG: 'GG', EG: 'EG'
+        };
+
+        function hasAnyMeasurement(m) {
+            if (!m) return false;
+            return ['altura', 'busto', 'cintura', 'quadril', 'manequim', 'calcado']
+                .some(key => m[key] !== null && m[key] !== undefined && m[key] !== '');
+        }
+
+        function fillMeasurementsForm(m) {
+            document.getElementById('mAltura').value = (m && m.altura) || '';
+            document.getElementById('mBusto').value = (m && m.busto) || '';
+            document.getElementById('mCintura').value = (m && m.cintura) || '';
+            document.getElementById('mQuadril').value = (m && m.quadril) || '';
+            document.getElementById('mManequim').value = (m && m.manequim) || '';
+            document.getElementById('mCalcado').value = (m && m.calcado) || '';
+        }
+
+        function renderMeasurementsSummary(m) {
+            const list = document.getElementById('measurementsList');
+            const rows = [
+                ['Altura', m.altura ? m.altura + ' cm' : null],
+                ['Busto', m.busto ? m.busto + ' cm' : null],
+                ['Cintura', m.cintura ? m.cintura + ' cm' : null],
+                ['Quadril', m.quadril ? m.quadril + ' cm' : null],
+                ['Manequim', m.manequim ? manequimLabels[m.manequim] || m.manequim : null],
+                ['Calçado', m.calcado || null]
+            ].filter(([, value]) => value);
+
+            list.innerHTML = rows.length
+                ? rows.map(([label, value]) => '<dt>' + label + '</dt><dd>' + value + '</dd>').join('')
+                : '<dt>—</dt><dd>Nenhuma medida informada ainda.</dd>';
+        }
+
+        function showBannerState(user) {
+            const banner = document.getElementById('completeBanner');
+            const dismissedKey = 'az_dismiss_banner_' + user.id;
+            const dismissed = sessionStorage.getItem(dismissedKey) === '1';
+
+            banner.hidden = Boolean(user.measurements) || dismissed;
+        }
+
+        function showMeasurementsState(user) {
+            const form = document.getElementById('measurementsForm');
+            const summary = document.getElementById('measurementsSummary');
+
+            if (user.measurements) {
+                form.hidden = true;
+                summary.hidden = false;
+                renderMeasurementsSummary(user.measurements);
+            } else {
+                form.hidden = true;
+                summary.hidden = true;
+            }
+        }
+
+        function initProfilePage(user) {
+            document.getElementById('profileWrap').hidden = false;
+
+            document.getElementById('profileAvatar').textContent = user.nome.charAt(0).toUpperCase();
+            document.getElementById('profileNome').textContent = user.nome;
+            document.getElementById('profileUsername').textContent = '@' + user.username;
+
+            document.getElementById('infoNome').textContent = user.nome;
+            document.getElementById('infoUsername').textContent = '@' + user.username;
+            document.getElementById('infoEmail').textContent = user.email;
+            document.getElementById('infoTelefone').textContent = user.telefone;
+            document.getElementById('infoCpf').textContent = user.cpf;
+
+            showBannerState(user);
+            showMeasurementsState(user);
+
+            document.getElementById('completeNowBtn').addEventListener('click', () => {
+                document.getElementById('completeBanner').hidden = true;
+                document.getElementById('measurementsSummary').hidden = true;
+                fillMeasurementsForm(user.measurements);
+                document.getElementById('measurementsForm').hidden = false;
+            });
+
+            document.getElementById('dismissBannerBtn').addEventListener('click', () => {
+                sessionStorage.setItem('az_dismiss_banner_' + user.id, '1');
+                document.getElementById('completeBanner').hidden = true;
+            });
+
+            document.getElementById('editMeasurementsBtn').addEventListener('click', () => {
+                document.getElementById('measurementsSummary').hidden = true;
+                fillMeasurementsForm(user.measurements);
+                document.getElementById('measurementsForm').hidden = false;
+            });
+
+            document.getElementById('cancelMeasurementsBtn').addEventListener('click', () => {
+                document.getElementById('measurementsForm').hidden = true;
+                const current = azGetCurrentUser();
+                showBannerState(current);
+                showMeasurementsState(current);
+            });
+
+            document.getElementById('saveMeasurementsBtn').addEventListener('click', () => {
+                const measurements = {
+                    altura: document.getElementById('mAltura').value.trim(),
+                    busto: document.getElementById('mBusto').value.trim(),
+                    cintura: document.getElementById('mCintura').value.trim(),
+                    quadril: document.getElementById('mQuadril').value.trim(),
+                    manequim: document.getElementById('mManequim').value,
+                    calcado: document.getElementById('mCalcado').value.trim()
+                };
+
+                /* BACKEND: troque por PATCH /api/me/medidas */
+                const updated = azUpdateCurrentUser({ measurements });
+                const statusEl = document.getElementById('measurementsStatus');
+
+                if (!updated) {
+                    statusEl.textContent = 'Não foi possível salvar agora. Tenta de novo?';
+                    return;
+                }
+
+                statusEl.textContent = '';
+                document.getElementById('measurementsForm').hidden = true;
+                showBannerState(updated);
+                showMeasurementsState(updated);
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                azLogout();
+                window.location.href = 'blog.html';
+            });
+        }
+
+        const currentUser = azRequireAuth(); // redireciona pra conta.html se não tiver logado
+        if (currentUser) {
+            initProfilePage(currentUser);
+        }
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
