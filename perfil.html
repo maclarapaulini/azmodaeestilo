@@ -209,8 +209,8 @@
             document.getElementById('infoNome').textContent = user.nome;
             document.getElementById('infoUsername').textContent = '@' + user.username;
             document.getElementById('infoEmail').textContent = user.email;
-            document.getElementById('infoTelefone').textContent = user.telefone;
-            document.getElementById('infoCpf').textContent = user.cpf;
+            document.getElementById('infoTelefone').textContent = user.telefone || 'Não informado';
+            document.getElementById('infoCpf').textContent = user.cpf || 'Não informado';
 
             showBannerState(user);
             showMeasurementsState(user);

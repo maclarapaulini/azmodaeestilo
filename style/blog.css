@@ -1554,3 +1554,9 @@ footer {
 
     .author-toggle { font-size: 15px; }
 }
+
+.google-slot {
+    display: flex;
+    justify-content: center;
+    min-height: 44px;
+}
