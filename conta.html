@@ -334,7 +334,14 @@
     </footer>
 
     <!-- Funções visuais: abas, máscaras e exibição de senha -->
-    <script>
+    <script type="module">
+        import { supabase } from './database/supaBase.js';
+
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+            window.location.href = 'perfil.html';
+        }
+        
         console.log('[CONTA] Inicializando funcionalidades da página.');
 
         const tabLogin = document.getElementById('tabLogin');
@@ -425,5 +432,6 @@
 
     <!-- Único arquivo responsável por login e cadastro -->
     <script type="module" src="./database/supabase-auth.js"></script>
+    <script type="module" src="./database/navAuth.js"></script>
 </body>
 </html>
