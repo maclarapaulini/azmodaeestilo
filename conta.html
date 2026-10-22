@@ -334,8 +334,8 @@
     </footer>
 
     <!-- Funções visuais: abas, máscaras e exibição de senha -->
-    <script>
-        import { supabase } from './supaBase.js';
+    <script type="module">
+        import { supabase } from './database/supaBase.js';
 
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
