@@ -140,8 +140,8 @@
         <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
     </footer>
 
-    <script src="./scripts/auth.js"></script>
-    <script>
+    <script type="module" src="./database/navAuth.js"></script>
+    <script type="module">
         const manequimLabels = {
             PP: 'PP', P: 'P', M: 'M', G: 'G', GG: 'GG', EG: 'EG'
         };
@@ -233,14 +233,14 @@
                 document.getElementById('measurementsForm').hidden = false;
             });
 
-            document.getElementById('cancelMeasurementsBtn').addEventListener('click', () => {
+            document.getElementById('cancelMeasurementsBtn').addEventListener('click', async () => {
                 document.getElementById('measurementsForm').hidden = true;
-                const current = azGetCurrentUser();
+                const current = await azGetCurrentUser();
                 showBannerState(current);
                 showMeasurementsState(current);
             });
 
-            document.getElementById('saveMeasurementsBtn').addEventListener('click', () => {
+            document.getElementById('saveMeasurementsBtn').addEventListener('click', async () => {
                 const measurements = {
                     altura: document.getElementById('mAltura').value.trim(),
                     busto: document.getElementById('mBusto').value.trim(),
@@ -250,8 +250,7 @@
                     calcado: document.getElementById('mCalcado').value.trim()
                 };
 
-                /* BACKEND: troque por PATCH /api/me/medidas */
-                const updated = azUpdateCurrentUser({ measurements });
+                const updated = await azUpdateCurrentUser({ measurements });
                 const statusEl = document.getElementById('measurementsStatus');
 
                 if (!updated) {
@@ -265,18 +264,23 @@
                 showMeasurementsState(updated);
             });
 
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                azLogout();
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                await azLogout();
                 window.location.href = 'blog.html';
             });
         }
 
-        const currentUser = azRequireAuth(); // redireciona pra conta.html se não tiver logado
-        if (currentUser) {
-            initProfilePage(currentUser);
-        }
+        import { azRequireAuth, azGetCurrentUser, azLogout, azUpdateCurrentUser } from './database/perfilAuth.js';
+
+        (async () => {
+            const currentUser = await azRequireAuth();
+            if (currentUser) {
+                initProfilePage(currentUser);
+            }
+        })();
 
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
+
 </body>
 </html>
