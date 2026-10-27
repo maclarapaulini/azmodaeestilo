@@ -1,4 +1,4 @@
-const AZ_GOOGLE_CLIENT_ID = '359091971325-9g02hvkc4gqb7d33ue9ss33pimb574ug.apps.googleusercontent.com';
+const AZ_GOOGLE_CLIENT_ID = '359091971325-t3gng9ua3hta1dl48eipj0ckdo9puj5q.apps.googleusercontent.com';
 
 /* Decodifica o payload do JWT do Google (com suporte a acentos) */
 function azDecodeJwt(token) {
