@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Guarda-Roupa - Ariadne Zanardi</title>
+    <link rel="stylesheet" href="./style/blog.css">
+    <link rel="stylesheet" href="./style/guarda-roupa.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ================= Header ================= -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
+                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
+            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
+        </a>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="blog.html">Blog</a>
+            <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
+        </nav>
+    </header>
+
+    <main class="gr-wrap">
+        <!-- ================= Título ================= -->
+        <div class="gr-intro">
+            <span class="eyebrow">Guarda-roupa virtual</span>
+            <h1>Adicione uma <em>nova peça</em></h1>
+            <p>Escolha a categoria, envie a foto e pronto: ela já fica guardada para você montar looks depois.</p>
+        </div>
+
+        <!-- ================= Passos ================= -->
+        <ol class="gr-steps" aria-label="Etapas">
+            <li class="gr-step active" id="step1"><span>1</span> Categoria</li>
+            <li class="gr-step" id="step2"><span>2</span> Foto</li>
+            <li class="gr-step" id="step3"><span>3</span> Confirmar</li>
+        </ol>
+
+        <div class="gr-card">
+            <!-- ---------- Passo 1: categoria ---------- -->
+            <section aria-labelledby="catTitle">
+                <h2 class="gr-title" id="catTitle">Que tipo de peça é?</h2>
+
+                <div class="gr-categories" id="categories" role="group" aria-label="Categoria da peça">
+                    <button type="button" class="gr-cat" data-cat="cima" aria-pressed="false">
+                        <span class="gr-cat-icon">
+                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M8 4L3 7.5l2.5 4L8 10v10h8V10l2.5 1.5 2.5-4L16 4c-.6 1.6-2 2.5-4 2.5S8.6 5.6 8 4z"/>
+                            </svg>
+                        </span>
+                        <strong>Parte de Cima</strong>
+                        <small>Camisas, blusas, casacos</small>
+                    </button>
+
+                    <button type="button" class="gr-cat" data-cat="baixo" aria-pressed="false">
+                        <span class="gr-cat-icon">
+                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 3h10l1.5 18h-5.2L12 11l-1.3 10H5.5z"/>
+                            </svg>
+                        </span>
+                        <strong>Parte de Baixo</strong>
+                        <small>Calças, saias, shorts</small>
+                    </button>
+
+                    <button type="button" class="gr-cat" data-cat="inteira" aria-pressed="false">
+                        <span class="gr-cat-icon">
+                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+                                <path d="M9 3l1.5 4h3L15 3"/>
+                                <path d="M10.5 7L8.5 12 4.5 21h15l-4-9-2-5"/>
+                                <path d="M8.5 12h7"/>
+                            </svg>
+                        </span>
+                        <strong>Peça Inteira</strong>
+                        <small>Vestidos, macacões</small>
+                    </button>
+
+                    <button type="button" class="gr-cat" data-cat="calcados" aria-pressed="false">
+                        <span class="gr-cat-icon">
+                            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M3 7v9h18v-2.5c0-1-.7-1.7-1.6-1.9L14 10l-2-3H8L6 9 3 7z"/>
+                                <path d="M3 16v2h18v-2"/>
+                            </svg>
+                        </span>
+                        <strong>Calçados</strong>
+                        <small>Sapatos, tênis, sandálias</small>
+                    </button>
+                </div>
+            </section>
+
+            <!-- ---------- Passo 2: dropzone ---------- -->
+            <section class="gr-upload" id="uploadSection" hidden aria-labelledby="uploadTitle">
+                <h2 class="gr-title" id="uploadTitle">Envie a foto da peça</h2>
+
+                <div class="gr-dropzone" id="dropzone" role="button" tabindex="0"
+                     aria-label="Arraste uma foto aqui ou clique para selecionar">
+                    <span class="gr-drop-icon">⇪</span>
+                    <strong>Arraste a foto aqui</strong>
+                    <span>ou <u>clique para escolher</u> no seu dispositivo</span>
+                    <small>JPG, PNG ou WebP · até 8 MB · prefira fundo liso e peça inteira</small>
+                    <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+                </div>
+            </section>
+
+            <!-- ---------- Passo 3: prévia ---------- -->
+            <section class="gr-preview" id="previewSection" hidden aria-labelledby="previewTitle">
+                <h2 class="gr-title" id="previewTitle">Ficou boa? Confira antes de salvar</h2>
+
+                <div class="gr-preview-body">
+                    <div class="gr-preview-img">
+                        <img id="previewImg" alt="Prévia da peça selecionada">
+                    </div>
+
+                    <div class="gr-preview-side">
+                        <span class="tag" id="previewTag"></span>
+                        <p class="gr-file-name" id="previewName"></p>
+
+                        <div class="gr-actions">
+                            <button type="button" class="btn-blog gr-save" id="saveBtn">Salvar no Guarda-Roupa</button>
+                            <button type="button" class="btn-ghost" id="changeBtn">Trocar imagem</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mensagens de erro (upload / salvar) -->
+            <p class="gr-error" id="uploadError" role="alert"></p>
+
+            <!-- ---------- Feedback ---------- -->
+            <div class="gr-success" id="successBox" hidden role="status">
+                <span class="gr-success-icon">✓</span>
+                <div>
+                    <strong>Peça salva!</strong>
+                    <p>Ela já está no seu guarda-roupa.</p>
+                </div>
+                <button type="button" class="link-button" id="addAnotherBtn">Adicionar outra</button>
+            </div>
+        </div>
+
+        <!-- ================= Minhas peças ================= -->
+        <section class="gr-closet" aria-labelledby="closetTitle">
+            <div class="feed-head gr-closet-head">
+                <div>
+                    <h2 id="closetTitle">Minhas peças</h2>
+                    <p class="hint" id="closetCount"></p>
+                </div>
+                <div class="chips" id="closetFilters">
+                    <button type="button" class="chip active" data-filter="todas">Todas</button>
+                    <button type="button" class="chip" data-filter="cima">Cima</button>
+                    <button type="button" class="chip" data-filter="baixo">Baixo</button>
+                    <button type="button" class="chip" data-filter="inteira">Inteira</button>
+                    <button type="button" class="chip" data-filter="calcados">Calçados</button>
+                </div>
+            </div>
+
+            <div class="gr-grid" id="closetGrid"></div>
+
+        </section>
+    </main>
+
+    <!-- ================= Footer ================= -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                Ariadne Zanardi
+                <small>Seu estilo, do seu jeito.</small>
+            </div>
+            <div class="footer-social">
+                <a href="#">Instagram</a>
+                <a href="#">TikTok</a>
+                <a href="#">Pinterest</a>
+                <a href="#">Portfólio</a>
+                <a href="#">Contato</a>
+            </div>
+        </div>
+        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        /* ==========================================================
+           Versão aberta: sem login e sem banco de dados.
+           As peças ficam salvas só neste navegador (localStorage).
+
+           BACKEND (depois): trocar loadItems / saveItems / removeItem
+           por chamadas ao Supabase (Storage + tabela) e proteger a
+           página com azRequireAuth().
+           ========================================================== */
+        const STORAGE_KEY = 'az_wardrobe_local';
+
+        const CATEGORIES = {
+            cima:     'Parte de Cima',
+            baixo:    'Parte de Baixo',
+            inteira:  'Peça Inteira',
+            calcados: 'Calçados'
+        };
+
+        const MAX_SIZE_MB = 8;
+        const ACCEPTED = ['image/jpeg', 'image/png', 'image/webp'];
+        const MAX_DIMENSION = 700; // menor, para caber no limite do localStorage
+
+        /* ---------- Elementos ---------- */
+        const $ = id => document.getElementById(id);
+        const catButtons = document.querySelectorAll('.gr-cat');
+        const uploadSection = $('uploadSection');
+        const previewSection = $('previewSection');
+        const successBox = $('successBox');
+        const dropzone = $('dropzone');
+        const fileInput = $('fileInput');
+        const uploadError = $('uploadError');
+        const previewImg = $('previewImg');
+        const previewTag = $('previewTag');
+        const previewName = $('previewName');
+        const saveBtn = $('saveBtn');
+        const changeBtn = $('changeBtn');
+        const addAnotherBtn = $('addAnotherBtn');
+        const closetGrid = $('closetGrid');
+        const closetCount = $('closetCount');
+        const closetFilters = $('closetFilters');
+
+        /* ---------- Estado ---------- */
+        let selectedCategory = null;
+        let selectedImage = null;   // dataURL já redimensionada
+        let selectedFileName = '';
+        let currentFilter = 'todas';
+
+        /* ---------- Armazenamento local ---------- */
+        function loadItems() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveItems(items) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+                return true;
+            } catch (e) {
+                return false; // geralmente: limite do navegador estourado
+            }
+        }
+
+        /* ---------- Passos ---------- */
+        function setStep(n) {
+            [1, 2, 3].forEach(i => {
+                const el = $('step' + i);
+                el.classList.toggle('active', i === n);
+                el.classList.toggle('done', i < n);
+            });
+        }
+
+        function showError(msg) {
+            uploadError.textContent = msg || '';
+        }
+
+        /* ---------- 1) Categoria ---------- */
+        catButtons.forEach(btn => {
+            btn.addEventListener('click', () => selectCategory(btn.dataset.cat));
+        });
+
+        function selectCategory(cat) {
+            selectedCategory = cat;
+            successBox.hidden = true;
+            showError('');
+
+            catButtons.forEach(b => {
+                const on = b.dataset.cat === cat;
+                b.classList.toggle('selected', on);
+                b.setAttribute('aria-pressed', String(on));
+            });
+
+            previewTag.textContent = CATEGORIES[cat];
+
+            if (selectedImage) {
+                setStep(3);
+            } else {
+                uploadSection.hidden = false;
+                setStep(2);
+                uploadSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        /* ---------- 2) Dropzone ---------- */
+        dropzone.addEventListener('click', () => fileInput.click());
+
+        dropzone.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                fileInput.click();
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files[0]) handleFile(fileInput.files[0]);
+        });
+
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropzone.addEventListener(evt, e => {
+                e.preventDefault();
+                dropzone.classList.add('dragover');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(evt => {
+            dropzone.addEventListener(evt, e => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+            });
+        });
+
+        dropzone.addEventListener('drop', e => {
+            const file = e.dataTransfer.files[0];
+            if (file) handleFile(file);
+        });
+
+        function handleFile(file) {
+            showError('');
+
+            if (!ACCEPTED.includes(file.type)) {
+                showError('Formato não aceito. Use JPG, PNG ou WebP.');
+                return;
+            }
+            if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+                showError('A imagem passa de ' + MAX_SIZE_MB + ' MB. Tente uma menor.');
+                return;
+            }
+
+            resizeImage(file)
+                .then(dataUrl => {
+                    selectedImage = dataUrl;
+                    selectedFileName = file.name;
+                    previewImg.src = dataUrl;
+                    previewName.textContent = file.name;
+                    uploadSection.hidden = true;
+                    previewSection.hidden = false;
+                    setStep(3);
+                })
+                .catch(() => showError('Não consegui ler essa imagem. Tente outra.'));
+        }
+
+        function resizeImage(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onerror = reject;
+                reader.onload = () => {
+                    const img = new Image();
+                    img.onerror = reject;
+                    img.onload = () => {
+                        const scale = Math.min(1, MAX_DIMENSION / Math.max(img.width, img.height));
+                        const canvas = document.createElement('canvas');
+                        canvas.width = Math.round(img.width * scale);
+                        canvas.height = Math.round(img.height * scale);
+                        const ctx = canvas.getContext('2d');
+                        ctx.fillStyle = '#fff'; // PNG transparente vira fundo branco
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL('image/jpeg', 0.8));
+                    };
+                    img.src = reader.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        /* ---------- 3) Trocar / Salvar ---------- */
+        changeBtn.addEventListener('click', () => {
+            selectedImage = null;
+            selectedFileName = '';
+            fileInput.value = '';
+            showError('');
+            previewSection.hidden = true;
+            uploadSection.hidden = false;
+            setStep(2);
+            fileInput.click();
+        });
+
+        saveBtn.addEventListener('click', () => {
+            if (!selectedCategory || !selectedImage) return;
+
+            const items = loadItems();
+            items.unshift({
+                id: 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                category: selectedCategory,
+                image: selectedImage,
+                name: selectedFileName,
+                createdAt: Date.now()
+            });
+
+            if (!saveItems(items)) {
+                showError('Sem espaço para guardar mais fotos neste navegador. Remova alguma peça e tente de novo.');
+                return;
+            }
+
+            showError('');
+            previewSection.hidden = true;
+            successBox.hidden = false;
+            resetFlow();
+            renderCloset();
+            successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        function resetFlow() {
+            selectedCategory = null;
+            selectedImage = null;
+            selectedFileName = '';
+            fileInput.value = '';
+            catButtons.forEach(b => {
+                b.classList.remove('selected');
+                b.setAttribute('aria-pressed', 'false');
+            });
+            uploadSection.hidden = true;
+            setStep(1);
+        }
+
+        addAnotherBtn.addEventListener('click', () => {
+            successBox.hidden = true;
+            $('categories').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        /* ---------- Minhas peças ---------- */
+        closetFilters.addEventListener('click', e => {
+            const chip = e.target.closest('.chip');
+            if (!chip) return;
+            currentFilter = chip.dataset.filter;
+            closetFilters.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c === chip));
+            renderCloset();
+        });
+
+        function renderCloset() {
+            const all = loadItems();
+            const items = currentFilter === 'todas' ? all : all.filter(i => i.category === currentFilter);
+
+            closetCount.textContent = all.length === 1 ? '1 peça guardada' : all.length + ' peças guardadas';
+            closetGrid.innerHTML = '';
+
+            if (!items.length) {
+                const empty = document.createElement('div');
+                empty.className = 'grid-empty';
+                empty.innerHTML = '<strong>Nada por aqui ainda</strong>Suas peças vão aparecer aqui assim que você salvar a primeira.';
+                closetGrid.appendChild(empty);
+                return;
+            }
+
+            items.forEach(item => {
+                const card = document.createElement('article');
+                card.className = 'gr-item';
+
+                const img = document.createElement('img');
+                img.src = item.image;
+                img.alt = 'Peça: ' + CATEGORIES[item.category];
+
+                const tag = document.createElement('span');
+                tag.className = 'tag';
+                tag.textContent = CATEGORIES[item.category];
+
+                const del = document.createElement('button');
+                del.type = 'button';
+                del.className = 'gr-item-del';
+                del.setAttribute('aria-label', 'Remover peça');
+                del.textContent = '×';
+                del.addEventListener('click', () => {
+                    if (!confirm('Remover esta peça do guarda-roupa?')) return;
+                    saveItems(loadItems().filter(i => i.id !== item.id));
+                    renderCloset();
+                });
+
+                card.append(img, tag, del);
+                closetGrid.appendChild(card);
+            });
+        }
+
+        renderCloset();
+        $('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

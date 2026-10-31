@@ -18,8 +18,6 @@
         <nav>
             <a href="index.html">Início</a>
             <a href="blog.html">Blog</a>
-            <a href="#">Montar Look</a>
-            <a href="#">Contato</a>
             <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
         </nav>
     </header>
@@ -35,80 +33,6 @@
             <button type="button" class="btn-reset" id="logoutBtn">Sair da conta</button>
         </div>
 
-        <!-- ---------- Banner: falta completar o perfil (opcional) ---------- -->
-        <div class="alert-banner" id="completeBanner" hidden>
-            <div class="alert-text">
-                <strong>Falta só um passo pra sua conta ficar completa!</strong>
-                <p>
-                    Adicione suas medidas para receber sugestões de look sob medida.
-                    Isso é totalmente opcional — você pode fazer isso quando quiser.
-                </p>
-            </div>
-            <div class="alert-actions">
-                <button type="button" class="btn-blog" id="completeNowBtn">Adicionar agora</button>
-                <button type="button" class="btn-ghost" id="dismissBannerBtn">Depois</button>
-            </div>
-        </div>
-
-        <!-- ---------- Formulário de medidas (opcional) ---------- -->
-        <div class="measurements-card" id="measurementsForm" hidden>
-            <h2>Suas medidas</h2>
-            <p class="hint">
-                Fica só na sua conta e ajuda a sugerir looks que caibam certinho em você.
-                Pode deixar em branco o que não quiser informar.
-            </p>
-
-            <div class="measurements-grid">
-                <div class="field">
-                    <label for="mAltura">Altura (cm)</label>
-                    <input type="number" id="mAltura" min="0" step="1">
-                </div>
-                <div class="field">
-                    <label for="mBusto">Busto (cm)</label>
-                    <input type="number" id="mBusto" min="0" step="1">
-                </div>
-                <div class="field">
-                    <label for="mCintura">Cintura (cm)</label>
-                    <input type="number" id="mCintura" min="0" step="1">
-                </div>
-                <div class="field">
-                    <label for="mQuadril">Quadril (cm)</label>
-                    <input type="number" id="mQuadril" min="0" step="1">
-                </div>
-                <div class="field">
-                    <label for="mManequim">Manequim</label>
-                    <select id="mManequim">
-                        <option value="">Não sei dizer</option>
-                        <option value="PP">PP</option>
-                        <option value="P">P</option>
-                        <option value="M">M</option>
-                        <option value="G">G</option>
-                        <option value="GG">GG</option>
-                        <option value="EG">EG</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label for="mCalcado">Calçado (opcional)</label>
-                    <input type="number" id="mCalcado" min="0" step="1">
-                </div>
-            </div>
-
-            <div class="measurements-actions">
-                <button type="button" class="btn-blog" id="saveMeasurementsBtn">Salvar medidas</button>
-                <button type="button" class="btn-ghost" id="cancelMeasurementsBtn">Cancelar</button>
-            </div>
-            <p class="auth-status" id="measurementsStatus"></p>
-        </div>
-
-        <!-- ---------- Resumo das medidas já salvas ---------- -->
-        <div class="measurements-summary" id="measurementsSummary" hidden>
-            <div class="measurements-summary-head">
-                <h2>Suas medidas</h2>
-                <button type="button" class="link-button" id="editMeasurementsBtn">Editar</button>
-            </div>
-            <dl class="info-list" id="measurementsList"></dl>
-        </div>
-
         <!-- ---------- Dados da conta ---------- -->
         <div class="profile-info-card">
             <h2>Seus dados</h2>
@@ -119,6 +43,69 @@
                 <dt>Telefone</dt><dd id="infoTelefone"></dd>
                 <dt>CPF</dt><dd id="infoCpf"></dd>
             </dl>
+        </div>
+
+        <!-- ---------- Guarda-roupa: atalhos ---------- -->
+        <div class="profile-actions-card">
+            <h2>Guarda-roupa</h2>
+            <p class="hint">Guarde suas peças e combine looks.</p>
+
+            <div class="profile-actions">
+                <a href="peca.html" class="profile-action" id="actionPecas">
+                    <span class="profile-action-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 16V5"/>
+                            <path d="M7.5 9.5L12 5l4.5 4.5"/>
+                            <path d="M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/>
+                        </svg>
+                    </span>
+                    <span class="profile-action-text">
+                        <strong>Peças</strong>
+                        <small>Envie fotos das suas roupas</small>
+                    </span>
+                </a>
+
+                <!-- Função de administrador (ainda sem controle de admin) -->
+                <a href="montar-look.html" class="profile-action" id="actionMontarLook" hidden>
+                    <span class="profile-action-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M8 4L3 7.5l2.5 4L8 10v10h8V10l2.5 1.5 2.5-4L16 4c-.6 1.6-2 2.5-4 2.5S8.6 5.6 8 4z"/>
+                        </svg>
+                    </span>
+                    <span class="profile-action-text">
+                        <strong>Montar look <em class="profile-action-badge">Admin</em></strong>
+                        <small>Combine as peças guardadas</small>
+                    </span>
+                </a>
+
+                <!-- Lookbook: onde a cliente vê os looks montados pela stylist -->
+                <a href="lookbook.html" class="profile-action" id="actionLookbook">
+                    <span class="profile-action-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5v-13z"/>
+                            <path d="M13 4h5.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H13V4z"/>
+                        </svg>
+                    </span>
+                    <span class="profile-action-text">
+                        <strong>Meus looks</strong>
+                        <small>Veja os looks feitos para você</small>
+                    </span>
+                </a>
+
+                <!-- Função de administrador (ainda sem controle de admin) -->
+                <a href="admin-blog.html" class="profile-action" id="actionPublicarBlog" hidden>
+                    <span class="profile-action-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3z"/>
+                            <path d="M13.5 8.5l3 3"/>
+                        </svg>
+                    </span>
+                    <span class="profile-action-text">
+                        <strong>Publicar no blog <em class="profile-action-badge">Admin</em></strong>
+                        <small>Cadastre e gerencie os posts</small>
+                    </span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -142,9 +129,26 @@
 
     <script type="module" src="./database/navAuth.js"></script>
     <script type="module">
+        import { azRequireAuth, azGetCurrentUser, azLogout, azUpdateCurrentUser } from './database/perfilAuth.js';
+
+        /* TODO (admin): hoje o botão "Montar look" aparece para todo mundo.
+           Quando existir o controle de administrador, troque por algo como
+           const isAdmin = user.is_admin === true;  (e traga is_admin no azGetCurrentUser) */
+        const MOSTRAR_MONTAR_LOOK = true;
+
+        /* TODO (admin): mesmo caso do botão acima, vale para "Publicar no blog"
+           (admin-blog.html). Troque pela mesma verificação de administrador. */
+        const MOSTRAR_PUBLICAR_BLOG = true;
+
         const manequimLabels = {
             PP: 'PP', P: 'P', M: 'M', G: 'G', GG: 'GG', EG: 'EG'
         };
+
+        /* Liga um evento só se o elemento existir na página */
+        function on(id, eventName, handler) {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener(eventName, handler);
+        }
 
         function hasAnyMeasurement(m) {
             if (!m) return false;
@@ -163,6 +167,8 @@
 
         function renderMeasurementsSummary(m) {
             const list = document.getElementById('measurementsList');
+            if (!list) return;
+
             const rows = [
                 ['Altura', m.altura ? m.altura + ' cm' : null],
                 ['Busto', m.busto ? m.busto + ' cm' : null],
@@ -179,6 +185,8 @@
 
         function showBannerState(user) {
             const banner = document.getElementById('completeBanner');
+            if (!banner) return;
+
             const dismissedKey = 'az_dismiss_banner_' + user.id;
             const dismissed = sessionStorage.getItem(dismissedKey) === '1';
 
@@ -188,6 +196,7 @@
         function showMeasurementsState(user) {
             const form = document.getElementById('measurementsForm');
             const summary = document.getElementById('measurementsSummary');
+            if (!form || !summary) return;
 
             if (user.measurements) {
                 form.hidden = true;
@@ -212,35 +221,41 @@
             document.getElementById('infoTelefone').textContent = user.telefone || 'Não informado';
             document.getElementById('infoCpf').textContent = user.cpf || 'Não informado';
 
+            // botão "Montar look" (função de administrador)
+            document.getElementById('actionMontarLook').hidden = !MOSTRAR_MONTAR_LOOK;
+
+            // botão "Publicar no blog" (função de administrador)
+            document.getElementById('actionPublicarBlog').hidden = !MOSTRAR_PUBLICAR_BLOG;
+
             showBannerState(user);
             showMeasurementsState(user);
 
-            document.getElementById('completeNowBtn').addEventListener('click', () => {
+            on('completeNowBtn', 'click', () => {
                 document.getElementById('completeBanner').hidden = true;
                 document.getElementById('measurementsSummary').hidden = true;
                 fillMeasurementsForm(user.measurements);
                 document.getElementById('measurementsForm').hidden = false;
             });
 
-            document.getElementById('dismissBannerBtn').addEventListener('click', () => {
+            on('dismissBannerBtn', 'click', () => {
                 sessionStorage.setItem('az_dismiss_banner_' + user.id, '1');
                 document.getElementById('completeBanner').hidden = true;
             });
 
-            document.getElementById('editMeasurementsBtn').addEventListener('click', () => {
+            on('editMeasurementsBtn', 'click', () => {
                 document.getElementById('measurementsSummary').hidden = true;
                 fillMeasurementsForm(user.measurements);
                 document.getElementById('measurementsForm').hidden = false;
             });
 
-            document.getElementById('cancelMeasurementsBtn').addEventListener('click', async () => {
+            on('cancelMeasurementsBtn', 'click', async () => {
                 document.getElementById('measurementsForm').hidden = true;
                 const current = await azGetCurrentUser();
                 showBannerState(current);
                 showMeasurementsState(current);
             });
 
-            document.getElementById('saveMeasurementsBtn').addEventListener('click', async () => {
+            on('saveMeasurementsBtn', 'click', async () => {
                 const measurements = {
                     altura: document.getElementById('mAltura').value.trim(),
                     busto: document.getElementById('mBusto').value.trim(),
@@ -264,13 +279,11 @@
                 showMeasurementsState(updated);
             });
 
-            document.getElementById('logoutBtn').addEventListener('click', async () => {
+            on('logoutBtn', 'click', async () => {
                 await azLogout();
                 window.location.href = 'blog.html';
             });
         }
-
-        import { azRequireAuth, azGetCurrentUser, azLogout, azUpdateCurrentUser } from './database/perfilAuth.js';
 
         (async () => {
             const currentUser = await azRequireAuth();

@@ -18,8 +18,6 @@
         <nav>
             <a href="index.html" class="active">Início</a>
             <a href="blog.html">Blog</a>
-            <a href="#">Montar Look</a>
-            <a href="#">Contato</a>
             <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
         </nav>
     </header>
@@ -35,7 +33,7 @@
         <div class="hero-image">
             <img src="images/home/tablet.jpg" alt="Fashion collage with pink flowers and polaroids">
         </div>
-    </section>
+    </section>  
 
     <!-- About Section -->
     <section class="about">
@@ -71,8 +69,8 @@
         <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos
             reservados.</p>
     </footer>
-    
-    <script type="module" src="./database/navAuth.js"></script>
+
+    <script src="./scripts/auth.js"></script>
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
