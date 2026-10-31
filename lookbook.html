@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Looks - Ariadne Zanardi</title>
+    <link rel="stylesheet" href="./style/blog.css">
+    <link rel="stylesheet" href="./style/lookbook.css">
+    <style>
+        /* ==========================================================
+           CORREÇÃO DO MODAL DO LOOK
+           - o look inteiro (imagem + detalhes) rola junto, sem imagem travada
+           - a imagem fica alinhada ao topo, com altura própria
+           - o botão de fechar fica sempre visível
+           (pode ser movido para o lookbook.css depois)
+           ========================================================== */
+        .lb-dialog {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;              /* mantém os cantos arredondados */
+        }
+
+        .lb-dialog-scroll {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;              /* único elemento que rola */
+            overscroll-behavior: contain;  /* não rola a página por trás */
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+        }
+
+        .lb-dialog-media {
+            align-items: flex-start;       /* imagem no topo, não esticada */
+        }
+
+        #mCollageBox {
+            align-self: flex-start;
+            min-height: 0;
+            height: clamp(380px, calc(100vh - 130px), 600px);
+        }
+
+        #mCollageBox .lb-collage {
+            min-height: 0;
+            height: 100%;
+        }
+
+        .lb-dialog-body {
+            max-height: none;
+            overflow: visible;             /* quem rola é o .lb-dialog-scroll */
+        }
+
+        @media (max-width: 760px) {
+            .lb-dialog-scroll {
+                display: block;
+            }
+
+            #mCollageBox {
+                height: min(460px, 62vh);
+                min-height: 340px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ================= Header ================= -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
+                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
+            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
+        </a>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="blog.html">Blog</a>
+            <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
+        </nav>
+    </header>
+
+    <main class="lb-wrap">
+        <!-- ================= Título ================= -->
+        <div class="lb-intro">
+            <span class="eyebrow">Lookbook digital</span>
+            <h1>Looks <em>escolhidos para você</em></h1>
+            <p>Combinações criadas pela sua stylist, pensadas para o seu estilo e para o seu dia a dia.</p>
+        </div>
+
+        <!-- ================= Abas + busca ================= -->
+        <div class="lb-toolbar">
+            <div class="lb-tabs" role="group" aria-label="Exibir">
+                <button type="button" class="lb-tab active" data-tab="todos" aria-pressed="true">
+                    Todos os Looks <span class="lb-tab-count" id="countTodos">0</span>
+                </button>
+                <button type="button" class="lb-tab" data-tab="favoritos" aria-pressed="false">
+                    Favoritos <span class="lb-tab-count" id="countFavoritos">0</span>
+                </button>
+                <button type="button" class="lb-tab" data-tab="recentes" aria-pressed="false">
+                    Mais Recentes <span class="lb-tab-count" id="countRecentes">0</span>
+                </button>
+            </div>
+
+            <label class="lb-search">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>
+                </svg>
+                <input type="search" id="searchInput" placeholder="Buscar por nome, ocasião ou dica" autocomplete="off">
+            </label>
+        </div>
+
+        <p class="lb-result" id="resultCount" aria-live="polite"></p>
+
+        <!-- ================= Feed (galeria) ================= -->
+        <div class="lb-masonry" id="lookGrid"></div>
+    </main>
+
+    <!-- ================= Detalhe do look (modal) ================= -->
+    <div class="lb-modal" id="lookModal" hidden>
+        <div class="lb-backdrop" data-close></div>
+
+        <div class="lb-dialog" id="lookDialog" role="dialog" aria-modal="true" aria-labelledby="mTitle" tabindex="-1">
+            <button type="button" class="lb-close" data-close aria-label="Fechar">×</button>
+
+            <div class="lb-dialog-scroll" id="lookDialogScroll">
+            <div class="lb-dialog-media">
+                <div id="mCollageBox"></div>
+            </div>
+
+            <div class="lb-dialog-body">
+                <div class="lb-meta-tags">
+                    <span class="tag" id="mOccasion"></span>
+                    <span class="lb-climate" id="mClimate"></span>
+                </div>
+
+                <h2 id="mTitle"></h2>
+                <p class="lb-date" id="mDate"></p>
+
+                <h3 class="lb-sub">Peças do look</h3>
+                <ul class="lb-pieces" id="mPieces"></ul>
+
+                <div class="lb-tips">
+                    <span class="lb-tips-icon">✦</span>
+                    <div>
+                        <strong>Dicas da stylist</strong>
+                        <p id="mTipsText"></p>
+                        <span class="lb-tips-sign">— Ariadne</span>
+                    </div>
+                </div>
+
+                <div class="lb-actions">
+                    <button type="button" class="lb-fav" id="favBtn" aria-pressed="false"></button>
+                </div>
+            </div>
+            </div><!-- /.lb-dialog-scroll -->
+        </div>
+    </div>
+
+    <!-- ================= Footer ================= -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                Ariadne Zanardi
+                <small>Seu estilo, do seu jeito.</small>
+            </div>
+            <div class="footer-social">
+                <a href="#">Instagram</a>
+                <a href="#">TikTok</a>
+                <a href="#">Pinterest</a>
+                <a href="#">Portfólio</a>
+                <a href="#">Contato</a>
+            </div>
+        </div>
+        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        /* ==========================================================
+           Lookbook do cliente (versão aberta, sem login e sem banco).
+
+           Lê os looks criados na tela "Montar Look" (localStorage) e
+           as peças da tela "Guarda-Roupa". Favoritos, "usado hoje" e
+           mensagens também ficam só neste navegador.
+
+           BACKEND (depois): o cliente deve receber apenas os looks
+           atribuídos a ele; favoritos / usos / mensagens viram tabelas.
+           ========================================================== */
+        const WARDROBE_KEY = 'az_wardrobe_local';
+        const LOOKS_KEY = 'az_looks_local';
+        const FAVS_KEY = 'az_look_favs';
+
+        const MODES = {
+            tradicional: ['cima', 'baixo', 'calcados'],
+            unica:       ['inteira', 'calcados']
+        };
+
+        const CAT_LABELS = {
+            cima:     'Parte de Cima',
+            baixo:    'Parte de Baixo',
+            inteira:  'Peça Única',
+            calcados: 'Sapatos'
+        };
+
+        const OCCASIONS = { trabalho: 'Trabalho', eventos: 'Eventos', casual: 'Casual', viagem: 'Viagem' };
+        const CLIMATES = { frio: 'Frio', calor: 'Calor', 'meia-estacao': 'Meia-estação' };
+        const CLIMATE_ICONS = { frio: '❄', calor: '☀', 'meia-estacao': '☁' };
+
+        const RECENT_DAYS = 7;
+
+        const HEART_SVG =
+            '<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="1.9" ' +
+            'stroke-linejoin="round" aria-hidden="true">' +
+            '<path d="M12 20.5s-7.5-4.6-9.2-9.3C1.7 7.7 3.8 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.2 0 5.3 3.2 4.2 6.7-1.7 4.7-9.2 9.3-9.2 9.3z"/>' +
+            '</svg>';
+
+        const $ = id => document.getElementById(id);
+
+        /* ---------- Storage ---------- */
+        function readJSON(key, fallback) {
+            try {
+                return JSON.parse(localStorage.getItem(key)) ?? fallback;
+            } catch (e) {
+                return fallback;
+            }
+        }
+
+        function writeJSON(key, value) {
+            try {
+                localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        /* ---------- Estado ---------- */
+        let looks = [];
+        let favs = new Set(readJSON(FAVS_KEY, []));
+        let filters = { tab: 'todos', q: '' };
+
+        /* ---------- Utilidades ---------- */
+        function normalize(s) {
+            return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        }
+
+        function formatDate(ts) {
+            return new Date(ts).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+        }
+
+        function isRecent(look) {
+            return Date.now() - look.createdAt < RECENT_DAYS * 86400000;
+        }
+
+        /* ---------- Carrega looks ---------- */
+        function loadLooks() {
+            const wardrobe = readJSON(WARDROBE_KEY, []);
+            const byId = new Map(wardrobe.map(i => [i.id, i]));
+
+            const raw = readJSON(LOOKS_KEY, []).filter(l => MODES[l.mode]);
+            const numbers = new Map(
+                [...raw].sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0)).map((l, i) => [l.id, i + 1])
+            );
+
+            looks = raw
+                .map(l => ({
+                    id: l.id,
+                    mode: l.mode,
+                    createdAt: l.createdAt || 0,
+                    title: (l.title || '').trim() || 'Look nº ' + numbers.get(l.id),
+                    occasion: OCCASIONS[l.occasion] ? l.occasion : '',
+                    climate: CLIMATES[l.climate] ? l.climate : '',
+                    tips: (l.tips || '').trim(),
+                    pieces: MODES[l.mode].map(cat => ({
+                        cat,
+                        item: l.pieces && l.pieces[cat] ? byId.get(l.pieces[cat]) || null : null
+                    }))
+                }))
+                .filter(l => l.pieces.some(p => p.item))
+                .sort((a, b) => b.createdAt - a.createdAt);
+        }
+
+        /* ---------- Colagem do look ---------- */
+        function buildCollage(look) {
+            const collage = document.createElement('div');
+            collage.className = 'lb-collage mode-' + look.mode;
+
+            look.pieces.forEach(p => {
+                const cell = document.createElement('span');
+                cell.className = 'lb-cell';
+                if (p.item) {
+                    const img = document.createElement('img');
+                    img.src = p.item.image;
+                    img.alt = CAT_LABELS[p.cat];
+                    img.draggable = false;
+                    cell.appendChild(img);
+                } else {
+                    cell.classList.add('lb-cell-missing');
+                }
+                collage.appendChild(cell);
+            });
+
+            return collage;
+        }
+
+        /* ---------- Filtros ---------- */
+        function matches(look) {
+            if (filters.tab === 'favoritos' && !favs.has(look.id)) return false;
+            if (filters.tab === 'recentes' && !isRecent(look)) return false;
+
+            if (filters.q) {
+                const haystack = normalize([
+                    look.title,
+                    OCCASIONS[look.occasion] || '',
+                    CLIMATES[look.climate] || '',
+                    look.tips
+                ].join(' '));
+                const ok = normalize(filters.q).split(/\s+/).filter(Boolean).every(w => haystack.includes(w));
+                if (!ok) return false;
+            }
+
+            return true;
+        }
+
+        function updateTabCounts() {
+            $('countTodos').textContent = looks.length;
+            $('countFavoritos').textContent = looks.filter(l => favs.has(l.id)).length;
+            $('countRecentes').textContent = looks.filter(isRecent).length;
+        }
+
+        function resetFilters() {
+            filters = { tab: 'todos', q: '' };
+            $('searchInput').value = '';
+            document.querySelectorAll('.lb-tab').forEach(t => {
+                const on = t.dataset.tab === 'todos';
+                t.classList.toggle('active', on);
+                t.setAttribute('aria-pressed', String(on));
+            });
+            renderGrid(true);
+        }
+
+        document.querySelectorAll('.lb-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                filters.tab = tab.dataset.tab;
+                document.querySelectorAll('.lb-tab').forEach(t => {
+                    const on = t === tab;
+                    t.classList.toggle('active', on);
+                    t.setAttribute('aria-pressed', String(on));
+                });
+                renderGrid(true);
+            });
+        });
+
+        $('searchInput').addEventListener('input', e => {
+            filters.q = e.target.value.trim();
+            renderGrid(true);
+        });
+
+        /* ---------- Favoritos ---------- */
+        function heartButton(look) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'lb-heart' + (favs.has(look.id) ? ' saved' : '');
+            btn.setAttribute('aria-pressed', String(favs.has(look.id)));
+            btn.setAttribute('aria-label', favs.has(look.id) ? 'Remover dos favoritos' : 'Favoritar look');
+            btn.innerHTML = HEART_SVG;
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                toggleFav(look.id);
+            });
+            return btn;
+        }
+
+        function toggleFav(id) {
+            if (favs.has(id)) favs.delete(id);
+            else favs.add(id);
+            writeJSON(FAVS_KEY, [...favs]);
+
+            renderGrid(false);
+            if (currentId === id) updateFavButton();
+        }
+
+        /* ---------- Grade ---------- */
+        const grid = $('lookGrid');
+        const resultCount = $('resultCount');
+
+        function emptyBox(title, text, withClear) {
+            const box = document.createElement('div');
+            box.className = 'lb-empty';
+            box.innerHTML = '<span class="lb-empty-icon">✦</span><strong></strong><p></p>';
+            box.querySelector('strong').textContent = title;
+            box.querySelector('p').textContent = text;
+            if (withClear) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn-blog lb-empty-btn';
+                btn.textContent = 'Limpar filtros';
+                btn.addEventListener('click', resetFilters);
+                box.appendChild(btn);
+            }
+            return box;
+        }
+
+        function renderGrid(animate) {
+            updateTabCounts();
+            grid.innerHTML = '';
+
+            if (!looks.length) {
+                resultCount.textContent = '';
+                grid.classList.add('is-empty');
+                grid.appendChild(emptyBox(
+                    'Seu lookbook ainda está vazio',
+                    'Assim que a stylist montar looks para você, eles aparecem aqui.'
+                ));
+                return;
+            }
+
+            const list = looks.filter(matches);
+            grid.classList.toggle('is-empty', !list.length);
+            resultCount.textContent = list.length === 1 ? '1 look' : list.length + ' looks';
+
+            if (!list.length) {
+                let title = 'Nenhum look encontrado';
+                let text = 'Tente outros filtros ou limpe a busca.';
+
+                if (filters.tab === 'favoritos' && !favs.size) {
+                    title = 'Nenhum favorito ainda';
+                    text = 'Toque no coração de um look para guardá-lo aqui.';
+                } else if (filters.tab === 'recentes') {
+                    text = 'Nenhum look novo nos últimos ' + RECENT_DAYS + ' dias com esses filtros.';
+                }
+
+                grid.appendChild(emptyBox(title, text, true));
+                return;
+            }
+
+            list.forEach((look, i) => {
+                const card = document.createElement('article');
+                card.className = 'lb-card' + (animate ? ' lb-in' : '');
+                card.dataset.id = look.id;
+                if (animate) card.style.animationDelay = Math.min(i, 10) * 45 + 'ms';
+
+                const main = document.createElement('button');
+                main.type = 'button';
+                main.className = 'lb-card-main';
+                main.setAttribute('aria-label', 'Abrir ' + look.title);
+
+                const media = document.createElement('div');
+                media.className = 'lb-card-media mode-' + look.mode;
+                media.appendChild(buildCollage(look));
+
+                if (look.occasion) {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag lb-card-tag';
+                    tag.textContent = OCCASIONS[look.occasion];
+                    media.appendChild(tag);
+                }
+
+                const body = document.createElement('div');
+                body.className = 'lb-card-body';
+
+                const title = document.createElement('h3');
+                title.textContent = look.title;
+                body.appendChild(title);
+
+                const foot = document.createElement('div');
+                foot.className = 'lb-card-foot';
+
+                if (look.climate) {
+                    const c = document.createElement('span');
+                    c.className = 'lb-climate';
+                    c.textContent = CLIMATE_ICONS[look.climate] + ' ' + CLIMATES[look.climate];
+                    foot.appendChild(c);
+                }
+                if (isRecent(look)) {
+                    const n = document.createElement('span');
+                    n.className = 'lb-new';
+                    n.textContent = 'Novo';
+                    foot.appendChild(n);
+                }
+                if (foot.children.length) body.appendChild(foot);
+
+                main.append(media, body);
+                main.addEventListener('click', () => openLook(look.id, main));
+
+                card.append(main, heartButton(look));
+                grid.appendChild(card);
+            });
+        }
+
+        /* ---------- Modal ---------- */
+        const modal = $('lookModal');
+        const dialog = $('lookDialog');
+        let currentId = null;
+        let lastFocus = null;
+
+        function currentLook() {
+            return looks.find(l => l.id === currentId) || null;
+        }
+
+        function openLook(id, trigger) {
+            const look = looks.find(l => l.id === id);
+            if (!look) return;
+
+            currentId = id;
+            lastFocus = trigger || document.activeElement;
+
+            // imagem
+            const box = $('mCollageBox');
+            box.innerHTML = '';
+            box.appendChild(buildCollage(look));
+
+            // etiquetas
+            const occ = $('mOccasion');
+            occ.textContent = look.occasion ? OCCASIONS[look.occasion] : '';
+            occ.hidden = !look.occasion;
+
+            const clim = $('mClimate');
+            clim.textContent = look.climate ? CLIMATE_ICONS[look.climate] + ' ' + CLIMATES[look.climate] : '';
+            clim.hidden = !look.climate;
+
+            $('mTitle').textContent = look.title;
+            $('mDate').textContent = 'Criado em ' + formatDate(look.createdAt);
+
+            // recorte de peças
+            const list = $('mPieces');
+            list.innerHTML = '';
+            look.pieces.forEach(p => {
+                const li = document.createElement('li');
+                li.className = 'lb-piece';
+
+                const thumb = document.createElement('span');
+                thumb.className = 'lb-piece-thumb';
+                if (p.item) {
+                    const img = document.createElement('img');
+                    img.src = p.item.image;
+                    img.alt = '';
+                    thumb.appendChild(img);
+                }
+
+                const label = document.createElement('span');
+                label.className = 'lb-piece-label';
+                label.innerHTML = '<strong></strong><small></small>';
+                label.querySelector('strong').textContent = CAT_LABELS[p.cat];
+                label.querySelector('small').textContent = p.item ? 'No seu guarda-roupa' : 'Peça removida do guarda-roupa';
+
+                li.append(thumb, label);
+                list.appendChild(li);
+            });
+
+            // dicas
+            const tips = $('mTipsText');
+            if (look.tips) {
+                tips.textContent = look.tips;
+                tips.classList.remove('muted');
+            } else {
+                tips.textContent = 'A stylist ainda não deixou dicas para este look.';
+                tips.classList.add('muted');
+            }
+
+            updateFavButton();
+
+            modal.hidden = false;
+            document.body.classList.add('lb-lock');
+            $('lookDialogScroll').scrollTop = 0;
+            dialog.focus({ preventScroll: true });
+        }
+
+        function closeLook() {
+            modal.hidden = true;
+            document.body.classList.remove('lb-lock');
+            currentId = null;
+            if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+        }
+
+        modal.addEventListener('click', e => {
+            if (e.target.closest('[data-close]')) closeLook();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (modal.hidden) return;
+            if (e.key === 'Escape') closeLook();
+        });
+
+        // mantém o foco dentro do modal
+        dialog.addEventListener('keydown', e => {
+            if (e.key !== 'Tab') return;
+            const focusables = [...dialog.querySelectorAll('button, textarea, a[href], input')]
+                .filter(el => !el.disabled && el.offsetParent !== null);
+            if (!focusables.length) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        });
+
+        /* ---------- Ações do modal ---------- */
+        function updateFavButton() {
+            const on = favs.has(currentId);
+            const btn = $('favBtn');
+            btn.classList.toggle('saved', on);
+            btn.setAttribute('aria-pressed', String(on));
+            btn.innerHTML = HEART_SVG + '<span>' + (on ? 'Nos favoritos' : 'Favoritar') + '</span>';
+        }
+
+        $('favBtn').addEventListener('click', () => {
+            if (currentId) toggleFav(currentId);
+        });
+
+        /* ---------- Início ---------- */
+        loadLooks();
+        renderGrid(true);
+
+        // atualiza se os looks mudarem em outra aba
+        window.addEventListener('storage', e => {
+            if ([WARDROBE_KEY, LOOKS_KEY].includes(e.key)) {
+                loadLooks();
+                renderGrid(false);
+            }
+        });
+
+        $('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

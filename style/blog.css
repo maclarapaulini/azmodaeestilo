@@ -1392,6 +1392,112 @@ nav a.active {
     color: #333;
 }
 
+
+.profile-actions-card {
+    background-color: #fff;
+    border-radius: 24px;
+    padding: 28px 30px;
+    box-shadow: 0 10px 26px rgba(200, 75, 75, 0.08);
+}
+
+.profile-actions-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #C84B4B;
+    margin-bottom: 6px;
+}
+
+.profile-actions-card .hint {
+    font-size: 14px;
+    color: #9a8580;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.profile-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.profile-action {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background-color: #FFFDF5;
+    border: 1.5px solid #F5C6C6;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.25s, border-color 0.25s, background-color 0.25s, box-shadow 0.25s;
+}
+
+.profile-action[hidden] { display: none; }
+
+.profile-action:hover {
+    transform: translateY(-3px);
+    border-color: #E8927C;
+    background-color: #FFF1F1;
+    box-shadow: 0 10px 22px rgba(200, 75, 75, 0.12);
+}
+
+.profile-action:focus-visible {
+    outline: 2px solid #C84B4B;
+    outline-offset: 3px;
+}
+
+.profile-action-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(140deg, #E8927C, #C84B4B);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-action-text strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #A53D3D;
+}
+
+.profile-action-text small {
+    display: block;
+    font-size: 12.5px;
+    color: #9a8580;
+    margin-top: 2px;
+    line-height: 1.4;
+}
+
+.profile-action-badge {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 6px;
+    padding: 2px 9px;
+    border-radius: 10px;
+    background-color: #F5C6C6;
+    color: #A53D3D;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+/* No celular: um atalho por linha.
+   Coloque esta regra DENTRO do "@media (max-width: 700px)" que já existe no perfil: */
+/*
+    .profile-actions {
+        grid-template-columns: 1fr;
+    }
+*/
+
 @media (max-width: 700px) {
     .auth-card {
         padding: 26px 22px 32px;

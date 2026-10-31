@@ -1,0 +1,563 @@
+/* ==========================================================
+   GUARDA-ROUPA - Ariadne Zanardi
+   Arquivo: style/guarda-roupa.css
+   Carregar DEPOIS do blog.css (reaproveita header, footer,
+   .btn-blog, .btn-ghost, .link-button, .chip, .tag, .eyebrow,
+   .feed-head e .grid-empty).
+   ========================================================== */
+
+.gr-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+}
+
+/* ---------- Introdução ---------- */
+.gr-intro {
+    text-align: center;
+    margin-bottom: 34px;
+}
+
+.gr-intro h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 5vw, 50px);
+    line-height: 1.15;
+    color: #C84B4B;
+    margin-bottom: 12px;
+}
+
+.gr-intro h1 em {
+    font-style: italic;
+    color: #E8927C;
+}
+
+.gr-intro p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #6b5a55;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+/* ---------- Indicador de passos ---------- */
+.gr-steps {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: clamp(8px, 3vw, 28px);
+    margin-bottom: 28px;
+}
+
+.gr-step {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #9a8580;
+    transition: color 0.25s;
+}
+
+.gr-step span {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid #E8927C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #A53D3D;
+    background-color: #fff;
+    transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+}
+
+.gr-step.active {
+    color: #C84B4B;
+    font-weight: 600;
+}
+
+.gr-step.active span {
+    background-color: #C84B4B;
+    border-color: #C84B4B;
+    color: #fff;
+}
+
+.gr-step.done span {
+    background-color: #F5C6C6;
+    border-color: #F5C6C6;
+    color: #A53D3D;
+}
+
+/* ---------- Cartão principal ---------- */
+.gr-card {
+    background-color: #fff;
+    border-radius: 28px;
+    padding: 36px 38px 40px;
+    box-shadow: 0 18px 40px rgba(200, 75, 75, 0.10);
+}
+
+.gr-card > section + section {
+    margin-top: 34px;
+    padding-top: 30px;
+    border-top: 1.5px dashed #F5C6C6;
+}
+
+.gr-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #C84B4B;
+    margin-bottom: 18px;
+}
+
+/* ---------- Categorias ---------- */
+.gr-categories {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+/* tablets: 2 x 2 */
+@media (max-width: 900px) {
+    .gr-categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.gr-cat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: 24px 14px 22px;
+    background-color: #FFFDF5;
+    border: 2px solid #F5C6C6;
+    border-radius: 22px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    transition: transform 0.25s, border-color 0.25s, background-color 0.25s, box-shadow 0.25s;
+}
+
+.gr-cat:hover {
+    transform: translateY(-3px);
+    border-color: #E8927C;
+    box-shadow: 0 10px 22px rgba(200, 75, 75, 0.12);
+}
+
+.gr-cat:focus-visible {
+    outline: 2px solid #C84B4B;
+    outline-offset: 3px;
+}
+
+.gr-cat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #F5C6C6;
+    color: #A53D3D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition: background-color 0.25s, color 0.25s;
+}
+
+.gr-cat strong {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gr-cat small {
+    font-size: 12.5px;
+    color: #9a8580;
+    line-height: 1.4;
+}
+
+.gr-cat.selected {
+    border-color: #C84B4B;
+    background-color: #FFF1F1;
+    box-shadow: 0 10px 24px rgba(200, 75, 75, 0.16);
+}
+
+.gr-cat.selected .gr-cat-icon {
+    background: linear-gradient(140deg, #E8927C, #C84B4B);
+    color: #fff;
+}
+
+.gr-cat.selected strong {
+    color: #C84B4B;
+}
+
+/* ---------- Dropzone ---------- */
+.gr-upload:not([hidden]),
+.gr-preview:not([hidden]) {
+    animation: gr-fade 0.35s ease;
+}
+
+@keyframes gr-fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.gr-dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+    min-height: 230px;
+    padding: 30px 20px;
+    border: 2.5px dashed #E8927C;
+    background-color: #FFFDF5;
+    border-radius: 24px;
+    cursor: pointer;
+    color: #6b5a55;
+    font-size: 15px;
+    transition: background-color 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+.gr-dropzone strong {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.gr-dropzone small {
+    font-size: 12.5px;
+    color: #9a8580;
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+.gr-dropzone u {
+    color: #C84B4B;
+    font-weight: 600;
+    text-underline-offset: 3px;
+}
+
+.gr-drop-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(140deg, #E8927C, #C84B4B);
+    color: #fff;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition: transform 0.25s;
+}
+
+.gr-dropzone:hover,
+.gr-dropzone:focus-visible {
+    background-color: #FFF1F1;
+    border-color: #C84B4B;
+    outline: none;
+}
+
+.gr-dropzone:hover .gr-drop-icon {
+    transform: translateY(-3px);
+}
+
+.gr-dropzone.dragover {
+    background-color: #FFF1F1;
+    border-color: #C84B4B;
+    border-style: solid;
+    transform: scale(1.015);
+}
+
+.gr-dropzone.dragover .gr-drop-icon {
+    transform: scale(1.12);
+}
+
+.gr-error {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #C84B4B;
+    margin-top: 12px;
+    min-height: 0;
+}
+
+/* ---------- Prévia ---------- */
+.gr-preview-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    align-items: center;
+}
+
+.gr-preview-img {
+    aspect-ratio: 3 / 4;
+    border-radius: 26px;
+    overflow: hidden;
+    background-color: #f1dcdc;
+    box-shadow: 10px 10px 0 #E8927C;
+}
+
+.gr-preview-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gr-preview-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.gr-file-name {
+    font-size: 13px;
+    color: #9a8580;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 16px;
+}
+
+.gr-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.gr-save {
+    font-size: 16px;
+}
+
+/* ---------- Feedback de sucesso ---------- */
+.gr-success {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: #FFF1E6;
+    border: 1.5px dashed #E8927C;
+    border-radius: 22px;
+    padding: 18px 22px;
+    margin-top: 26px;
+    animation: gr-fade 0.35s ease;
+}
+
+.gr-success[hidden] { display: none; }
+
+.gr-success-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #C84B4B;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.gr-success div { flex: 1; }
+
+.gr-success strong {
+    display: block;
+    font-size: 16px;
+    color: #A53D3D;
+}
+
+.gr-success p {
+    font-size: 14px;
+    color: #6b5a55;
+}
+
+/* ---------- Minhas peças ---------- */
+.gr-closet {
+    margin-top: 70px;
+}
+
+.gr-closet-head h2 {
+    font-size: 34px;
+}
+
+.gr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 20px;
+}
+
+.gr-item {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #f1dcdc;
+    box-shadow: 0 10px 22px rgba(200, 75, 75, 0.10);
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.gr-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 30px rgba(200, 75, 75, 0.18);
+}
+
+.gr-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gr-item .tag {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    margin: 0;
+    font-size: 10.5px;
+    padding: 4px 11px;
+    background-color: rgba(255, 248, 220, 0.94);
+}
+
+.gr-item-del {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.94);
+    color: #C84B4B;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.gr-item:hover .gr-item-del,
+.gr-item-del:focus-visible {
+    opacity: 1;
+}
+
+.gr-item-del:hover {
+    background-color: #C84B4B;
+    color: #fff;
+}
+
+/* no celular não existe hover: deixa o botão sempre visível */
+@media (hover: none) {
+    .gr-item-del { opacity: 1; }
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 760px) {
+    .gr-wrap {
+        padding: 40px 16px 80px;
+    }
+
+    .gr-card {
+        padding: 26px 20px 30px;
+        border-radius: 24px;
+    }
+
+    .gr-categories {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    /* categorias viram linhas horizontais no celular */
+    .gr-cat {
+        flex-direction: row;
+        flex-wrap: wrap;
+        text-align: left;
+        align-items: center;
+        gap: 0 14px;
+        padding: 16px 18px;
+    }
+
+    .gr-cat-icon {
+        margin-bottom: 0;
+        grid-row: span 2;
+    }
+
+    .gr-cat strong,
+    .gr-cat small {
+        flex-basis: calc(100% - 80px);
+    }
+
+    .gr-preview-body {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+        gap: 24px;
+    }
+
+    .gr-preview-img {
+        width: 100%;
+        max-width: 260px;
+        box-shadow: 8px 8px 0 #E8927C;
+    }
+
+    .gr-preview-side {
+        align-items: center;
+        width: 100%;
+    }
+
+    .gr-file-name {
+        max-width: 100%;
+    }
+
+    .gr-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .gr-actions .btn-blog {
+        width: 100%;
+        text-align: center;
+    }
+
+    .gr-step {
+        font-size: 0;      /* só os números no celular */
+        gap: 0;
+    }
+
+    .gr-step span {
+        font-size: 13px;
+    }
+
+    .gr-step.active {
+        font-size: 14px;   /* mostra o nome apenas do passo atual */
+        gap: 9px;
+    }
+
+    .gr-success {
+        flex-wrap: wrap;
+    }
+
+    .gr-closet-head h2 {
+        font-size: 28px;
+    }
+
+    .gr-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+}
+
+/* ---------- Estados de carregamento ---------- */
+.gr-save:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.gr-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 15px;
+    color: #9a8580;
+}

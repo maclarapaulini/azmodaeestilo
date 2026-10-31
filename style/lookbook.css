@@ -1,0 +1,908 @@
+/* ==========================================================
+   LOOKBOOK DO CLIENTE - Ariadne Zanardi
+   Arquivo: style/lookbook.css
+   Carregar DEPOIS do blog.css (reaproveita header, footer,
+   .eyebrow, .tag, .chips/.chip, .btn-blog e .btn-reset).
+   ========================================================== */
+
+.lb-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+}
+
+/* ---------- Introdução ---------- */
+.lb-intro {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.lb-intro h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.15;
+    color: #C84B4B;
+    margin-bottom: 12px;
+}
+
+.lb-intro h1 em {
+    font-style: italic;
+    color: #E8927C;
+}
+
+.lb-intro p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #6b5a55;
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+/* ---------- Abas + busca ---------- */
+.lb-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 26px;
+}
+
+.lb-tabs {
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    max-width: 100%;
+    overflow-x: auto;
+    background-color: #fff;
+    border: 1.5px solid #F5C6C6;
+    border-radius: 24px;
+    box-shadow: 0 10px 26px rgba(200, 75, 75, 0.08);
+}
+
+.lb-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    padding: 10px 18px;
+    border: none;
+    background: none;
+    border-radius: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #A53D3D;
+    cursor: pointer;
+    transition: background-color 0.25s, color 0.25s;
+}
+
+.lb-tab:hover:not(.active) { background-color: #FFF1F1; }
+
+.lb-tab:focus-visible {
+    outline: 2px solid #C84B4B;
+    outline-offset: 2px;
+}
+
+.lb-tab.active {
+    background-color: #C84B4B;
+    color: #fff;
+}
+
+.lb-tab-count {
+    min-width: 22px;
+    padding: 1px 7px;
+    border-radius: 11px;
+    background-color: #F5C6C6;
+    color: #A53D3D;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.lb-tab.active .lb-tab-count {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+
+.lb-search {
+    position: relative;
+    flex: 0 1 340px;
+    min-width: 220px;
+    color: #9a8580;
+}
+
+.lb-search svg {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.lb-search input {
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14.5px;
+    color: #333;
+    padding: 12px 18px 12px 44px;
+    border: 1.5px solid #F5C6C6;
+    border-radius: 24px;
+    background-color: #fff;
+}
+
+.lb-search input:focus {
+    outline: none;
+    border-color: #C84B4B;
+}
+
+/* ---------- Filtros ---------- */
+.lb-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 40px;
+    padding: 22px 0 8px;
+    border-top: 2px solid #F5C6C6;
+}
+
+.lb-filter-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+}
+
+.lb-filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #A53D3D;
+}
+
+.lb-result {
+    font-size: 13.5px;
+    color: #9a8580;
+    margin: 14px 0 22px;
+    min-height: 20px;
+}
+
+/* ---------- Galeria (estilo Pinterest) ---------- */
+.lb-masonry {
+    column-count: 3;
+    column-gap: 26px;
+}
+
+.lb-masonry.is-empty {
+    column-count: 1;
+}
+
+.lb-card {
+    position: relative;
+    break-inside: avoid;
+    margin-bottom: 26px;
+    background-color: #fff;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 10px 26px rgba(200, 75, 75, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.lb-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 36px rgba(200, 75, 75, 0.16);
+}
+
+.lb-in {
+    animation: lb-rise 0.5s ease both;
+}
+
+@keyframes lb-rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.lb-card-main {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    color: inherit;
+    cursor: pointer;
+}
+
+.lb-card-main:focus-visible {
+    outline: 2px solid #C84B4B;
+    outline-offset: -3px;
+    border-radius: 26px;
+}
+
+.lb-card-media {
+    position: relative;
+    height: 380px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.lb-card-media.mode-unica { height: 330px; }
+
+.lb-card-media .lb-collage {
+    border-radius: 0;
+    transition: transform 0.5s;
+}
+
+.lb-card:hover .lb-card-media .lb-collage { transform: scale(1.03); }
+
+.lb-card-tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    margin: 0;
+    background-color: rgba(255, 248, 220, 0.94);
+}
+
+.lb-card-body {
+    padding: 16px 20px 20px;
+}
+
+.lb-card-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    line-height: 1.25;
+    color: #333;
+}
+
+.lb-card-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin-top: 10px;
+}
+
+.lb-climate {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #8a6f65;
+}
+
+.lb-chip-used {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 10px;
+    background-color: #E6F2EA;
+    color: #3F7A58;
+}
+
+.lb-new {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 10px;
+    background-color: #C84B4B;
+    color: #fff;
+}
+
+/* ---------- Colagem do look ---------- */
+.lb-collage {
+    display: grid;
+    gap: 6px;
+    height: 100%;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 22px;
+}
+
+.lb-collage.mode-tradicional { grid-template-rows: 1.35fr 1.35fr 0.8fr; }
+.lb-collage.mode-unica       { grid-template-rows: 2.2fr 0.8fr; }
+
+.lb-cell {
+    display: flex;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 14px;
+    background-color: #FFFDF5;
+}
+
+.lb-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.lb-cell-missing {
+    background:
+        repeating-linear-gradient(135deg, #FFFDF5 0 10px, rgba(245, 198, 198, 0.3) 10px 11px);
+}
+
+/* ---------- Coração (favoritar) ---------- */
+.lb-heart {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.94);
+    color: #C84B4B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(200, 75, 75, 0.15);
+    transition: transform 0.2s, background-color 0.25s, color 0.25s;
+}
+
+.lb-heart svg { fill: none; transition: fill 0.2s; }
+
+.lb-heart:hover { transform: scale(1.1); }
+
+.lb-heart:focus-visible {
+    outline: 2px solid #C84B4B;
+    outline-offset: 2px;
+}
+
+.lb-heart.saved {
+    background-color: #C84B4B;
+    color: #fff;
+}
+
+.lb-heart.saved svg { fill: currentColor; }
+
+/* ---------- Estados vazios ---------- */
+.lb-empty {
+    text-align: center;
+    padding: 60px 24px;
+    background-color: #fff;
+    border-radius: 26px;
+    box-shadow: 0 10px 26px rgba(200, 75, 75, 0.08);
+}
+
+.lb-empty-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(140deg, #E8927C, #C84B4B);
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 14px;
+}
+
+.lb-empty strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: #C84B4B;
+    margin-bottom: 8px;
+}
+
+.lb-empty p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #6b5a55;
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+.lb-empty-btn {
+    margin-top: 22px;
+    padding: 11px 30px;
+    font-size: 15px;
+}
+
+/* ==========================================================
+   MODAL: detalhe do look
+   ========================================================== */
+body.lb-lock { overflow: hidden; }
+
+.lb-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.lb-modal[hidden] { display: none; }
+
+.lb-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(70, 35, 35, 0.5);
+    backdrop-filter: blur(3px);
+    animation: lb-fade 0.25s ease;
+}
+
+@keyframes lb-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.lb-dialog {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+    width: 100%;
+    max-width: 980px;
+    max-height: calc(100vh - 48px);
+    background-color: #FFF8DC;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(120, 40, 40, 0.3);
+    animation: lb-pop 0.32s cubic-bezier(.22, .8, .3, 1);
+    outline: none;
+}
+
+@keyframes lb-pop {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to   { opacity: 1; transform: none; }
+}
+
+.lb-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 5;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background-color: #fff;
+    color: #C84B4B;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(200, 75, 75, 0.2);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.lb-close:hover {
+    background-color: #C84B4B;
+    color: #fff;
+}
+
+.lb-dialog-media {
+    display: flex;
+    padding: 28px;
+    background-color: #F5C6C6;
+}
+
+#mCollageBox {
+    width: 100%;
+    min-height: 480px;
+    box-shadow: 10px 10px 0 #E8927C;
+    border-radius: 24px;
+    margin: 0 10px 10px 0;
+}
+
+#mCollageBox .lb-collage {
+    min-height: 480px;
+    border-radius: 24px;
+    padding: 12px;
+    gap: 8px;
+}
+
+.lb-dialog-body {
+    padding: 36px 34px 32px;
+    overflow-y: auto;
+    max-height: calc(100vh - 48px);
+}
+
+.lb-meta-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-right: 44px;
+}
+
+.lb-meta-tags .tag { margin: 0; }
+.lb-meta-tags [hidden] { display: none; }
+
+.lb-dialog-body h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    line-height: 1.2;
+    color: #C84B4B;
+    margin-bottom: 4px;
+}
+
+.lb-date {
+    font-size: 13px;
+    color: #9a8580;
+    margin-bottom: 22px;
+}
+
+.lb-sub {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #A53D3D;
+    margin-bottom: 10px;
+}
+
+/* ---------- Peças do look ---------- */
+.lb-pieces {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.lb-piece {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 14px 8px 8px;
+    background-color: #fff;
+    border: 1.5px solid #F5C6C6;
+    border-radius: 18px;
+}
+
+.lb-piece-thumb {
+    width: 54px;
+    height: 66px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #FFFDF5;
+}
+
+.lb-piece-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.lb-piece-label strong {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #333;
+}
+
+.lb-piece-label small {
+    font-size: 12px;
+    color: #9a8580;
+}
+
+/* ---------- Dicas da stylist ---------- */
+.lb-tips {
+    display: flex;
+    gap: 14px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    background-color: #FFF1E6;
+    border: 1.5px dashed #E8927C;
+    border-radius: 22px;
+}
+
+.lb-tips-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(140deg, #E8927C, #C84B4B);
+    color: #fff;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lb-tips strong {
+    display: block;
+    font-size: 15px;
+    color: #A53D3D;
+    margin-bottom: 6px;
+}
+
+.lb-tips p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: #5a4a45;
+    white-space: pre-line;
+}
+
+.lb-tips p.muted {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-size: 14px;
+    color: #9a8580;
+}
+
+.lb-tips-sign {
+    display: block;
+    margin-top: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #C84B4B;
+}
+
+/* ---------- Ações ---------- */
+.lb-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.lb-use {
+    font-size: 15px;
+    padding: 13px 28px;
+}
+
+.lb-use.done {
+    background-color: #5E9C76;
+}
+
+.lb-use.done:hover {
+    background-color: #4B8562;
+}
+
+.lb-use.pop {
+    animation: lb-pulse 0.45s ease;
+}
+
+@keyframes lb-pulse {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.07); }
+    100% { transform: scale(1); }
+}
+
+.lb-fav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background-color: #fff;
+    border: 1.5px solid #C84B4B;
+    border-radius: 25px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #A53D3D;
+    cursor: pointer;
+    transition: background-color 0.25s, color 0.25s;
+}
+
+.lb-fav svg { fill: none; }
+
+.lb-fav:hover { background-color: #FFF1F1; }
+
+.lb-fav:focus-visible {
+    outline: 2px solid #C84B4B;
+    outline-offset: 2px;
+}
+
+.lb-fav.saved {
+    background-color: #C84B4B;
+    color: #fff;
+}
+
+.lb-fav.saved svg { fill: currentColor; }
+
+.lb-use-info {
+    font-size: 13px;
+    color: #8a6f65;
+    margin: 12px 0 0;
+    min-height: 19px;
+}
+
+/* ---------- Feedback / mensagem para a stylist ---------- */
+.lb-feedback {
+    margin-top: 26px;
+    padding-top: 24px;
+    border-top: 1.5px dashed #F5C6C6;
+}
+
+.lb-feedback label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #A53D3D;
+    margin-bottom: 8px;
+}
+
+.lb-feedback textarea {
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14.5px;
+    color: #333;
+    padding: 13px 16px;
+    border: 1.5px solid #F5C6C6;
+    border-radius: 16px;
+    background-color: #FFFDF5;
+    resize: vertical;
+}
+
+.lb-feedback textarea:focus {
+    outline: none;
+    border-color: #C84B4B;
+}
+
+.lb-feedback-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.lb-feedback-row small {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #9a8580;
+}
+
+.lb-send {
+    width: auto;
+    flex-shrink: 0;
+    padding: 10px 28px;
+    border-radius: 22px;
+}
+
+.lb-feedback-status {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #3F7A58;
+    margin-top: 10px;
+    min-height: 18px;
+}
+
+.lb-feedback-status.error { color: #C84B4B; }
+
+.lb-messages {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.lb-message {
+    padding: 12px 16px;
+    background-color: #fff;
+    border-radius: 16px 16px 16px 4px;
+    box-shadow: 0 6px 16px rgba(200, 75, 75, 0.07);
+}
+
+.lb-message p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #5a4a45;
+    white-space: pre-line;
+    word-break: break-word;
+}
+
+.lb-message small {
+    display: block;
+    margin-top: 4px;
+    font-size: 11.5px;
+    color: #9a8580;
+}
+
+/* ---------- Movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .lb-in,
+    .lb-dialog,
+    .lb-backdrop,
+    .lb-use.pop {
+        animation: none !important;
+    }
+
+    .lb-card,
+    .lb-card-media .lb-collage,
+    .lb-heart {
+        transition: none !important;
+    }
+}
+
+/* ==========================================================
+   RESPONSIVO
+   ========================================================== */
+@media (max-width: 1000px) {
+    .lb-wrap { padding: 50px 28px 90px; }
+    .lb-masonry { column-count: 2; }
+}
+
+@media (max-width: 760px) {
+    .lb-modal {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .lb-dialog {
+        display: block;
+        max-height: 94vh;
+        border-radius: 28px 28px 0 0;
+        overflow-y: auto;
+    }
+
+    .lb-dialog-media { padding: 22px 22px 26px; }
+
+    #mCollageBox,
+    #mCollageBox .lb-collage { min-height: 380px; }
+
+    .lb-dialog-body {
+        max-height: none;
+        overflow: visible;
+        padding: 26px 22px 30px;
+    }
+
+    .lb-dialog-body h2 { font-size: 27px; }
+
+    .lb-feedback-row { flex-wrap: wrap; }
+}
+
+@media (max-width: 700px) {
+    .lb-toolbar { flex-direction: column; align-items: stretch; }
+    .lb-search { flex: 1 1 auto; }
+}
+
+@media (max-width: 560px) {
+    .lb-wrap { padding: 36px 14px 80px; }
+
+    .lb-masonry { column-gap: 14px; }
+
+    .lb-card {
+        margin-bottom: 14px;
+        border-radius: 20px;
+    }
+
+    .lb-card-media { height: 270px; }
+    .lb-card-media.mode-unica { height: 240px; }
+
+    .lb-card-body { padding: 12px 14px 15px; }
+    .lb-card-body h3 { font-size: 16px; }
+
+    .lb-card-tag {
+        top: 10px;
+        left: 10px;
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+
+    .lb-heart {
+        top: 9px;
+        right: 9px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .lb-heart svg { width: 17px; height: 17px; }
+
+    .lb-tab {
+        padding: 9px 13px;
+        font-size: 13px;
+    }
+
+    .lb-filters { gap: 14px; }
+
+    .lb-actions { flex-direction: column; }
+    .lb-use,
+    .lb-fav {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+}

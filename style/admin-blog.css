@@ -1,0 +1,301 @@
+/* ==========================================================
+   PAINEL DA AUTORA (admin-blog.html)
+   Arquivo: style/admin-blog.css
+   Carregar DEPOIS do blog.css: aqui só entra o que é específico
+   do painel (header, footer, .btn-blog, .upload-box, .chip etc.
+   continuam vindo do blog.css).
+   Paleta: creme #FFF8DC | rosa #F5C6C6 | vermelho #C84B4B
+           coral #E8927C | texto #333
+   ========================================================== */
+
+.adm-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+}
+
+[hidden] { display: none !important; }
+
+/* ---------- Topo do painel ---------- */
+.adm-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin-bottom: 34px;
+}
+
+.adm-top h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 46px;
+    line-height: 1.12;
+    color: #C84B4B;
+    margin-bottom: 8px;
+}
+
+.adm-top h1 em {
+    font-style: italic;
+    color: #E8927C;
+}
+
+.adm-top p {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: #6e5a5a;
+    max-width: 520px;
+}
+
+.adm-top-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.adm-link-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #fff;
+    color: #A53D3D;
+    border: 1.5px solid #F5C6C6;
+    padding: 10px 22px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.25s, border-color 0.25s;
+}
+
+.adm-link-btn:hover {
+    background-color: #F5C6C6;
+    border-color: #F5C6C6;
+}
+
+/* ---------- Layout: formulário + lista ---------- */
+.adm-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.adm-card {
+    background-color: #fff;
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 14px 30px rgba(200, 75, 75, 0.10);
+}
+
+.adm-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: #C84B4B;
+    margin-bottom: 6px;
+}
+
+.adm-card .note {
+    font-size: 13px;
+    color: #9a8580;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+/* ---------- Campos ---------- */
+.adm-field { margin-bottom: 16px; }
+
+.adm-field label,
+.adm-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #A53D3D;
+    margin-bottom: 6px;
+}
+
+.adm-field input,
+.adm-field textarea,
+.adm-field select {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    color: #333;
+    border: 1.5px solid #F5C6C6;
+    background-color: #FFFDF5;
+    border-radius: 14px;
+    padding: 13px 16px;
+    width: 100%;
+    resize: vertical;
+}
+
+.adm-field input:focus,
+.adm-field textarea:focus,
+.adm-field select:focus {
+    outline: none;
+    border-color: #C84B4B;
+}
+
+.adm-field .count {
+    display: block;
+    text-align: right;
+    font-size: 12px;
+    color: #9a8580;
+    margin-top: 4px;
+}
+
+.adm-status {
+    font-size: 14px;
+    font-weight: 500;
+    color: #C84B4B;
+    margin-top: 12px;
+    min-height: 20px;
+    line-height: 1.5;
+}
+
+.adm-status.ok { color: #3f8a5a; }
+
+.adm-submit {
+    margin-top: 6px;
+}
+
+/* ---------- Lista de posts publicados ---------- */
+.adm-list-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.adm-count {
+    font-size: 13px;
+    font-weight: 600;
+    color: #A53D3D;
+    background-color: #F5C6C6;
+    padding: 4px 12px;
+    border-radius: 14px;
+}
+
+.adm-posts {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 640px;
+    overflow-y: auto;
+    padding: 2px 4px 2px 0;
+}
+
+.adm-post {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    background-color: #FFFDF5;
+    border: 1.5px solid #F5C6C6;
+    border-radius: 18px;
+    padding: 10px;
+}
+
+.adm-post-thumb {
+    flex-shrink: 0;
+    width: 74px;
+    height: 74px;
+    border-radius: 12px;
+    object-fit: cover;
+    background-color: #f1dcdc;
+}
+
+.adm-post-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.adm-post-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    line-height: 1.25;
+    color: #333;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.adm-post-meta {
+    font-size: 12px;
+    color: #9a8580;
+    margin-top: 4px;
+}
+
+.adm-post-meta .cat {
+    color: #A53D3D;
+    font-weight: 600;
+}
+
+.adm-post-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.adm-mini {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    border: 1.5px solid #F5C6C6;
+    background-color: #fff;
+    color: #A53D3D;
+    transition: background-color 0.25s, color 0.25s;
+}
+
+.adm-mini:hover { background-color: #F5C6C6; }
+
+.adm-mini.danger { border-color: #C84B4B; }
+
+.adm-mini.danger:hover {
+    background-color: #C84B4B;
+    color: #fff;
+}
+
+.adm-empty {
+    text-align: center;
+    padding: 34px 16px;
+    color: #9a8580;
+    font-size: 14.5px;
+    line-height: 1.6;
+}
+
+.adm-empty strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    color: #C84B4B;
+    margin-bottom: 6px;
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 960px) {
+    .adm-layout { grid-template-columns: minmax(0, 1fr); }
+    .adm-posts { max-height: none; }
+}
+
+@media (max-width: 900px) {
+    .adm-wrap { padding: 40px 25px 80px; }
+    .adm-top h1 { font-size: 36px; }
+}
+
+@media (max-width: 520px) {
+    .adm-card { padding: 22px 18px; }
+
+    .adm-post { flex-wrap: wrap; }
+    .adm-post-actions {
+        flex-direction: row;
+        width: 100%;
+    }
+    .adm-mini { flex: 1; }
+}

@@ -18,8 +18,6 @@
         <nav>
             <a href="index.html">Início</a>
             <a href="blog.html" class="active">Blog</a>
-            <a href="#">Montar Look</a>
-            <a href="#">Contato</a>
             <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
         </nav>
     </header>
@@ -67,7 +65,7 @@
         <!--
             Grid de posts: começa VAZIO de propósito.
             Os cards aqui dentro só existem se:
-            a) tiverem sido publicados pela Autora no painel "Publicar" lá embaixo, ou
+            a) tiverem sido publicados pela Autora no painel restrito (admin-blog.html), ou
             b) (quando tiver backend) vierem da API, ex.: GET /api/posts
 
             BACKEND: no lugar do localStorage do JS abaixo, é aqui que a lista de
@@ -80,74 +78,7 @@
         </p>
     </section>
 
-    <!-- ================= Newsletter por e-mail ================= -->
-    <section class="newsletter">
-        <div class="newsletter-inner">
-            <h2>Receba os posts por e-mail</h2>
-            <p>Um resumo por semana: novidades, links de peças e ideias de look direto na sua caixa de entrada.</p>
-            <form class="newsletter-form" id="newsletterForm">
-                <input type="email" id="newsletterEmail" placeholder="seu@email.com" required>
-                <button type="submit" class="btn-blog">Inscrever</button>
-            </form>
-            <p class="newsletter-status" id="newsletterStatus"></p>
-        </div>
-    </section>
-
-    <!-- ================= Área da Autora (permissão diferenciada) ================= -->
-    <section class="author-area">
-        <button class="author-toggle" id="authorToggle" aria-expanded="false">
-            <span>Área da Autora — publicar no blog</span>
-            <span class="lock">Autora · Cliente</span>
-        </button>
-
-        <div class="author-panel" id="authorPanel">
-            <h3>Nova publicação</h3>
-            <p class="note">
-                Só quem tem permissão de <strong>Autora</strong> publica no feed.
-                Quem é <strong>Cliente</strong> pode curtir, salvar na pasta de inspirações e comentar.
-            </p>
-
-            <input type="text" id="newTitle" placeholder="Título do post">
-            <select id="newCat">
-                <option value="tendencias">Tendências</option>
-                <option value="looks">Looks</option>
-                <option value="capsula">Guarda-roupa cápsula</option>
-                <option value="consultoria">Consultoria</option>
-            </select>
-
-            <!-- Upload da foto do post: uma imagem diferente para cada publicação -->
-            <label class="upload-box" for="newImage" id="uploadBox">
-                <input type="file" id="newImage" accept="image/*" hidden>
-                <span class="upload-icon">＋</span>
-                <span class="upload-text">
-                    <strong>Enviar foto do post</strong>
-                    <small>JPG, PNG ou WEBP · arraste o arquivo aqui ou clique para escolher</small>
-                </span>
-            </label>
-            <p class="upload-error" id="uploadError"></p>
-
-            <!-- Prévia da imagem escolhida pela Autora -->
-            <div class="upload-preview" id="uploadPreview" hidden>
-                <img id="previewImg" alt="Prévia da foto do post">
-                <button type="button" class="btn-remove" id="removeImage">Remover foto</button>
-            </div>
-
-            <textarea id="newExcerpt" rows="3" placeholder="Resumo que aparece no card..."></textarea>
-
-            <textarea id="newContent" rows="8" placeholder="Texto completo do post (o que aparece quando clicam em 'Ler mais'). Pode deixar em branco linha para separar parágrafos. Se deixar vazio, uso o resumo acima."></textarea>
-
-            <button class="btn-blog" id="publishBtn">Publicar</button>
-            <p class="author-status" id="authorStatus"></p>
-
-            <hr class="author-divider">
-
-            <button type="button" class="btn-reset" id="resetPostsBtn">Limpar posts publicados (resetar)</button>
-            <p class="author-hint">
-                Isso apaga só os posts salvos neste navegador (sem banco de dados, é o único jeito
-                de "resetar" por enquanto).
-            </p>
-        </div>
-    </section>
+   
 
     <!-- ================= Footer ================= -->
     <footer>
@@ -181,10 +112,11 @@
            - Se abrir em outro navegador/computador, ele não vai ver
              o que você publicou aqui (isso só um backend resolve).
 
-           BACKEND: quando tiver servidor, troque as 3 funções abaixo
-           (loadPosts / savePosts) por chamadas de API:
+           Quem PUBLICA é a página restrita admin-blog.html; aqui o blog
+           só LÊ os posts (mesma chave: az_blog_posts).
+
+           BACKEND: quando tiver servidor, troque loadPosts() por:
              GET  /api/posts        -> carregar
-             POST /api/posts        -> publicar (envia FormData com a imagem)
            ========================================================== */
         const STORAGE_KEY = 'az_blog_posts';
 
@@ -195,17 +127,6 @@
             } catch (e) {
                 console.error('Não foi possível ler os posts salvos:', e);
                 return [];
-            }
-        }
-
-        function savePosts(posts) {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-                return true;
-            } catch (e) {
-                // Ex.: estourou o limite do localStorage (fotos grandes)
-                console.error('Não foi possível salvar os posts:', e);
-                return false;
             }
         }
 
@@ -338,230 +259,6 @@
             const email = document.getElementById('newsletterEmail').value.trim();
             newsletterStatus.textContent = 'Prontinho! Os próximos posts chegam em ' + email + ' ♡';
             newsletterForm.reset();
-        });
-
-        /* ---------- Área da Autora ---------- */
-        const authorToggle = document.getElementById('authorToggle');
-        const authorPanel = document.getElementById('authorPanel');
-        const authorStatus = document.getElementById('authorStatus');
-
-        authorToggle.addEventListener('click', () => {
-            const open = authorPanel.classList.toggle('open');
-            authorToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-
-        /* ---------- Upload da foto do post ---------- */
-        const imageInput = document.getElementById('newImage');
-        const uploadBox = document.getElementById('uploadBox');
-        const uploadError = document.getElementById('uploadError');
-        const uploadPreview = document.getElementById('uploadPreview');
-        const previewImg = document.getElementById('previewImg');
-        const removeImageBtn = document.getElementById('removeImage');
-        const uploadPlaceholderText = '<span class="upload-icon">＋</span>' +
-            '<span class="upload-text">' +
-                '<strong>Enviar foto do post</strong>' +
-                '<small>JPG, PNG ou WEBP · arraste o arquivo aqui ou clique para escolher</small>' +
-            '</span>';
-
-        let uploadedFileDataUrl = null; // guardamos em base64 (já comprimida) para poder salvar no localStorage
-        let uploadedFileName = null;
-
-        const MAX_SIZE_MB = 15;       // limite do arquivo ORIGINAL escolhido pela pessoa
-        const MAX_DIMENSION = 1600;   // maior lado da imagem, depois de redimensionada
-        const JPEG_QUALITY = 0.82;    // qualidade da compressão (0 a 1)
-
-        /* Redimensiona a imagem e reduz a qualidade, pra caber com folga no
-           localStorage (o navegador só dá uns 5-10 MB por site, e uma foto de
-           celular sem tratamento facilmente passa disso sozinha). */
-        function compressImage(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-
-                reader.onload = () => {
-                    const img = new Image();
-
-                    img.onload = () => {
-                        let { width, height } = img;
-
-                        if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
-                            if (width > height) {
-                                height = Math.round(height * (MAX_DIMENSION / width));
-                                width = MAX_DIMENSION;
-                            } else {
-                                width = Math.round(width * (MAX_DIMENSION / height));
-                                height = MAX_DIMENSION;
-                            }
-                        }
-
-                        const canvas = document.createElement('canvas');
-                        canvas.width = width;
-                        canvas.height = height;
-
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-
-                        resolve(canvas.toDataURL('image/jpeg', JPEG_QUALITY));
-                    };
-
-                    img.onerror = () => reject(new Error('Não consegui processar essa imagem.'));
-                    img.src = reader.result;
-                };
-
-                reader.onerror = () => reject(new Error('Não consegui ler essa imagem.'));
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function showPreview(file) {
-            uploadError.textContent = '';
-            uploadBox.innerHTML =
-                '<span class="upload-icon">⏳</span>' +
-                '<span class="upload-text"><strong>Preparando a imagem…</strong></span>';
-
-            compressImage(file)
-                .then(dataUrl => {
-                    uploadedFileDataUrl = dataUrl;
-                    uploadedFileName = file.name;
-
-                    previewImg.src = dataUrl;
-                    uploadPreview.hidden = false;
-
-                    const approxKB = Math.round((dataUrl.length * 0.75) / 1024);
-
-                    uploadBox.classList.add('has-file');
-                    uploadBox.innerHTML =
-                        '<span class="upload-icon">✓</span>' +
-                        '<span class="upload-text">' +
-                            '<strong>' + file.name + '</strong>' +
-                            '<small>~' + approxKB + ' KB depois de otimizada · clique para trocar a foto</small>' +
-                        '</span>';
-                })
-                .catch(err => {
-                    uploadError.textContent = err.message || 'Não consegui processar essa imagem, tenta outra.';
-                    clearImage();
-                });
-        }
-
-        function clearImage() {
-            uploadedFileDataUrl = null;
-            uploadedFileName = null;
-
-            imageInput.value = '';
-            uploadPreview.hidden = true;
-            previewImg.removeAttribute('src');
-            uploadBox.classList.remove('has-file');
-            uploadBox.innerHTML = uploadPlaceholderText;
-        }
-
-        function handleFile(file) {
-            if (!file) return;
-
-            if (!file.type.startsWith('image/')) {
-                uploadError.textContent = 'Escolha um arquivo de imagem (JPG, PNG ou WEBP).';
-                return;
-            }
-
-            if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-                uploadError.textContent = 'A imagem é muito grande. Envie um arquivo de até ' + MAX_SIZE_MB + ' MB.';
-                return;
-            }
-
-            showPreview(file);
-        }
-
-        imageInput.addEventListener('change', () => handleFile(imageInput.files[0]));
-
-        /* arrastar e soltar */
-        ['dragenter', 'dragover'].forEach(evt =>
-            uploadBox.addEventListener(evt, e => {
-                e.preventDefault();
-                uploadBox.classList.add('dragover');
-            })
-        );
-
-        ['dragleave', 'drop'].forEach(evt =>
-            uploadBox.addEventListener(evt, e => {
-                e.preventDefault();
-                uploadBox.classList.remove('dragover');
-            })
-        );
-
-        uploadBox.addEventListener('drop', e => handleFile(e.dataTransfer.files[0]));
-
-        removeImageBtn.addEventListener('click', clearImage);
-
-        /* ---------- Publicar de verdade (título + resumo + imagem escolhidos pela Autora) ---------- */
-        document.getElementById('publishBtn').addEventListener('click', () => {
-            const title = document.getElementById('newTitle').value.trim();
-            const cat = document.getElementById('newCat');
-            const excerpt = document.getElementById('newExcerpt').value.trim();
-            const contentInput = document.getElementById('newContent').value.trim();
-
-            if (!uploadedFileDataUrl) {
-                uploadError.textContent = 'Envie a foto do post antes de publicar.';
-                uploadBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
-
-            if (!title || !excerpt) {
-                authorStatus.textContent = 'Preencha título e resumo para publicar.';
-                return;
-            }
-
-            /* BACKEND: quando tiver servidor, troque este bloco por:
-               const data = new FormData();
-               data.append('image', uploadedFile);       // o File original, não o base64
-               data.append('title', title);
-               data.append('category', cat.value);
-               data.append('excerpt', excerpt);
-               fetch('/api/posts', { method: 'POST', body: data });
-               e recarregue os posts a partir da resposta da API.
-            */
-            const post = {
-                id: Date.now(),
-                title,
-                cat: cat.value,
-                excerpt,
-                content: contentInput || excerpt,
-                imageUrl: uploadedFileDataUrl,
-                dateLabel: 'hoje'
-            };
-
-            const posts = loadPosts();
-            posts.unshift(post); // post novo aparece primeiro
-            const saved = savePosts(posts);
-
-            if (!saved) {
-                authorStatus.textContent =
-                    'Não deu para salvar: mesmo otimizada, a imagem ainda ficou grande demais para ' +
-                    'o espaço que o navegador reserva para o site. Tente uma foto mais simples, ou ' +
-                    'apague algum post publicado antes (botão "Limpar posts publicados") para abrir espaço.';
-                return;
-            }
-
-            postsGrid.prepend(buildCardElement(post));
-            applyFilter();
-
-            /* limpa o formulário e libera a imagem */
-            document.getElementById('newTitle').value = '';
-            document.getElementById('newExcerpt').value = '';
-            document.getElementById('newContent').value = '';
-            clearImage();
-
-            authorStatus.textContent = 'Publicado no feed! ♡';
-            window.scrollTo({ top: postsGrid.offsetTop - 120, behavior: 'smooth' });
-        });
-
-        /* ---------- Resetar (apaga todos os posts publicados neste navegador) ---------- */
-        document.getElementById('resetPostsBtn').addEventListener('click', () => {
-            const confirmed = window.confirm(
-                'Tem certeza? Isso vai apagar TODOS os posts publicados salvos neste navegador. Essa ação não pode ser desfeita.'
-            );
-            if (!confirmed) return;
-
-            localStorage.removeItem(STORAGE_KEY);
-            renderAllPosts();
-            authorStatus.textContent = 'Posts apagados. O feed foi resetado. ♡';
         });
 
         /* ---------- Ano no footer ---------- */
