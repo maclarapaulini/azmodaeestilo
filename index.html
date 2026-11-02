@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ariadne Zanardi - Moda e Estilo</title>
     <link rel="stylesheet" href="./style/index.css">
+    <link rel="icon" type="image/png" href="./images/logo.png">
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
@@ -28,12 +29,13 @@
             <img src="images/home/heart.png" alt="Imagem de coração" class="heart-img">
             <h1>Seu estilo, do seu<br>jeito!</h1>
             <p>Tendências, inspirações e combinações pensadas para você!</p>
-            <a href="conta.html" class="btn-hero">Entrar</a>
+            <!-- Fica invisível até o navAuth.js decidir: "Entrar" ou "Montar meu look" -->
+            <a href="conta.html" class="btn-hero" id="heroAuthBtn" style="visibility:hidden">Entrar</a>
         </div>
         <div class="hero-image">
             <img src="images/home/tablet.jpg" alt="Fashion collage with pink flowers and polaroids">
         </div>
-    </section>  
+    </section>
 
     <!-- About Section -->
     <section class="about">
@@ -70,9 +72,15 @@
             reservados.</p>
     </footer>
 
-    <script src="./scripts/auth.js"></script>
-    <script>
+    <script type="module" src="./database/navAuth.js"></script>
+    <script type="module">
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Segurança: se o navAuth.js falhar, o botão do hero não fica invisível para sempre
+        setTimeout(() => {
+            const heroBtn = document.getElementById('heroAuthBtn');
+            if (heroBtn) heroBtn.style.visibility = '';
+        }, 2000);
     </script>
 </body>
 

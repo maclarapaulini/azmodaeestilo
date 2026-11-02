@@ -7,6 +7,7 @@
     <title>Entrar ou criar conta - Ariadne Zanardi</title>
 
     <link rel="stylesheet" href="./style/blog.css">
+    <link rel="icon" type="image/png" href="./images/logo.png">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
@@ -34,7 +35,7 @@
         <nav>
             <a href="index.html">Início</a>
             <a href="blog.html">Blog</a>
-            <a href="#">Montar Look</a>
+            <a href="montar-look.html">Montar Look</a>
             <a href="#">Contato</a>
             <a href="conta.html" class="btn-entrar" id="navAuthLink">
                 Entrar
@@ -336,12 +337,16 @@
     <!-- Funções visuais: abas, máscaras e exibição de senha -->
     <script type="module">
         import { supabase } from './database/supaBase.js';
+        import { azGetTipoUsuario, azGetPaginaInicial } from './database/perfilAuth.js';
 
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-            window.location.href = 'perfil.html';
-        }
-        
+        // Usuário já logado: vai para a página do seu tipo (cliente/admin).
+        // Sem "await" no topo, para não travar o restante da inicialização.
+        supabase.auth.getSession().then(async ({ data: { session } }) => {
+            if (!session) return;
+            const tipo = await azGetTipoUsuario(session);
+            window.location.href = azGetPaginaInicial(tipo);
+        });
+
         console.log('[CONTA] Inicializando funcionalidades da página.');
 
         const tabLogin = document.getElementById('tabLogin');
