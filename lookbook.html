@@ -64,19 +64,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- ================= Header ================= -->
-    <header>
-        <a href="index.html" class="logo-link">
-            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
-                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
-            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
-        </a>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="blog.html">Blog</a>
-            <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
-        </nav>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main class="lb-wrap">
         <!-- ================= Título ================= -->
@@ -155,25 +143,11 @@
         </div>
     </div>
 
-    <!-- ================= Footer ================= -->
-    <footer>
-        <div class="footer-inner">
-            <div class="footer-brand">
-                Ariadne Zanardi
-                <small>Seu estilo, do seu jeito.</small>
-            </div>
-            <div class="footer-social">
-                <a href="#">Instagram</a>
-                <a href="#">TikTok</a>
-                <a href="#">Pinterest</a>
-                <a href="#">Portfólio</a>
-                <a href="#">Contato</a>
-            </div>
-        </div>
-        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
-    </footer>
-
-    <script>
+    <div id="footer-placeholder"></div>
+    <script type="module" src="./database/layout.js"></script>
+    <script type="module" src="./database/navAuth.js"></script>
+    <script type="module">
+        import { carregarLooksDoCliente } from './database/lookbook.js';
         /* ==========================================================
            Lookbook do cliente (versão aberta, sem login e sem banco).
 
@@ -251,31 +225,18 @@
         }
 
         /* ---------- Carrega looks ---------- */
-        function loadLooks() {
-            const wardrobe = readJSON(WARDROBE_KEY, []);
-            const byId = new Map(wardrobe.map(i => [i.id, i]));
+        async function loadLooks() {
+            try {
+                looks = await carregarLooksDoCliente();
 
-            const raw = readJSON(LOOKS_KEY, []).filter(l => MODES[l.mode]);
-            const numbers = new Map(
-                [...raw].sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0)).map((l, i) => [l.id, i + 1])
-            );
+                console.log('Looks carregados do Supabase:', looks);
 
-            looks = raw
-                .map(l => ({
-                    id: l.id,
-                    mode: l.mode,
-                    createdAt: l.createdAt || 0,
-                    title: (l.title || '').trim() || 'Look nº ' + numbers.get(l.id),
-                    occasion: OCCASIONS[l.occasion] ? l.occasion : '',
-                    climate: CLIMATES[l.climate] ? l.climate : '',
-                    tips: (l.tips || '').trim(),
-                    pieces: MODES[l.mode].map(cat => ({
-                        cat,
-                        item: l.pieces && l.pieces[cat] ? byId.get(l.pieces[cat]) || null : null
-                    }))
-                }))
-                .filter(l => l.pieces.some(p => p.item))
-                .sort((a, b) => b.createdAt - a.createdAt);
+            } catch (error) {
+                console.error('Não foi possível carregar o Lookbook:', error);
+
+                looks = [];
+                resultCount.textContent = 'Não foi possível carregar seus looks.';
+            }
         }
 
         /* ---------- Colagem do look ---------- */
@@ -610,17 +571,8 @@
             if (currentId) toggleFav(currentId);
         });
 
-        /* ---------- Início ---------- */
-        loadLooks();
+        await loadLooks();
         renderGrid(true);
-
-        // atualiza se os looks mudarem em outra aba
-        window.addEventListener('storage', e => {
-            if ([WARDROBE_KEY, LOOKS_KEY].includes(e.key)) {
-                loadLooks();
-                renderGrid(false);
-            }
-        });
 
         $('year').textContent = new Date().getFullYear();
     </script>

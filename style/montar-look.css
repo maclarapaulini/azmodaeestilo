@@ -528,3 +528,57 @@
     .lk-section[data-cat="inteira"] .lk-viewport { height: 290px; }
     .lk-section[data-cat="calcados"] .lk-viewport { height: 170px; }
 }
+
+.lk-client-select {
+    max-width: 480px;
+    margin: 0 auto 32px;
+}
+
+.lk-client-select label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.lk-client-select select {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.lk-client-select select:focus {
+    border-color: #b77b67;
+    box-shadow: 0 0 0 3px rgba(183, 123, 103, 0.12);
+}
+
+.lk-client-select small {
+    display: block;
+    margin-top: 7px;
+    color: #888;
+    font-size: 0.75rem;
+}
+
+.lk-piece-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px;
+    text-align: center;
+}
+
+.lk-piece-info strong {
+    font-size: 0.9rem;
+}
+
+.lk-piece-info small {
+    color: #888;
+    font-size: 0.8rem;
+}

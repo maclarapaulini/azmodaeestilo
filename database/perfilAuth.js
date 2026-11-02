@@ -108,3 +108,26 @@ export async function azUpdateCurrentUser(fields) {
 
     return data;
 }
+
+
+// ---------------------------------------------------------------
+// Proteção de páginas exclusivas da administradora
+// ---------------------------------------------------------------
+export async function azRequireAdmin() {
+    const user = await azGetCurrentUser();
+
+    // Sem sessão: direciona para o login.
+    if (!user) {
+        window.location.href = 'conta.html';
+        return null;
+    }
+
+    // Usuário autenticado, mas sem permissão administrativa.
+    if (user.tipo_usuario !== 'administradora') {
+        alert('Você não tem permissão para acessar esta página.');
+        window.location.href = azGetPaginaInicial(user.tipo_usuario);
+        return null;
+    }
+
+    return user;
+}

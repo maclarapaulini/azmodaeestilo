@@ -9,19 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- ================= Header (mesmo do blog) ================= -->
-    <header>
-        <a href="index.html" class="logo-link">
-            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
-                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
-            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
-        </a>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="blog.html">Blog</a>
-            <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
-        </nav>
-    </header>
+    <div id="header-placeholder"></div>
 
     <section class="profile-wrap" id="profileWrap" hidden>
         <!-- ---------- Cabeçalho do perfil ---------- -->
@@ -110,36 +98,12 @@
         </div>
     </section>
 
-    <!-- ================= Footer ================= -->
-    <footer>
-        <div class="footer-inner">
-            <div class="footer-brand">
-                Ariadne Zanardi
-                <small>Seu estilo, do seu jeito.</small>
-            </div>
-            <div class="footer-social">
-                <a href="#">Instagram</a>
-                <a href="#">TikTok</a>
-                <a href="#">Pinterest</a>
-                <a href="#">Portfólio</a>
-                <a href="#">Contato</a>
-            </div>
-        </div>
-        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
-    </footer>
+    <div id="footer-placeholder"></div>
+    <script type="module" src="./database/layout.js"></script>
 
     <script type="module" src="./database/navAuth.js"></script>
     <script type="module">
         import { azRequireAuth, azGetCurrentUser, azLogout, azUpdateCurrentUser } from './database/perfilAuth.js';
-
-        /* TODO (admin): hoje o botão "Montar look" aparece para todo mundo.
-           Quando existir o controle de administrador, troque por algo como
-           const isAdmin = user.is_admin === true;  (e traga is_admin no azGetCurrentUser) */
-        const MOSTRAR_MONTAR_LOOK = true;
-
-        /* TODO (admin): mesmo caso do botão acima, vale para "Publicar no blog"
-           (admin-blog.html). Troque pela mesma verificação de administrador. */
-        const MOSTRAR_PUBLICAR_BLOG = true;
 
         const manequimLabels = {
             PP: 'PP', P: 'P', M: 'M', G: 'G', GG: 'GG', EG: 'EG'
@@ -222,11 +186,11 @@
             document.getElementById('infoTelefone').textContent = user.telefone || 'Não informado';
             document.getElementById('infoCpf').textContent = user.cpf || 'Não informado';
 
-            // botão "Montar look" (função de administrador)
-            document.getElementById('actionMontarLook').hidden = !MOSTRAR_MONTAR_LOOK;
+            const isAdmin = user.tipo_usuario === 'administradora';
 
-            // botão "Publicar no blog" (função de administrador)
-            document.getElementById('actionPublicarBlog').hidden = !MOSTRAR_PUBLICAR_BLOG;
+            // Funcionalidades exclusivas da administradora
+            document.getElementById('actionMontarLook').hidden = !isAdmin;
+            document.getElementById('actionPublicarBlog').hidden = !isAdmin;
 
             showBannerState(user);
             showMeasurementsState(user);

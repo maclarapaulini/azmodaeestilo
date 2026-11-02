@@ -1,0 +1,44 @@
+<header>
+    <a href="index.html" class="logo-link">
+        <img
+            src="images/logo.png"
+            alt="Ariadne Zanardi"
+            class="logo"
+            onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');"
+        >
+        <span class="logo-fallback" id="logoFallback">
+            Ariadne Zanardi
+        </span>
+    </a>
+
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="blog.html">Blog</a>
+
+        <!-- Exclusivo do cliente -->
+        <a href="peca.html" id="navMinhasPecas" hidden>
+            Minhas Peças
+        </a>
+        <a href="lookbook.html" id="navLookbook" hidden>
+            Lookbook
+        </a>
+
+        <!-- Exclusivo da administradora -->
+        <a href="montar-look.html" id="navMontarLook" hidden>
+            Montar Looks
+        </a>
+        <a href="admin-blog.html" id="navPublicar" hidden>
+            Publicar
+        </a>
+
+        <!-- Visitantes -->
+        <a href="conta.html" class="btn-entrar" id="navLoginLink">
+            Entrar
+        </a>
+
+        <!-- Usuários autenticados -->
+        <a href="perfil.html" class="btn-entrar" id="navProfileLink" hidden>
+            Perfil
+        </a>
+    </nav>
+</header>

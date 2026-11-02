@@ -48,19 +48,7 @@
     </style>
 </head>
 <body>
-    <!-- ================= Header ================= -->
-    <header>
-        <a href="index.html" class="logo-link">
-            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
-                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
-            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
-        </a>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="blog.html">Blog</a>
-            <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
-        </nav>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main class="gr-wrap">
         <!-- ================= Título ================= -->
@@ -253,23 +241,9 @@
         </div>
     </div>
 
-    <!-- ================= Footer ================= -->
-    <footer>
-        <div class="footer-inner">
-            <div class="footer-brand">
-                Ariadne Zanardi
-                <small>Seu estilo, do seu jeito.</small>
-            </div>
-            <div class="footer-social">
-                <a href="#">Instagram</a>
-                <a href="#">TikTok</a>
-                <a href="#">Pinterest</a>
-                <a href="#">Portfólio</a>
-                <a href="#">Contato</a>
-            </div>
-        </div>
-        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
-    </footer>
+    
+    <div id="footer-placeholder"></div>
+    <script type="module" src="./database/layout.js"></script>
 
     <script type="module">
         /* ==========================================================
