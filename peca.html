@@ -6,22 +6,49 @@
     <title>Meu Guarda-Roupa - Ariadne Zanardi</title>
     <link rel="stylesheet" href="./style/blog.css">
     <link rel="stylesheet" href="./style/guarda-roupa.css">
+    <link rel="icon" type="image/png" href="./images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Campos da peça (passo 3): herdam o visual dos campos do login (.auth-form) */
+        .gr-form { display: grid; gap: 14px; margin: 16px 0; }
+        .gr-form .field input,
+        .gr-form .field textarea { width: 100%; box-sizing: border-box; }
+        .gr-form .field textarea { resize: vertical; min-height: 84px; }
+        .gr-form .field textarea:focus { outline: 2px solid var(--az-accent, #c2527a); outline-offset: 0; }
+        .gr-form-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        @media (max-width: 600px) { .gr-form-row { grid-template-columns: 1fr; } }
+
+        /* Cards clicáveis em "Minhas peças" */
+        .gr-item { cursor: pointer; }
+        .gr-item:focus-visible { outline: 2px solid var(--az-accent, #c2527a); outline-offset: 3px; }
+        .gr-item-info { display: block; padding: 8px 4px 0; }
+        .gr-item-info strong { display: block; font-size: .95rem; }
+        .gr-item-info small { color: #777; }
+
+        /* Modal "Detalhes da Peça" */
+        .gr-modal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(30, 20, 25, .55); backdrop-filter: blur(3px); }
+        .gr-modal[hidden] { display: none; }
+        .gr-modal-card { position: relative; display: grid; grid-template-columns: 1fr 1fr; width: 100%; max-width: 820px; max-height: 90vh; overflow: hidden; background: #fff; border-radius: 24px; box-shadow: 0 24px 60px rgba(0, 0, 0, .25); }
+        .gr-modal-photo { display: flex; align-items: center; justify-content: center; min-height: 260px; background: #faf6f4; }
+        .gr-modal-photo img { display: block; width: 100%; height: 100%; max-height: 90vh; object-fit: contain; }
+        .gr-modal-body { display: flex; flex-direction: column; gap: 14px; padding: 32px 28px 28px; overflow-y: auto; }
+        .gr-modal-body .gr-title { margin: 0; }
+        .gr-modal-body .tag { align-self: flex-start; }
+        .gr-modal-body .btn-ghost { align-self: flex-start; margin-top: 4px; }
+        .gr-modal-close { position: absolute; top: 12px; right: 12px; z-index: 1; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .92); font-size: 1.5rem; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, .15); }
+        .gr-modal-close:focus-visible { outline: 2px solid var(--az-accent, #c2527a); }
+        .gr-detail-name { margin: 0; font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; overflow-wrap: anywhere; }
+        .gr-detail-list { display: grid; gap: 12px; margin: 0; }
+        .gr-detail-list dt { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--az-accent, #c2527a); }
+        .gr-detail-list dd { margin: 2px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+        @media (max-width: 700px) {
+            .gr-modal-card { grid-template-columns: 1fr; overflow-y: auto; }
+            .gr-modal-photo { max-height: 45vh; }
+        }
+    </style>
 </head>
 <body>
-    <!-- ================= Header ================= -->
-    <header>
-        <a href="index.html" class="logo-link">
-            <img src="images/logo.png" alt="Ariadne Zanardi" class="logo"
-                 onerror="this.classList.add('logo-broken'); document.getElementById('logoFallback').classList.add('show');">
-            <span class="logo-fallback" id="logoFallback">Ariadne Zanardi</span>
-        </a>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="blog.html">Blog</a>
-            <a href="conta.html" class="btn-entrar" id="navAuthLink">Entrar</a>
-        </nav>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main class="gr-wrap">
         <!-- ================= Título ================= -->
@@ -103,18 +130,47 @@
                 </div>
             </section>
 
-            <!-- ---------- Passo 3: prévia ---------- -->
+            <!-- ---------- Passo 3: prévia + dados da peça ---------- -->
             <section class="gr-preview" id="previewSection" hidden aria-labelledby="previewTitle">
-                <h2 class="gr-title" id="previewTitle">Ficou boa? Confira antes de salvar</h2>
+                <h2 class="gr-title" id="previewTitle">Ficou boa? Preencha os dados e salve</h2>
 
                 <div class="gr-preview-body">
-                    <div class="gr-preview-img">
+                    <div class="gr-preview-img" style="box-shadow: none !important;">
                         <img id="previewImg" alt="Prévia da peça selecionada">
                     </div>
 
                     <div class="gr-preview-side">
                         <span class="tag" id="previewTag"></span>
                         <p class="gr-file-name" id="previewName"></p>
+
+                        <div class="gr-form auth-form">
+                            <div class="field">
+                                <label for="pecaNome">Nome da peça *</label>
+                                <input type="text" id="pecaNome" maxlength="150"
+                                       placeholder="ex: Blusa de linho branca" required>
+                            </div>
+
+                            <div class="gr-form-row">
+                                <div class="field">
+                                    <label for="pecaTamanho">Tamanho</label>
+                                    <input type="text" id="pecaTamanho" maxlength="20" placeholder="ex: M">
+                                </div>
+                                <div class="field">
+                                    <label for="pecaCor">Cor</label>
+                                    <input type="text" id="pecaCor" maxlength="50" placeholder="ex: Branco">
+                                </div>
+                                <div class="field">
+                                    <label for="pecaMarca">Marca</label>
+                                    <input type="text" id="pecaMarca" maxlength="80" placeholder="ex: Zara">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label for="pecaDescricao">Descrição</label>
+                                <textarea id="pecaDescricao" maxlength="500"
+                                          placeholder="Detalhes da peça (tecido, caimento, ocasião...)"></textarea>
+                            </div>
+                        </div>
 
                         <div class="gr-actions">
                             <button type="button" class="btn-blog gr-save" id="saveBtn">Salvar no Guarda-Roupa</button>
@@ -155,38 +211,54 @@
             </div>
 
             <div class="gr-grid" id="closetGrid"></div>
-
         </section>
     </main>
 
-    <!-- ================= Footer ================= -->
-    <footer>
-        <div class="footer-inner">
-            <div class="footer-brand">
-                Ariadne Zanardi
-                <small>Seu estilo, do seu jeito.</small>
+    <!-- ================= Modal: Detalhes da Peça ================= -->
+    <div class="gr-modal" id="detailModal" hidden>
+        <div class="gr-modal-card" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+            <button type="button" class="gr-modal-close" id="detailClose" aria-label="Fechar">×</button>
+
+            <div class="gr-modal-photo">
+                <img id="detailImg" alt="">
             </div>
-            <div class="footer-social">
-                <a href="#">Instagram</a>
-                <a href="#">TikTok</a>
-                <a href="#">Pinterest</a>
-                <a href="#">Portfólio</a>
-                <a href="#">Contato</a>
+
+            <div class="gr-modal-body">
+                <h2 class="gr-title" id="detailTitle">Detalhes da Peça</h2>
+                <span class="tag" id="detailTag"></span>
+                <p class="gr-detail-name" id="detailName"></p>
+
+                <dl class="gr-detail-list">
+                    <div><dt>Tamanho</dt><dd id="dTamanho"></dd></div>
+                    <div><dt>Cor</dt><dd id="dCor"></dd></div>
+                    <div><dt>Marca</dt><dd id="dMarca"></dd></div>
+                    <div><dt>Descrição</dt><dd id="dDescricao"></dd></div>
+                    <div><dt>Cadastrada em</dt><dd id="dData"></dd></div>
+                </dl>
+
+                <button type="button" class="btn-ghost" id="detailCloseBtn">Fechar</button>
             </div>
         </div>
-        <p class="footer-bottom">© <span id="year"></span> Ariadne Zanardi · Moda e Estilo · Todos os direitos reservados.</p>
-    </footer>
+    </div>
 
-    <script>
+    
+    <div id="footer-placeholder"></div>
+    <script type="module" src="./database/layout.js"></script>
+
+    <script type="module">
         /* ==========================================================
-           Versão aberta: sem login e sem banco de dados.
-           As peças ficam salvas só neste navegador (localStorage).
-
-           BACKEND (depois): trocar loadItems / saveItems / removeItem
-           por chamadas ao Supabase (Storage + tabela) e proteger a
-           página com azRequireAuth().
+           Guarda-roupa conectado ao Supabase:
+           - pecas_roupa    → dados da peça
+           - peca_imagens   → url da foto (arquivo no bucket "imagens")
            ========================================================== */
-        const STORAGE_KEY = 'az_wardrobe_local';
+        import { supabase } from './database/supaBase.js';
+        import { azRequireAuth } from './database/perfilAuth.js';
+
+        const BUCKET = 'imagens';
+
+        // Ids da tabela categorias_pecas
+        const CATEGORY_IDS = { cima: 1, baixo: 2, inteira: 3, calcados: 4 };
+        const CATEGORY_KEYS = { 1: 'cima', 2: 'baixo', 3: 'inteira', 4: 'calcados' };
 
         const CATEGORIES = {
             cima:     'Parte de Cima',
@@ -197,7 +269,7 @@
 
         const MAX_SIZE_MB = 8;
         const ACCEPTED = ['image/jpeg', 'image/png', 'image/webp'];
-        const MAX_DIMENSION = 700; // menor, para caber no limite do localStorage
+        const MAX_DIMENSION = 1200;
 
         /* ---------- Elementos ---------- */
         const $ = id => document.getElementById(id);
@@ -217,30 +289,22 @@
         const closetGrid = $('closetGrid');
         const closetCount = $('closetCount');
         const closetFilters = $('closetFilters');
+        const fields = {
+            nome: $('pecaNome'),
+            tamanho: $('pecaTamanho'),
+            cor: $('pecaCor'),
+            marca: $('pecaMarca'),
+            descricao: $('pecaDescricao')
+        };
 
         /* ---------- Estado ---------- */
+        let currentUser = null;
         let selectedCategory = null;
-        let selectedImage = null;   // dataURL já redimensionada
+        let selectedBlob = null;      // imagem já redimensionada (JPEG)
         let selectedFileName = '';
+        let previewUrl = null;
         let currentFilter = 'todas';
-
-        /* ---------- Armazenamento local ---------- */
-        function loadItems() {
-            try {
-                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-            } catch (e) {
-                return [];
-            }
-        }
-
-        function saveItems(items) {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-                return true;
-            } catch (e) {
-                return false; // geralmente: limite do navegador estourado
-            }
-        }
+        let allItems = [];
 
         /* ---------- Passos ---------- */
         function setStep(n) {
@@ -273,7 +337,7 @@
 
             previewTag.textContent = CATEGORIES[cat];
 
-            if (selectedImage) {
+            if (selectedBlob) {
                 setStep(3);
             } else {
                 uploadSection.hidden = false;
@@ -328,10 +392,12 @@
             }
 
             resizeImage(file)
-                .then(dataUrl => {
-                    selectedImage = dataUrl;
+                .then(blob => {
+                    if (previewUrl) URL.revokeObjectURL(previewUrl);
+                    selectedBlob = blob;
                     selectedFileName = file.name;
-                    previewImg.src = dataUrl;
+                    previewUrl = URL.createObjectURL(blob);
+                    previewImg.src = previewUrl;
                     previewName.textContent = file.name;
                     uploadSection.hidden = true;
                     previewSection.hidden = false;
@@ -340,6 +406,7 @@
                 .catch(() => showError('Não consegui ler essa imagem. Tente outra.'));
         }
 
+        // Redimensiona e converte para JPEG (Blob) antes do upload
         function resizeImage(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -356,7 +423,11 @@
                         ctx.fillStyle = '#fff'; // PNG transparente vira fundo branco
                         ctx.fillRect(0, 0, canvas.width, canvas.height);
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        resolve(canvas.toDataURL('image/jpeg', 0.8));
+                        canvas.toBlob(
+                            blob => (blob ? resolve(blob) : reject(new Error('blob'))),
+                            'image/jpeg',
+                            0.85
+                        );
                     };
                     img.src = reader.result;
                 };
@@ -366,7 +437,7 @@
 
         /* ---------- 3) Trocar / Salvar ---------- */
         changeBtn.addEventListener('click', () => {
-            selectedImage = null;
+            selectedBlob = null;
             selectedFileName = '';
             fileInput.value = '';
             showError('');
@@ -376,36 +447,96 @@
             fileInput.click();
         });
 
-        saveBtn.addEventListener('click', () => {
-            if (!selectedCategory || !selectedImage) return;
+        const textOrNull = el => el.value.trim() || null;
 
-            const items = loadItems();
-            items.unshift({
-                id: 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-                category: selectedCategory,
-                image: selectedImage,
-                name: selectedFileName,
-                createdAt: Date.now()
-            });
+        saveBtn.addEventListener('click', async () => {
+            if (!selectedCategory || !selectedBlob) return;
 
-            if (!saveItems(items)) {
-                showError('Sem espaço para guardar mais fotos neste navegador. Remova alguma peça e tente de novo.');
+            const nome = fields.nome.value.trim();
+            if (!nome) {
+                showError('Informe o nome da peça.');
+                fields.nome.focus();
                 return;
             }
 
             showError('');
-            previewSection.hidden = true;
-            successBox.hidden = false;
-            resetFlow();
-            renderCloset();
-            successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            saveBtn.disabled = true;
+            const originalLabel = saveBtn.textContent;
+            saveBtn.textContent = 'Salvando...';
+
+            let path = null;
+            let pecaId = null;
+
+            try {
+                // 1) Foto no Storage (pasta = uuid do usuário, exigido pela policy)
+                path = currentUser.id + '/' + Date.now().toString(36) +
+                       Math.random().toString(36).slice(2, 7) + '.jpg';
+
+                const { error: upError } = await supabase.storage
+                    .from(BUCKET)
+                    .upload(path, selectedBlob, { contentType: 'image/jpeg', upsert: false });
+                if (upError) throw upError;
+
+                // 2) Dados da peça
+                const { data: peca, error: pecaError } = await supabase
+                    .from('pecas_roupa')
+                    .insert({
+                        id_cliente: currentUser.id_usuario,
+                        id_categoria: CATEGORY_IDS[selectedCategory],
+                        nome_peca: nome,
+                        tamanho: textOrNull(fields.tamanho),
+                        cor: textOrNull(fields.cor),
+                        marca: textOrNull(fields.marca),
+                        descricao: textOrNull(fields.descricao)
+                    })
+                    .select('id_peca')
+                    .single();
+                if (pecaError) throw pecaError;
+                pecaId = peca.id_peca;
+
+                // 3) Registro da imagem
+                const { data: pub } = supabase.storage.from(BUCKET).getPublicUrl(path);
+
+                const { error: imgError } = await supabase
+                    .from('peca_imagens')
+                    .insert({
+                        id_peca: pecaId,
+                        url_imagem: pub.publicUrl,
+                        caminho_storage: path
+                    });
+                if (imgError) throw imgError;
+
+                // Sucesso
+                previewSection.hidden = true;
+                successBox.hidden = false;
+                resetFlow();
+                await loadItems();
+                successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            } catch (error) {
+                console.error('[GUARDA-ROUPA] Erro ao salvar peça:', error);
+
+                // Desfaz o que já tinha sido gravado, para não deixar lixo
+                if (pecaId) await supabase.from('pecas_roupa').delete().eq('id_peca', pecaId);
+                if (path) await supabase.storage.from(BUCKET).remove([path]);
+
+                showError('Não foi possível salvar a peça: ' + (error.message || 'erro desconhecido'));
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = originalLabel;
+            }
         });
 
         function resetFlow() {
             selectedCategory = null;
-            selectedImage = null;
+            selectedBlob = null;
             selectedFileName = '';
             fileInput.value = '';
+            Object.values(fields).forEach(el => { el.value = ''; });
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+                previewUrl = null;
+            }
             catButtons.forEach(b => {
                 b.classList.remove('selected');
                 b.setAttribute('aria-pressed', 'false');
@@ -428,51 +559,208 @@
             renderCloset();
         });
 
-        function renderCloset() {
-            const all = loadItems();
-            const items = currentFilter === 'todas' ? all : all.filter(i => i.category === currentFilter);
+        async function loadItems() {
+            const { data, error } = await supabase
+                .from('pecas_roupa')
+                .select(`
+                    id_peca, id_categoria, nome_peca, tamanho, cor, marca, descricao, data_cadastro,
+                    peca_imagens ( id_imagem, url_imagem, caminho_storage )
+                `)
+                .eq('id_cliente', currentUser.id_usuario)
+                .order('data_cadastro', { ascending: false });
 
-            closetCount.textContent = all.length === 1 ? '1 peça guardada' : all.length + ' peças guardadas';
+            if (error) {
+                console.error('[GUARDA-ROUPA] Erro ao carregar peças:', error);
+                showError('Não foi possível carregar suas peças.');
+                return;
+            }
+
+            allItems = data || [];
+            renderCloset();
+        }
+
+        function renderCloset() {
+            const items = currentFilter === 'todas'
+                ? allItems
+                : allItems.filter(i => CATEGORY_KEYS[i.id_categoria] === currentFilter);
+
+            closetCount.textContent = allItems.length === 1
+                ? '1 peça guardada'
+                : allItems.length + ' peças guardadas';
             closetGrid.innerHTML = '';
 
             if (!items.length) {
                 const empty = document.createElement('div');
                 empty.className = 'grid-empty';
-                empty.innerHTML = '<strong>Nada por aqui ainda</strong>Suas peças vão aparecer aqui assim que você salvar a primeira.';
+                const title = document.createElement('strong');
+                title.textContent = allItems.length ? 'Nenhuma peça nesta categoria' : 'Nada por aqui ainda';
+                empty.append(title, allItems.length
+                    ? 'Troque o filtro para ver as outras peças.'
+                    : 'Suas peças vão aparecer aqui assim que você salvar a primeira.');
                 closetGrid.appendChild(empty);
                 return;
             }
 
             items.forEach(item => {
+                const catKey = CATEGORY_KEYS[item.id_categoria];
+                const catName = CATEGORIES[catKey] || 'Peça';
+                const imagem = (item.peca_imagens && item.peca_imagens[0]) || null;
+
                 const card = document.createElement('article');
                 card.className = 'gr-item';
+                card.tabIndex = 0;
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', 'Ver detalhes: ' + item.nome_peca);
 
-                const img = document.createElement('img');
-                img.src = item.image;
-                img.alt = 'Peça: ' + CATEGORIES[item.category];
+                if (imagem) {
+                    const img = document.createElement('img');
+                    img.src = imagem.url_imagem;
+                    img.alt = item.nome_peca;
+                    img.loading = 'lazy';
+                    card.appendChild(img);
+                }
 
                 const tag = document.createElement('span');
                 tag.className = 'tag';
-                tag.textContent = CATEGORIES[item.category];
+                tag.textContent = catName;
+
+                // textContent em tudo: dados do usuário nunca viram HTML
+                const info = document.createElement('div');
+                info.className = 'gr-item-info';
+                const nome = document.createElement('strong');
+                nome.textContent = item.nome_peca;
+                const meta = document.createElement('small');
+                meta.textContent = [item.tamanho, item.cor, item.marca].filter(Boolean).join(' · ');
+                info.append(nome, meta);
+                if (item.descricao) info.title = item.descricao;
 
                 const del = document.createElement('button');
                 del.type = 'button';
                 del.className = 'gr-item-del';
                 del.setAttribute('aria-label', 'Remover peça');
                 del.textContent = '×';
-                del.addEventListener('click', () => {
-                    if (!confirm('Remover esta peça do guarda-roupa?')) return;
-                    saveItems(loadItems().filter(i => i.id !== item.id));
-                    renderCloset();
+                del.addEventListener('click', e => {
+                    e.stopPropagation(); // não abre o modal ao remover
+                    removeItem(item);
                 });
 
-                card.append(img, tag, del);
+                card.append(tag, info, del);
+                card.addEventListener('click', () => openDetail(item));
+                card.addEventListener('keydown', e => {
+                    if (e.target !== card) return;
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openDetail(item);
+                    }
+                });
                 closetGrid.appendChild(card);
             });
         }
 
-        renderCloset();
+        async function removeItem(item) {
+            if (!confirm('Remover esta peça do guarda-roupa?')) return;
+
+            const paths = (item.peca_imagens || [])
+                .map(i => i.caminho_storage)
+                .filter(Boolean);
+
+            // peca_imagens é apagada junto (ON DELETE CASCADE)
+            const { error } = await supabase
+                .from('pecas_roupa')
+                .delete()
+                .eq('id_peca', item.id_peca);
+
+            if (error) {
+                console.error('[GUARDA-ROUPA] Erro ao remover peça:', error);
+                showError('Não foi possível remover a peça.');
+                return;
+            }
+
+            if (paths.length) await supabase.storage.from(BUCKET).remove(paths);
+
+            await loadItems();
+        }
+
+        /* ---------- Modal: Detalhes da Peça ---------- */
+        const detailModal = $('detailModal');
+        const detailImg = $('detailImg');
+        let lastFocused = null;
+
+        function openDetail(item) {
+            const catKey = CATEGORY_KEYS[item.id_categoria];
+            const imagem = (item.peca_imagens && item.peca_imagens[0]) || null;
+            const vazio = 'Não informado';
+
+            detailImg.hidden = !imagem;
+            detailImg.src = imagem ? imagem.url_imagem : '';
+            detailImg.alt = item.nome_peca;
+
+            $('detailTag').textContent = CATEGORIES[catKey] || 'Peça';
+            $('detailName').textContent = item.nome_peca;
+            $('dTamanho').textContent = item.tamanho || vazio;
+            $('dCor').textContent = item.cor || vazio;
+            $('dMarca').textContent = item.marca || vazio;
+            $('dDescricao').textContent = item.descricao || vazio;
+            $('dData').textContent = item.data_cadastro
+                ? new Date(item.data_cadastro).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })
+                : vazio;
+
+            lastFocused = document.activeElement;
+            detailModal.hidden = false;
+            document.body.style.overflow = 'hidden';
+            $('detailClose').focus();
+        }
+
+        function closeDetail() {
+            detailModal.hidden = true;
+            document.body.style.overflow = '';
+            if (lastFocused) lastFocused.focus();
+        }
+
+        detailModal.addEventListener('click', e => {
+            if (e.target === detailModal) closeDetail(); // clique fora do cartão
+        });
+        $('detailClose').addEventListener('click', closeDetail);
+        $('detailCloseBtn').addEventListener('click', closeDetail);
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !detailModal.hidden) closeDetail();
+        });
+
+        /* ---------- Estilo adaptativo: usa as cores/campos já definidos no site ---------- */
+        (function matchSiteStyle() {
+            // Cor de destaque = cor do botão principal do site
+            const accent = getComputedStyle(saveBtn).backgroundColor;
+            if (accent && accent !== 'transparent' && accent !== 'rgba(0, 0, 0, 0)') {
+                document.documentElement.style.setProperty('--az-accent', accent);
+            }
+
+            // Textarea copia o visual dos inputs estilizados do site
+            const cs = getComputedStyle(fields.nome);
+            const ta = fields.descricao.style;
+            ta.borderWidth = cs.borderTopWidth;
+            ta.borderStyle = cs.borderTopStyle;
+            ta.borderColor = cs.borderTopColor;
+            ta.borderRadius = cs.borderTopLeftRadius;
+            ta.padding = cs.paddingTop + ' ' + cs.paddingLeft;
+            ta.backgroundColor = cs.backgroundColor;
+            ta.color = cs.color;
+            ta.fontFamily = cs.fontFamily;
+            ta.fontSize = cs.fontSize;
+        })();
+
+        /* ---------- Início ---------- */
         $('year').textContent = new Date().getFullYear();
+
+        currentUser = await azRequireAuth(); // sem sessão → conta.html
+        if (currentUser) {
+            if (!currentUser.id_usuario) {
+                showError('Não encontramos seu cadastro. Saia e entre novamente.');
+            } else {
+                await loadItems();
+            }
+        }
     </script>
+
+    <script type="module" src="./database/navAuth.js"></script>
 </body>
 </html>
